@@ -110,7 +110,7 @@
 /* 悬停动画增强 */
 .aceternity-hover-animation {
   @apply transition-all duration-300 ease-out;
-  @apply hover:shadow-lg hover:shadow-primary/10;
+  @apply hover:shadow-primary/10 hover:shadow-lg;
 }
 
 .aceternity-hover-animation:hover {
@@ -124,7 +124,8 @@
 
 .aceternity-pulse-glow::before {
   content: '';
-  @apply rounded-inherit absolute inset-0;
+  @apply absolute inset-0;
+  border-radius: inherit;
   background: inherit;
   filter: blur(8px);
   opacity: 0.3;
@@ -134,7 +135,7 @@
 /* 磁场效果样式 */
 .aceternity-magnetic {
   @apply transition-transform duration-300 ease-out;
-  @apply hover:shadow-xl hover:shadow-primary/20;
+  @apply hover:shadow-primary/20 hover:shadow-xl;
 }
 
 /* ===== 特殊效果样式覆盖 ===== */
@@ -142,7 +143,7 @@
 /* 渐变移动背景增强 */
 .aceternity-gradient-shift {
   background-size: 400% 400%;
-  @apply animate-gradient-shift;
+  animation: gradient-shift 4s linear infinite;
 }
 
 /* 粒子效果容器 */
@@ -298,7 +299,7 @@
 /* 高对比度模式支持 */
 @media (prefers-contrast: high) {
   .aceternity-floating-nav {
-    @apply border-2 border-foreground/50;
+    @apply border-foreground/50 border-2;
   }
 
   .aceternity-beam {
@@ -320,7 +321,7 @@
 }
 
 .aceternity-glow-border {
-  @apply border border-primary/50;
+  @apply border-primary/50 border;
   box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
 }
 
