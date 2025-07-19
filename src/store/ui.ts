@@ -31,9 +31,24 @@ export interface Notification {
  */
 export interface Modal {
   id: string;
+  type?: 'modal' | 'drawer' | 'confirm';
   isOpen: boolean;
   title?: string;
+  description?: string;
   content?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  animation?: 'fade' | 'scale' | 'slide-up' | 'slide-down' | 'bounce';
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  variant?: 'default' | 'destructive';
+  showCloseButton?: boolean;
+  closeOnOverlayClick?: boolean;
+  closeOnEscape?: boolean;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  footer?: React.ReactNode;
+  className?: string;
   onClose?: () => void;
 }
 

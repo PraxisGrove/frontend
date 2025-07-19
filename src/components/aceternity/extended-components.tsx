@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion, HTMLMotionProps, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import {
@@ -486,10 +487,11 @@ export function InteractiveCard({
       {/* 图片区域 */}
       {image && (
         <div className="relative h-48 overflow-hidden">
-          <img
+          <Image
             src={image}
             alt={title}
-            className="h-full w-full object-cover transition-transform duration-300"
+            fill
+            className="object-cover transition-transform duration-300"
             style={{
               transform: isHovered ? 'scale(1.1)' : 'scale(1)',
             }}
