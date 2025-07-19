@@ -267,10 +267,10 @@ export function CardContainer({
   variant?: 'default' | 'outlined' | 'elevated' | 'glass';
 }) {
   const variantClasses = {
-    default: 'bg-card border border-border',
-    outlined: 'border-2 border-border bg-transparent',
-    elevated: 'bg-card shadow-lg border border-border',
-    glass: 'bg-card/50 backdrop-blur-sm border border-border',
+    default: 'bg-card border border-[hsl(var(--border))]',
+    outlined: 'border-2 border-[hsl(var(--border))] bg-transparent',
+    elevated: 'bg-card shadow-lg border border-[hsl(var(--border))]',
+    glass: 'bg-card/50 backdrop-blur-sm border border-[hsl(var(--border))]',
   };
 
   return (

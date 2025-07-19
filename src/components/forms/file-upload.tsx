@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useController, FieldValues, Path } from 'react-hook-form';
+import NextImage from 'next/image';
 import { cn } from '@/lib/utils';
 import {
   useFormContext,
@@ -89,10 +90,10 @@ const fileTypeMap: Record<FileType, string> = {
 
 // 文件图标映射
 const fileIconMap: Record<string, React.ReactNode> = {
-  image: <Image className="h-4 w-4" />,
-  video: <Video className="h-4 w-4" />,
-  audio: <Music className="h-4 w-4" />,
-  document: <FileText className="h-4 w-4" />,
+  image: <Image className="h-4 w-4" aria-label="图片文件" />,
+  video: <Video className="h-4 w-4" aria-label="视频文件" />,
+  audio: <Music className="h-4 w-4" aria-label="音频文件" />,
+  document: <FileText className="h-4 w-4" aria-label="文档文件" />,
   archive: <Archive className="h-4 w-4" />,
   default: <File className="h-4 w-4" />,
 };
@@ -148,9 +149,11 @@ function FilePreview({
     <div className="flex items-center gap-3 rounded-lg border bg-muted/50 p-3">
       <div className="flex-shrink-0">
         {fileType === 'image' && fileInfo.url ? (
-          <img
+          <NextImage
             src={fileInfo.url}
             alt={fileInfo.name}
+            width={40}
+            height={40}
             className="h-10 w-10 rounded object-cover"
           />
         ) : (

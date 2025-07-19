@@ -105,7 +105,7 @@ export default function UploadDemoPage() {
                 {/* 头像上传 */}
                 <GridItem span={{ xs: 1, md: 2 }}>
                   <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
-                    <Image className="h-5 w-5" />
+                    <Image className="h-5 w-5" aria-label="图片图标" />
                     头像上传
                   </h3>
                 </GridItem>
@@ -152,7 +152,7 @@ export default function UploadDemoPage() {
                 <GridItem span={{ xs: 1, md: 2 }}>
                   <Separator className="my-6" />
                   <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
-                    <Image className="h-5 w-5" />
+                    <Image className="h-5 w-5" aria-label="图片图标" />
                     图片上传
                   </h3>
                 </GridItem>
@@ -260,7 +260,7 @@ export default function UploadDemoPage() {
               <Card className="p-4">
                 <div className="mb-3 flex items-center gap-3">
                   <div className="rounded-lg bg-purple-100 p-2 text-purple-600">
-                    <Image className="h-5 w-5" />
+                    <Image className="h-5 w-5" aria-label="图片图标" />
                   </div>
                   <h4 className="font-medium">文件预览</h4>
                 </div>

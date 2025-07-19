@@ -109,9 +109,11 @@ export function EnhancedButton({
   ...props
 }: EnhancedButtonProps) {
   const variantClasses = {
-    primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
-    secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/90',
-    ghost: 'bg-transparent border border-border hover:bg-accent',
+    primary:
+      'bg-primary text-primary-foreground hover:bg-[hsl(var(--primary)/0.9)]',
+    secondary:
+      'bg-secondary text-secondary-foreground hover:bg-[hsl(var(--secondary)/0.9)]',
+    ghost: 'bg-transparent border border-[hsl(var(--border))] hover:bg-accent',
     glow: 'aceternity-glow-border bg-primary text-primary-foreground',
   };
 
@@ -155,10 +157,11 @@ export function EnhancedCard({
   ...props
 }: EnhancedCardProps) {
   const variantClasses = {
-    default: 'bg-card border border-border',
+    default: 'bg-card border border-[hsl(var(--border))]',
     glass: 'aceternity-glass-effect',
     glow: 'aceternity-glow-border bg-card',
-    floating: 'aceternity-floating-shadow bg-card border border-border',
+    floating:
+      'aceternity-floating-shadow bg-card border border-[hsl(var(--border))]',
   };
 
   return (

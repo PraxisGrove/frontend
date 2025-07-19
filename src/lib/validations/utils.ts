@@ -405,8 +405,8 @@ export function useRealtimeValidation<T extends Record<string, any>>(
   const { validateField } = useFormValidation(schema, form);
 
   // 防抖验证函数
-  const debouncedValidate = React.useCallback(
-    debounce((fieldName: keyof T, value: any) => {
+  const debouncedValidate = React.useCallback(() => {
+    return debounce((fieldName: keyof T, value: any) => {
       const result = validateField(fieldName, value);
       if (!result.isValid && result.error) {
         form.setError(fieldName as any, {
@@ -416,8 +416,13 @@ export function useRealtimeValidation<T extends Record<string, any>>(
       } else {
         form.clearErrors(fieldName as any);
       }
-    }, debounceMs),
-    [validateField, form, debounceMs]
+    }, debounceMs);
+  }, [validateField, form, debounceMs]);
+
+  // 获取防抖函数实例
+  const debouncedValidateInstance = React.useMemo(
+    () => debouncedValidate(),
+    [debouncedValidate]
   );
 
   // 监听字段变化
@@ -426,15 +431,15 @@ export function useRealtimeValidation<T extends Record<string, any>>(
 
     const subscription = form.watch((value, { name }) => {
       if (name && value[name] !== undefined) {
-        debouncedValidate(name as keyof T, value[name]);
+        debouncedValidateInstance(name as keyof T, value[name]);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [form, debouncedValidate, validateOnChange]);
+  }, [form, debouncedValidateInstance, validateOnChange]);
 
   return {
-    validateField: debouncedValidate,
+    validateField: debouncedValidateInstance,
   };
 }
 

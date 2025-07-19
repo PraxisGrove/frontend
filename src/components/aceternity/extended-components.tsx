@@ -174,7 +174,7 @@ export function FeatureCard({
         'relative rounded-lg border p-6 transition-all duration-300',
         highlight
           ? 'aceternity-glow-border bg-card/50'
-          : 'border-border bg-card hover:border-primary/50',
+          : 'border-[hsl(var(--border))] bg-card hover:border-primary/50',
         className
       )}
       whileHover={{ y: -5, scale: 1.02 }}

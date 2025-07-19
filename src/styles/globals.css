@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 /* Aceternity UI 样式覆盖 */
 @import './aceternity-overrides.css';
