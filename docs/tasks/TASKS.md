@@ -55,32 +55,31 @@ PraxisGrove 是一个纯前端的 AI 驱动沉浸式在线教育平台，基于 
 
 #### 2.1 基础组件开发
 
-- [ ] **Aceternity UI 定制**
-  - [ ] 组件库主题定制
-  - [ ] 动画效果配置
-  - [ ] 组件样式覆盖
-  - [ ] 自定义组件扩展
+- [x] **Aceternity UI 定制**
+  - [x] 组件库主题定制
+  - [x] 动画效果配置
+  - [x] 组件样式覆盖
+  - [x] 自定义组件扩展
 
 - [x] **通用组件**
   - [x] Button, Input, Select 组件
-  - [ ] Modal, Dialog, Drawer 组件
-  - [ ] Table, Pagination 组件
-  - [ ] Loading, Skeleton 组件
-  - [ ] Toast, Notification 组件
+  - [x] Modal, Dialog, Drawer 组件
+  - [x] Table, Pagination 组件
+  - [x] Loading, Skeleton 组件
+  - [x] Toast, Notification 组件
 
-- [ ] **布局组件**
-  - [ ] Header 导航组件
-  - [ ] Footer 页脚组件
-  - [ ] Sidebar 侧边栏组件
-  - [ ] Layout 布局容器
-  - [ ] 响应式网格系统
-  - [ ] 集成 /logo 目录下的 logo 文件和 ico
+- [x] **布局组件**
+  - [x] Header 导航组件
+  - [x] Footer 页脚组件
+  - [x] Sidebar 侧边栏组件
+  - [x] Layout 布局容器
+  - [x] 响应式网格系统
+  - [x] 集成 /logo 目录下的 logo 文件和 ico
 
-- [ ] **表单组件**
-  - [ ] React Hook Form 集成
-  - [ ] 表单验证 (Zod)
-  - [ ] 文件上传组件
-  - [ ] 富文本编辑器
+- [x] **表单组件**
+  - [x] React Hook Form 集成
+  - [x] 表单验证 (Zod)
+  - [x] 文件上传组件
 
 #### 2.2 主题与国际化
 

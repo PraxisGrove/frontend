@@ -24,6 +24,27 @@ export { Skeleton } from './skeleton';
 
 export { Toaster } from './sonner';
 
+export { Separator } from './separator';
+
+export { ScrollArea, ScrollBar } from './scroll-area';
+
+export {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from './collapsible';
+
+export { RadioGroup, RadioGroupItem } from './radio-group';
+
+export { Switch } from './switch';
+
+export { Checkbox } from './checkbox';
+
+export { Textarea } from './textarea';
+export type { TextareaProps } from './textarea';
+
+export { Progress } from './progress';
+
 // Table 组件
 export {
   Table,

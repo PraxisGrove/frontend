@@ -7,13 +7,13 @@
 
 /* 浮动导航栏样式覆盖 */
 .aceternity-floating-nav {
-  @apply border border-border/50 bg-background/80 backdrop-blur-xl;
+  @apply border border-border bg-background/80 backdrop-blur-xl;
   @apply shadow-lg shadow-black/5 dark:shadow-black/20;
   @apply transition-all duration-300 ease-out;
 }
 
 .aceternity-floating-nav:hover {
-  @apply border-border/70 bg-background/90;
+  @apply border-border bg-background/90;
   @apply shadow-xl shadow-black/10 dark:shadow-black/30;
 }
 
@@ -198,7 +198,7 @@
 
 /* 深色主题增强 */
 .dark .aceternity-floating-nav {
-  @apply border-border/30 bg-background/70;
+  @apply border-border bg-background/70;
   @apply backdrop-blur-xl;
 }
 
@@ -223,7 +223,7 @@
 
 /* 浅色主题优化 */
 .light .aceternity-floating-nav {
-  @apply border-border/40 bg-background/90;
+  @apply border-border bg-background/90;
 }
 
 .light .aceternity-beam {
@@ -284,7 +284,7 @@
 
 /* Aceternity 特定的工具类 */
 .aceternity-glass-effect {
-  @apply border border-border/20 bg-background/10 backdrop-blur-md;
+  @apply border border-border bg-background/10 backdrop-blur-md;
 }
 
 .aceternity-glow-border {

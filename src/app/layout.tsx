@@ -12,9 +12,24 @@ export const metadata: Metadata = {
   authors: [{ name: 'PraxisGrove Team' }],
   viewport: 'width=device-width, initial-scale=1',
   icons: {
-    icon: '/logo/favicon.ico',
+    icon: [
+      { url: '/logo/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/logo/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo/favicon.ico', sizes: 'any' },
+    ],
     apple: '/logo/apple-touch-icon.png',
+    other: [
+      {
+        rel: 'android-chrome-192x192',
+        url: '/logo/android-chrome-192x192.png',
+      },
+      {
+        rel: 'android-chrome-512x512',
+        url: '/logo/android-chrome-512x512.png',
+      },
+    ],
   },
+  manifest: '/logo/site.webmanifest',
 };
 
 export default function RootLayout({
