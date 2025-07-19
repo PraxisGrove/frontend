@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Aceternity UI 样式覆盖 */
+@import './aceternity-overrides.css';
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -24,6 +27,20 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+
+    /* Aceternity UI 特定变量 */
+    --aceternity-beam-primary: 221.2 83.2% 53.3%;
+    --aceternity-beam-secondary: 210 40% 96%;
+    --aceternity-beam-glow: 221.2 83.2% 53.3%;
+    --aceternity-navbar-bg: 0 0% 100% / 0.8;
+    --aceternity-navbar-border: 214.3 31.8% 91.4% / 0.2;
+    --aceternity-navbar-shadow: 0 0% 0% / 0.1;
+    --aceternity-glass-bg: 0 0% 100% / 0.1;
+    --aceternity-glass-border: 214.3 31.8% 91.4% / 0.2;
+    --aceternity-beam-duration: 3s;
+    --aceternity-float-duration: 0.2s;
+    --aceternity-gradient-duration: 4s;
+    --aceternity-pulse-duration: 2s;
   }
 
   .dark {
@@ -46,6 +63,16 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 94.1%;
+
+    /* Aceternity UI 暗色主题变量 */
+    --aceternity-beam-primary: 217.2 91.2% 59.8%;
+    --aceternity-beam-secondary: 217.2 32.6% 17.5%;
+    --aceternity-beam-glow: 217.2 91.2% 59.8%;
+    --aceternity-navbar-bg: 222.2 84% 4.9% / 0.8;
+    --aceternity-navbar-border: 210 40% 98% / 0.2;
+    --aceternity-navbar-shadow: 0 0% 0% / 0.3;
+    --aceternity-glass-bg: 222.2 84% 4.9% / 0.1;
+    --aceternity-glass-border: 210 40% 98% / 0.2;
   }
 }
 

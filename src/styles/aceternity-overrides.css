@@ -1,0 +1,312 @@
+/**
+ * Aceternity UI 组件样式覆盖
+ * 自定义样式以符合 PraxisGrove 项目设计规范
+ */
+
+/* ===== 全局 Aceternity 样式覆盖 ===== */
+
+/* 浮动导航栏样式覆盖 */
+.aceternity-floating-nav {
+  @apply border border-border/50 bg-background/80 backdrop-blur-xl;
+  @apply shadow-lg shadow-black/5 dark:shadow-black/20;
+  @apply transition-all duration-300 ease-out;
+}
+
+.aceternity-floating-nav:hover {
+  @apply border-border/70 bg-background/90;
+  @apply shadow-xl shadow-black/10 dark:shadow-black/30;
+}
+
+.aceternity-floating-nav-item {
+  @apply relative rounded-full px-4 py-2 transition-all duration-200;
+  @apply text-foreground/70 hover:text-foreground;
+  @apply hover:bg-accent/50;
+}
+
+.aceternity-floating-nav-item.active {
+  @apply bg-primary/10 text-primary;
+}
+
+.aceternity-floating-nav-button {
+  @apply relative rounded-full px-6 py-2;
+  @apply bg-primary text-primary-foreground;
+  @apply transition-all duration-200 hover:bg-primary/90;
+  @apply shadow-md hover:shadow-lg;
+}
+
+/* 背景光束效果样式覆盖 */
+.aceternity-background-beams {
+  @apply absolute inset-0 overflow-hidden;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--background)) 0%,
+    hsl(var(--muted)) 50%,
+    hsl(var(--background)) 100%
+  );
+}
+
+.aceternity-beam {
+  @apply absolute top-0 w-px opacity-60;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    hsl(var(--primary)) 50%,
+    transparent 100%
+  );
+  filter: blur(0.5px);
+}
+
+.aceternity-beam.enhanced {
+  @apply w-0.5 opacity-80;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    hsl(var(--primary)) 30%,
+    hsl(var(--accent)) 50%,
+    hsl(var(--primary)) 70%,
+    transparent 100%
+  );
+  filter: blur(1px);
+  box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+}
+
+/* ===== 动画组件样式覆盖 ===== */
+
+/* 动画容器基础样式 */
+.aceternity-animated-container {
+  @apply relative;
+}
+
+/* 悬停动画增强 */
+.aceternity-hover-animation {
+  @apply transition-all duration-300 ease-out;
+  @apply hover:shadow-lg hover:shadow-primary/10;
+}
+
+.aceternity-hover-animation:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* 脉冲发光效果增强 */
+.aceternity-pulse-glow {
+  @apply relative;
+}
+
+.aceternity-pulse-glow::before {
+  content: '';
+  @apply rounded-inherit absolute inset-0;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* 磁场效果样式 */
+.aceternity-magnetic {
+  @apply transition-transform duration-300 ease-out;
+  @apply hover:shadow-xl hover:shadow-primary/20;
+}
+
+/* ===== 特殊效果样式覆盖 ===== */
+
+/* 渐变移动背景增强 */
+.aceternity-gradient-shift {
+  background-size: 400% 400%;
+  @apply animate-gradient-shift;
+}
+
+/* 粒子效果容器 */
+.aceternity-particles {
+  @apply pointer-events-none absolute inset-0 overflow-hidden;
+}
+
+.aceternity-particle {
+  @apply absolute rounded-full;
+  background: radial-gradient(
+    circle,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.5) 50%,
+    transparent 100%
+  );
+  filter: blur(1px);
+}
+
+/* 波纹效果样式 */
+.aceternity-ripple {
+  @apply pointer-events-none absolute rounded-full border-2;
+  border-color: hsl(var(--primary) / 0.6);
+  background: radial-gradient(
+    circle,
+    hsl(var(--primary) / 0.1) 0%,
+    transparent 70%
+  );
+}
+
+/* ===== 响应式设计覆盖 ===== */
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .aceternity-floating-nav {
+    @apply px-4 py-2;
+  }
+
+  .aceternity-floating-nav-item {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .aceternity-floating-nav-button {
+    @apply px-4 py-1.5 text-sm;
+  }
+
+  .aceternity-beam {
+    @apply opacity-40;
+  }
+
+  .aceternity-hover-animation:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+/* 平板端优化 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .aceternity-floating-nav {
+    @apply px-6 py-2.5;
+  }
+
+  .aceternity-beam.enhanced {
+    @apply opacity-70;
+  }
+}
+
+/* 桌面端增强 */
+@media (min-width: 1025px) {
+  .aceternity-floating-nav {
+    @apply px-8 py-3;
+  }
+
+  .aceternity-hover-animation:hover {
+    transform: translateY(-6px) scale(1.03);
+  }
+
+  .aceternity-beam.enhanced {
+    @apply opacity-90;
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.6);
+  }
+}
+
+/* ===== 主题特定样式覆盖 ===== */
+
+/* 深色主题增强 */
+.dark .aceternity-floating-nav {
+  @apply border-border/30 bg-background/70;
+  @apply backdrop-blur-xl;
+}
+
+.dark .aceternity-beam {
+  @apply opacity-80;
+  filter: blur(0.8px);
+}
+
+.dark .aceternity-pulse-glow::before {
+  opacity: 0.5;
+  filter: blur(12px);
+}
+
+.dark .aceternity-particle {
+  background: radial-gradient(
+    circle,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.7) 50%,
+    transparent 100%
+  );
+}
+
+/* 浅色主题优化 */
+.light .aceternity-floating-nav {
+  @apply border-border/40 bg-background/90;
+}
+
+.light .aceternity-beam {
+  @apply opacity-50;
+}
+
+.light .aceternity-pulse-glow::before {
+  opacity: 0.2;
+  filter: blur(6px);
+}
+
+/* ===== 性能优化样式 ===== */
+
+/* GPU 加速优化 */
+.aceternity-gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* 减少动画的样式（用于低性能设备） */
+@media (prefers-reduced-motion: reduce) {
+  .aceternity-animated-container,
+  .aceternity-hover-animation,
+  .aceternity-pulse-glow,
+  .aceternity-magnetic {
+    @apply transition-none;
+    animation: none !important;
+  }
+
+  .aceternity-beam {
+    @apply opacity-30;
+    animation: none !important;
+  }
+
+  .aceternity-gradient-shift {
+    animation: none !important;
+    background-position: 0% 50% !important;
+  }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .aceternity-floating-nav {
+    @apply border-2 border-foreground/50;
+  }
+
+  .aceternity-beam {
+    @apply opacity-90;
+    filter: none;
+  }
+
+  .aceternity-pulse-glow::before {
+    display: none;
+  }
+}
+
+/* ===== 自定义工具类 ===== */
+
+/* Aceternity 特定的工具类 */
+.aceternity-glass-effect {
+  @apply border border-border/20 bg-background/10 backdrop-blur-md;
+}
+
+.aceternity-glow-border {
+  @apply border border-primary/50;
+  box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
+}
+
+.aceternity-floating-shadow {
+  @apply shadow-lg shadow-black/5 dark:shadow-black/20;
+  filter: drop-shadow(0 10px 20px hsl(var(--primary) / 0.1));
+}
+
+.aceternity-gradient-text {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)),
+    hsl(var(--accent)),
+    hsl(var(--secondary))
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease-in-out infinite;
+}

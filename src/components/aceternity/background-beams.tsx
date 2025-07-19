@@ -2,8 +2,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useAceternityTheme } from './theme-provider';
 
-export const BackgroundBeams = ({ className }: { className?: string }) => {
+export const BackgroundBeams = ({
+  className,
+  beamCount = 20,
+  animationDuration = 3,
+  repeatDelay = 2,
+}: {
+  className?: string;
+  beamCount?: number;
+  animationDuration?: number;
+  repeatDelay?: number;
+}) => {
+  const { theme } = useAceternityTheme();
   const [beams, setBeams] = useState<
     Array<{ id: number; x: number; delay: number }>
   >([]);
@@ -11,29 +23,26 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const generateBeams = () => {
-      const newBeams = Array.from({ length: 20 }, (_, i) => ({
+      const newBeams = Array.from({ length: beamCount }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
-        delay: Math.random() * 2,
+        delay: Math.random() * repeatDelay,
       }));
       setBeams(newBeams);
     };
 
     generateBeams();
-  }, []);
+  }, [beamCount, repeatDelay]);
 
   return (
     <div
       ref={containerRef}
-      className={cn(
-        'absolute inset-0 overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900',
-        className
-      )}
+      className={cn('aceternity-background-beams', className)}
     >
       {beams.map((beam) => (
         <motion.div
           key={beam.id}
-          className="absolute top-0 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent"
+          className={cn('aceternity-beam', beam.id % 3 === 0 && 'enhanced')}
           style={{
             left: `${beam.x}%`,
             height: '100%',
@@ -44,10 +53,11 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
             scaleY: [0, 1, 0],
           }}
           transition={{
-            duration: 3,
+            duration: animationDuration,
             delay: beam.delay,
             repeat: Infinity,
-            repeatDelay: 2,
+            repeatDelay: repeatDelay,
+            ease: theme.animations.beam.ease,
           }}
         />
       ))}
