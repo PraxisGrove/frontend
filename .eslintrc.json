@@ -1,0 +1,18 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "ignorePatterns": [
+    ".next/**",
+    "node_modules/**",
+    ".storybook/**",
+    "storybook-static/**",
+    "out/**",
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    "*.config.js",
+    "*.config.ts"
+  ],
+  "rules": {
+    "@next/next/no-html-link-for-pages": "warn"
+  }
+}

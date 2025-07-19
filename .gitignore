@@ -1,0 +1,302 @@
+# ===================================
+# PraxisGrove Frontend .gitignore
+# ===================================
+# 
+# 这个文件定义了 PraxisGrove 前端项目中应该被 Git 忽略的文件和目录
+# 基于 Next.js 15 + TypeScript + pnpm 技术栈
+# 
+# 最后更新: 2025年7月20日
+# ===================================
+
+# ===================================
+# Next.js 相关
+# ===================================
+# Next.js 构建输出
+.next/
+out/
+
+# Next.js 缓存
+.next/cache/
+
+# Next.js 静态导出
+out/
+
+# Next.js 增量静态再生
+.next/static/chunks/
+.next/static/css/
+.next/static/media/
+
+# Next.js 服务器组件缓存
+.next/server/
+
+# Next.js 类型检查缓存
+.next/types/
+
+# ===================================
+# Node.js 相关
+# ===================================
+# 依赖包目录
+node_modules/
+
+# npm 缓存
+.npm
+
+# pnpm 相关
+.pnpm-debug.log*
+.pnpm-store/
+
+# Yarn 相关（如果使用）
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# ===================================
+# 环境变量和配置
+# ===================================
+# 环境变量文件（包含敏感信息）
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 保留示例环境变量文件
+!.env.example
+!.env.template
+
+# ===================================
+# 构建和编译输出
+# ===================================
+# TypeScript 构建信息
+*.tsbuildinfo
+.tsbuildinfo
+
+# 通用构建目录
+build/
+dist/
+
+# 构建输出的 lib 目录（不包括源码中的 lib 目录）
+/lib/
+
+# ===================================
+# 测试相关
+# ===================================
+# 测试覆盖率报告
+coverage/
+.nyc_output/
+
+# Vitest 缓存
+.vitest/
+
+# Playwright 相关
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Jest 缓存（如果使用）
+.jest/
+
+# ===================================
+# Storybook 相关
+# ===================================
+# Storybook 构建输出
+storybook-static/
+.storybook/build/
+
+# Storybook 缓存
+.storybook/.cache/
+
+# ===================================
+# 开发工具和 IDE
+# ===================================
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# WebStorm / IntelliJ
+.idea/
+*.swp
+*.swo
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===================================
+# 操作系统生成的文件
+# ===================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===================================
+# 日志文件
+# ===================================
+# 各种日志文件
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ===================================
+# 临时文件和缓存
+# ===================================
+# 临时文件
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# 缓存目录
+.cache/
+.parcel-cache/
+
+# Turbopack 缓存
+.turbo/
+
+# ===================================
+# 安全和敏感信息
+# ===================================
+# SSL 证书
+*.pem
+*.key
+*.crt
+*.csr
+
+# 密钥文件
+*.private
+*.secret
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# ===================================
+# 部署相关
+# ===================================
+# Vercel
+.vercel
+
+# Netlify
+.netlify/
+
+# AWS
+.aws/
+
+# Docker
+.dockerignore
+
+# ===================================
+# 分析和监控
+# ===================================
+# Bundle 分析
+.next/analyze/
+bundle-analyzer-report.html
+
+# 性能分析
+.next/trace
+
+# Lighthouse 报告
+lighthouse-report.html
+
+# ===================================
+# 其他工具
+# ===================================
+# ESLint 缓存
+.eslintcache
+
+# Prettier 缓存
+.prettiercache
+
+# Stylelint 缓存
+.stylelintcache
+
+# TypeScript 错误报告
+*.tserror
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+
+# ===================================
+# 项目特定忽略
+# ===================================
+# 3D 模型和大型资源文件（如果不需要版本控制）
+# *.glb
+# *.gltf
+# *.fbx
+# *.obj
+
+# 用户上传的文件（如果有）
+uploads/
+user-content/
+
+# 生成的文档
+generated-docs/
+
+# 本地开发数据
+local-data/
+mock-data/
+
+# ===================================
+# 注意事项
+# ===================================
+# 
+# 1. 如果需要忽略特定的配置文件，请在项目特定部分添加
+# 2. 对于大型资源文件，考虑使用 Git LFS
+# 3. 定期检查和更新此文件以适应项目需求
+# 4. 敏感信息应该通过环境变量管理，而不是硬编码在代码中
+# 
+# ===================================
