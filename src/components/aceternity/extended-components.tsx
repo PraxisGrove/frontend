@@ -10,7 +10,6 @@ import {
   PulseGlow,
   GradientShift,
   AnimatedContainer,
-  useAceternityTheme,
 } from './index';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -63,7 +62,7 @@ export function HeroSection({
         );
       case 'particles':
         return (
-          <div className="absolute inset-0 bg-gradient-to-br from-background via-muted to-background" />
+          <div className="from-background via-muted to-background absolute inset-0 bg-gradient-to-br" />
         );
       default:
         return null;
@@ -83,7 +82,7 @@ export function HeroSection({
         <AnimatedContainer animation="slideUp" className="space-y-8">
           {subtitle && (
             <motion.p
-              className="text-sm font-medium uppercase tracking-wide text-primary md:text-base"
+              className="text-primary text-sm font-medium uppercase tracking-wide md:text-base"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -93,7 +92,7 @@ export function HeroSection({
           )}
 
           <motion.h1
-            className="text-4xl font-bold text-foreground md:text-6xl lg:text-7xl"
+            className="text-foreground text-4xl font-bold md:text-6xl lg:text-7xl"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -103,7 +102,7 @@ export function HeroSection({
 
           {description && (
             <motion.p
-              className="mx-auto max-w-3xl text-lg text-muted-foreground md:text-xl"
+              className="text-muted-foreground mx-auto max-w-3xl text-lg md:text-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -174,7 +173,7 @@ export function FeatureCard({
         'relative rounded-lg border p-6 transition-all duration-300',
         highlight
           ? 'aceternity-glow-border bg-card/50'
-          : 'border-[hsl(var(--border))] bg-card hover:border-primary/50',
+          : 'bg-card hover:border-primary/50 border-[hsl(var(--border))]',
         className
       )}
       whileHover={{ y: -5, scale: 1.02 }}
@@ -183,17 +182,17 @@ export function FeatureCard({
       transition={{ duration: 0.3 }}
     >
       {highlight && (
-        <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/5 to-accent/5" />
+        <div className="from-primary/5 to-accent/5 absolute inset-0 rounded-lg bg-gradient-to-br" />
       )}
 
       <div className="relative z-10 space-y-4">
         {icon && (
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <div className="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-lg">
             {icon}
           </div>
         )}
 
-        <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+        <h3 className="text-foreground text-xl font-semibold">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
       </div>
     </motion.div>
@@ -292,12 +291,12 @@ export function StatsCounter({
       viewport={{ once: true }}
       onViewportEnter={() => setIsVisible(true)}
     >
-      <div className="text-3xl font-bold text-primary md:text-4xl">
+      <div className="text-primary text-3xl font-bold md:text-4xl">
         {prefix}
         {Math.floor(count).toLocaleString()}
         {suffix}
       </div>
-      <div className="mt-2 text-sm text-muted-foreground md:text-base">
+      <div className="text-muted-foreground mt-2 text-sm md:text-base">
         {label}
       </div>
     </motion.div>
@@ -349,7 +348,7 @@ export function Timeline({ items, className }: TimelineProps) {
   return (
     <div className={cn('relative', className)}>
       {/* 时间线主线 */}
-      <div className="absolute bottom-0 left-4 top-0 w-px bg-border md:left-1/2 md:-translate-x-1/2 md:transform" />
+      <div className="bg-border absolute bottom-0 left-4 top-0 w-px md:left-1/2 md:-translate-x-1/2 md:transform" />
 
       <div className="space-y-8">
         {items.map((item, index) => (
@@ -365,7 +364,7 @@ export function Timeline({ items, className }: TimelineProps) {
             transition={{ delay: index * 0.2 }}
           >
             {/* 时间线节点 */}
-            <div className="absolute left-4 z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-background md:left-1/2 md:-translate-x-1/2 md:transform">
+            <div className="border-primary bg-background absolute left-4 z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 md:left-1/2 md:-translate-x-1/2 md:transform">
               {item.icon || (
                 <div
                   className={cn(
@@ -391,11 +390,11 @@ export function Timeline({ items, className }: TimelineProps) {
               >
                 <div className="space-y-2">
                   {item.date && (
-                    <div className="text-sm font-medium text-primary">
+                    <div className="text-primary text-sm font-medium">
                       {item.date}
                     </div>
                   )}
-                  <h3 className="text-lg font-semibold text-foreground">
+                  <h3 className="text-foreground text-lg font-semibold">
                     {item.title}
                   </h3>
                   <p className="text-muted-foreground">{item.description}</p>
@@ -460,7 +459,7 @@ export function InteractiveCard({
   return (
     <motion.div
       className={cn(
-        'relative cursor-pointer overflow-hidden rounded-lg border bg-card',
+        'bg-card relative cursor-pointer overflow-hidden rounded-lg border',
         variant === 'glow' && 'aceternity-glow-border',
         className
       )}
@@ -475,7 +474,7 @@ export function InteractiveCard({
       <AnimatePresence>
         {isHovered && variant === 'glow' && (
           <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10"
+            className="from-primary/10 to-accent/10 absolute inset-0 bg-gradient-to-br"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -497,7 +496,7 @@ export function InteractiveCard({
             }}
           />
           {badge && (
-            <div className="absolute left-4 top-4 rounded-full bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">
+            <div className="bg-primary text-primary-foreground absolute left-4 top-4 rounded-full px-2 py-1 text-xs font-medium">
               {badge}
             </div>
           )}
@@ -506,7 +505,7 @@ export function InteractiveCard({
 
       {/* 内容区域 */}
       <div className="relative z-10 space-y-4 p-6">
-        <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+        <h3 className="text-foreground text-xl font-semibold">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
 
         {action && (
@@ -593,7 +592,7 @@ export function ProgressIndicator({
                 {step.title}
               </div>
               {step.description && (
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   {step.description}
                 </div>
               )}

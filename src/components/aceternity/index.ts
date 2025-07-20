@@ -23,7 +23,6 @@ export {
   InViewAnimation,
   HoverAnimation,
   RippleEffect,
-  Typewriter,
 } from './animated-container';
 
 // 特殊效果组件
@@ -33,7 +32,7 @@ export {
   Floating,
   GradientShift,
   ParticleEffect,
-  Magnetic,
+  // Magnetic, // 暂时注释掉，避免与 advanced-animations 中的重复
   RippleWave,
 } from './special-effects';
 
@@ -62,6 +61,28 @@ export {
   ProgressIndicator,
   NotificationBanner,
 } from './extended-components';
+
+// 高级动画组件
+export {
+  Typewriter,
+  CountUp,
+  ParticleBackground,
+  RippleEffect as AdvancedRippleEffect,
+  Magnetic as AdvancedMagnetic,
+  FlipCard,
+} from './advanced-animations';
+
+// 增强特效组件
+export {
+  Parallax,
+  ScrollReveal,
+  MouseFollower,
+  TextSplit,
+  LiquidButton,
+  FloatingElement,
+  AnimatedBorder,
+  ParticleExplosion,
+} from './enhanced-effects';
 
 // 主题配置和工具
 export { aceternityTheme, aceternityUtils } from '@/lib/aceternity-theme';

@@ -339,6 +339,48 @@
     0 4px 6px -4px rgb(0 0 0 / 0.2);
 }
 
+/* 3D 变换工具类 */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* 高级动画工具类 */
+.aceternity-typewriter {
+  @apply font-mono;
+}
+
+.aceternity-magnetic {
+  @apply transition-transform duration-300 ease-out;
+}
+
+.aceternity-liquid-button {
+  @apply relative overflow-hidden;
+}
+
+.aceternity-particle-container {
+  @apply pointer-events-none absolute inset-0;
+}
+
+.aceternity-scroll-reveal {
+  @apply translate-y-8 transform opacity-0;
+}
+
+.aceternity-scroll-reveal.visible {
+  @apply translate-y-0 opacity-100 transition-all duration-700 ease-out;
+}
+
 .aceternity-gradient-text {
   background: linear-gradient(
     135deg,

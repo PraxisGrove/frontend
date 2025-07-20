@@ -10,7 +10,7 @@ import {
   PulseGlow,
   Floating,
   GradientShift,
-  Magnetic,
+  AdvancedMagnetic as Magnetic,
   Typewriter,
   BeamScan,
   ParticleEffect,

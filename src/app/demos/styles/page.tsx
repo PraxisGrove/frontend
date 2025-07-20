@@ -15,7 +15,7 @@ import {
   EnhancedContainer,
   EnhancedDivider,
   PulseGlow,
-  Magnetic,
+  AdvancedMagnetic as Magnetic,
   AnimatedContainer,
   AnimatedItem,
 } from '@/components/aceternity';
