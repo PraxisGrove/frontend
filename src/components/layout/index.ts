@@ -48,5 +48,6 @@ export type {
 } from './grid-system';
 
 // Logo 组件
-export { Logo, BrandLogo, LoadingLogo, FaviconLinks } from './logo';
+export { Logo, BrandLogo, LoadingLogo, FaviconInfo } from './logo';
+export { SvgLogo, DownloadableSvgLogo } from './svg-logo';
 export type { LogoProps, LogoSize, LogoVariant } from './logo';

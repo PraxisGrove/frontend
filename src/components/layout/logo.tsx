@@ -194,33 +194,50 @@ export function Logo({
 }
 
 /**
- * Favicon 组件
- * 用于在页面头部设置 favicon
+ * Favicon 信息组件
+ * 用于展示 favicon 相关信息（仅用于演示）
+ * 注意：实际的 favicon 设置通过 Next.js metadata API 在 layout.tsx 中配置
  */
-export function FaviconLinks() {
-  return (
-    <>
-      <link rel="icon" href="/logo/favicon.ico" />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="/logo/favicon-32x32.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="/logo/favicon-16x16.png"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="/logo/apple-touch-icon.png"
-      />
-      <link rel="manifest" href="/logo/site.webmanifest" />
-    </>
-  );
+export function FaviconInfo() {
+  const faviconFiles = [
+    {
+      name: 'favicon.ico',
+      path: '/logo/favicon.ico',
+      description: '通用 ICO 格式图标',
+    },
+    {
+      name: 'favicon-16x16.png',
+      path: '/logo/favicon-16x16.png',
+      description: '16x16 PNG 图标',
+    },
+    {
+      name: 'favicon-32x32.png',
+      path: '/logo/favicon-32x32.png',
+      description: '32x32 PNG 图标',
+    },
+    {
+      name: 'apple-touch-icon.png',
+      path: '/logo/apple-touch-icon.png',
+      description: 'Apple 设备图标',
+    },
+    {
+      name: 'android-chrome-192x192.png',
+      path: '/logo/android-chrome-192x192.png',
+      description: 'Android Chrome 192x192',
+    },
+    {
+      name: 'android-chrome-512x512.png',
+      path: '/logo/android-chrome-512x512.png',
+      description: 'Android Chrome 512x512',
+    },
+    {
+      name: 'site.webmanifest',
+      path: '/logo/site.webmanifest',
+      description: 'Web App Manifest',
+    },
+  ];
+
+  return { faviconFiles };
 }
 
 /**
@@ -242,7 +259,7 @@ export function BrandLogo({
     <div className={cn('space-y-4 text-center', className)}>
       <Logo size={size} variant="stacked" animated={animated} showText={true} />
       {showTagline && (
-        <p className="mx-auto max-w-md text-sm text-muted-foreground">
+        <p className="text-muted-foreground mx-auto max-w-md text-sm">
           AI驱动的沉浸式在线教育平台，重新定义学习体验
         </p>
       )}
