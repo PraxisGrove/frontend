@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import {
   Logo,
   BrandLogo,
@@ -315,10 +316,12 @@ export default function LogoDemoPage() {
                     <div className="bg-muted flex h-16 items-center justify-center rounded">
                       {file.path.endsWith('.png') ||
                       file.path.endsWith('.ico') ? (
-                        <img
+                        <Image
                           src={file.path}
                           alt={file.name}
-                          className="max-h-12 max-w-12"
+                          width={48}
+                          height={48}
+                          className="max-h-12 max-w-12 object-contain"
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.display =
                               'none';

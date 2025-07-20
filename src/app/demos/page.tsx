@@ -147,6 +147,13 @@ export default function DemosIndexPage() {
       description: '用于开发和测试的页面',
       demos: [
         {
+          name: '主题测试',
+          path: '/demos/theme-test',
+          description: 'TweakCN Soft Pop 主题完整测试',
+          icon: Palette,
+          tags: ['主题', 'TweakCN', 'Soft Pop'],
+        },
+        {
           name: 'Logo 测试',
           path: '/demos/logo-test',
           description: 'Logo 组件的功能测试',
