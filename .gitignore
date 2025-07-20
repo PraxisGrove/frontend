@@ -18,6 +18,9 @@ out/
 # Next.js 缓存
 .next/cache/
 
+# 组件优化备份
+.backup/
+
 # Next.js 静态导出
 out/
 

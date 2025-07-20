@@ -66,11 +66,11 @@ export function HeroSection({ className }: HeroSectionProps) {
             PraxisGrove - AI驱动的沉浸式在线教育平台
           </h1>
           <TextGenerateEffect
-            text="欢迎来到 PraxisGrove"
+            text="PraxisGrove"
             className="text-foreground mb-4 text-4xl font-bold md:text-6xl lg:text-7xl"
           />
           <AnimatedText
-            text="AI驱动的沉浸式在线教育平台"
+            text="打造无需许可的学校"
             variant="typewriter"
             className="text-primary text-2xl font-light md:text-4xl lg:text-5xl"
             speed={100}
@@ -84,7 +84,7 @@ export function HeroSection({ className }: HeroSectionProps) {
           transition={itemTransition}
           className="text-muted-foreground mx-auto mb-8 max-w-3xl text-lg leading-relaxed md:text-xl"
         >
-          通过人工智能技术和3D知识宇宙，为您提供个性化学习体验。
+          通过人工智能和区块链技术，为您提供个性化学习体验。
           探索知识的无限可能，开启智慧学习新时代。
         </motion.p>
 
@@ -115,7 +115,7 @@ export function HeroSection({ className }: HeroSectionProps) {
               'transform transition-all duration-200 hover:scale-105'
             )}
           >
-            探索3D知识宇宙
+            探索知识宇宙
           </Button>
         </motion.div>
 

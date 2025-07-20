@@ -186,26 +186,7 @@ export {
 } from '@/components/aceternity';
 
 // ReactBit UI 的占位符组件重命名
-export {
-  GradientBackground as ReactBitGradientBackground,
-  ParticleField as ReactBitParticleField,
-  HoverCard as ReactBitHoverCard,
-  ClickEffect as ReactBitClickEffect,
-  ScrollAnimation as ReactBitScrollAnimation,
-  ProgressBar as ReactBitProgressBar,
-  SkeletonLoader as ReactBitSkeletonLoader,
-  AnimatedNavbar as ReactBitNavbar,
-  SidebarMenu as ReactBitSidebarMenu,
-  TabNavigation as ReactBitTabNavigation,
-  AnimatedSelect as ReactBitSelect,
-  AnimatedCheckbox as ReactBitCheckbox,
-  AnimatedToast as ReactBitToast,
-  AnimatedModal as ReactBitModal,
-  AnimatedAlert as ReactBitAlert,
-  AnimatedChart as ReactBitChart,
-  AnimatedTable as ReactBitTable,
-  AnimatedTimeline as ReactBitTimeline,
-} from '@/components/reactbit';
+export { ProgressBar as ReactBitProgressBar } from '@/components/reactbit';
 
 // ===== 主题和配置 =====
 export {

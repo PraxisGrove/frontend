@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-07-20T19:20:46.494Z",
+  "componentUsage": {
+    "shadcnui": 0,
+    "aceternity": 1,
+    "reactbit": 0,
+    "unified": 0,
+    "redundant": 0
+  },
+  "cleanedComponents": 0,
+  "validation": {
+    "fileIntegrity": true,
+    "buildSuccess": false,
+    "importValidation": true
+  },
+  "success": false
+}

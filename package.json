@@ -16,7 +16,8 @@
     "test:e2e": "playwright test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "optimize": "node scripts/quick-optimize.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -93,58 +93,60 @@ export function FooterSection({ className }: FooterSectionProps) {
 
       <div className="relative z-10">
         {/* 主要内容区域 */}
-        <div className="container mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
-            {/* 品牌信息和订阅 */}
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
+            {/* 品牌信息和订阅 - 更紧凑的设计 */}
             <motion.div
               className="lg:col-span-1"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <div className="mb-6">
-                <h3 className="text-foreground mb-3 text-2xl font-bold">
+              <div className="mb-4">
+                <h3 className="text-foreground mb-2 text-lg font-bold">
                   PraxisGrove
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  革新教育体验，用 AI 和 3D
-                  技术打造个性化学习平台，让知识获取更加高效有趣。
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  AI 驱动的个性化学习平台
                 </p>
               </div>
 
-              {/* 特色功能 */}
-              <div className="mb-6 space-y-3">
-                {features.map((feature, index) => (
+              {/* 简化的特色功能 - 只显示核心特性 */}
+              <div className="mb-4 space-y-2">
+                {features.slice(0, 2).map((feature, index) => (
                   <motion.div
                     key={index}
                     className="text-muted-foreground flex items-center"
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, x: -8 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ duration: 0.4, delay: index * 0.08 }}
                     viewport={{ once: true }}
                   >
-                    <feature.icon className="text-primary mr-3 h-4 w-4" />
-                    <span className="text-sm">{feature.text}</span>
+                    <feature.icon className="text-primary mr-2 h-3 w-3" />
+                    <span className="text-xs">{feature.text}</span>
                   </motion.div>
                 ))}
               </div>
 
-              {/* 邮件订阅 */}
+              {/* 更紧凑的邮件订阅 */}
               <div>
-                <h4 className="text-foreground mb-3 font-semibold">订阅更新</h4>
-                <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+                <h4 className="text-foreground mb-2 text-sm font-medium">
+                  获取更新
+                </h4>
+                <form onSubmit={handleNewsletterSubmit} className="space-y-2">
                   <Input
                     type="email"
-                    placeholder="输入您的邮箱"
+                    placeholder="邮箱地址"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-card/50 border-border"
+                    className="bg-card/50 border-border h-8 text-xs"
                     required
                   />
                   <Button
                     type="submit"
-                    className="from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 w-full bg-gradient-to-r"
+                    size="sm"
+                    className="from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 w-full bg-gradient-to-r text-xs"
                   >
                     订阅
                   </Button>
@@ -152,22 +154,24 @@ export function FooterSection({ className }: FooterSectionProps) {
               </div>
             </motion.div>
 
-            {/* 链接区域 */}
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:col-span-3">
+            {/* 链接区域 - 调整为4列布局 */}
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:col-span-4">
               {/* 产品 */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-foreground mb-4 font-semibold">产品</h4>
-                <ul className="space-y-3">
+                <h4 className="text-foreground mb-3 text-sm font-semibold">
+                  产品
+                </h4>
+                <ul className="space-y-2">
                   {footerLinks.product.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.href}
-                        className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-200"
+                        className="text-muted-foreground hover:text-foreground text-xs transition-colors duration-200"
                       >
                         {link.name}
                       </a>
@@ -178,18 +182,20 @@ export function FooterSection({ className }: FooterSectionProps) {
 
               {/* 公司 */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-foreground mb-4 font-semibold">公司</h4>
-                <ul className="space-y-3">
+                <h4 className="text-foreground mb-3 text-sm font-semibold">
+                  公司
+                </h4>
+                <ul className="space-y-2">
                   {footerLinks.company.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.href}
-                        className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-200"
+                        className="text-muted-foreground hover:text-foreground text-xs transition-colors duration-200"
                       >
                         {link.name}
                       </a>
@@ -200,21 +206,23 @@ export function FooterSection({ className }: FooterSectionProps) {
 
               {/* 资源 */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-foreground mb-4 font-semibold">资源</h4>
-                <ul className="space-y-3">
+                <h4 className="text-foreground mb-3 text-sm font-semibold">
+                  资源
+                </h4>
+                <ul className="space-y-2">
                   {footerLinks.resources.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.href}
-                        className="text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors duration-200"
+                        className="text-muted-foreground hover:text-foreground flex items-center text-xs transition-colors duration-200"
                       >
                         {link.name}
-                        <ExternalLink className="ml-1 h-3 w-3" />
+                        <ExternalLink className="ml-1 h-2.5 w-2.5" />
                       </a>
                     </li>
                   ))}
@@ -223,18 +231,20 @@ export function FooterSection({ className }: FooterSectionProps) {
 
               {/* 法律 */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-foreground mb-4 font-semibold">法律</h4>
-                <ul className="space-y-3">
+                <h4 className="text-foreground mb-3 text-sm font-semibold">
+                  法律
+                </h4>
+                <ul className="space-y-2">
                   {footerLinks.legal.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.href}
-                        className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-200"
+                        className="text-muted-foreground hover:text-foreground text-xs transition-colors duration-200"
                       >
                         {link.name}
                       </a>
@@ -248,31 +258,31 @@ export function FooterSection({ className }: FooterSectionProps) {
 
         <Separator className="bg-white/10" />
 
-        {/* 底部信息 */}
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
+        {/* 底部信息 - 更紧凑的设计 */}
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col items-center justify-between space-y-3 md:flex-row md:space-y-0">
             {/* 版权信息 */}
             <motion.div
-              className="text-muted-foreground flex items-center text-sm"
+              className="text-muted-foreground flex items-center text-xs"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
               <span>© 2025 PraxisGrove. 保留所有权利.</span>
               <span className="mx-2">•</span>
               <span className="flex items-center">
-                Made with <Heart className="mx-1 h-4 w-4 text-red-400" /> in
+                Made with <Heart className="mx-1 h-3 w-3 text-red-400" /> in
                 China
               </span>
             </motion.div>
 
             {/* 社交媒体链接 */}
             <motion.div
-              className="flex items-center space-x-4"
+              className="flex items-center space-x-3"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
               viewport={{ once: true }}
             >
               {socialLinks.map((social, index) => (
@@ -284,24 +294,24 @@ export function FooterSection({ className }: FooterSectionProps) {
                   className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                   aria-label={social.name}
                 >
-                  <social.icon className="h-5 w-5" />
+                  <social.icon className="h-4 w-4" />
                 </a>
               ))}
             </motion.div>
 
             {/* 联系信息 */}
             <motion.div
-              className="text-muted-foreground flex items-center space-x-6 text-sm"
+              className="text-muted-foreground flex items-center text-xs"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
               <a
                 href="mailto:contact@praxisgrove.com"
                 className="hover:text-foreground flex items-center transition-colors duration-200"
               >
-                <Mail className="mr-2 h-4 w-4" />
+                <Mail className="mr-1.5 h-3 w-3" />
                 contact@praxisgrove.com
               </a>
             </motion.div>
