@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![PraxisGrove Logo](./logo/android-chrome-192x192.png)
+![PraxisGrove Logo](./public/logo/android-chrome-192x192.png)
 
 **重新定义在线教育 - AI驱动的沉浸式学习平台**
 

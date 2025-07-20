@@ -327,23 +327,6 @@ export type {
   LoadingOverlayProps,
 } from './enhanced-loading';
 
-// 增强通知组件
-export {
-  enhancedToast,
-  NotificationCenter,
-  NotificationBadge,
-  CustomToast,
-} from './enhanced-toast';
-export type {
-  ToastType,
-  ToastPosition,
-  ToastOptions,
-  NotificationData,
-  NotificationCenterProps,
-  NotificationBadgeProps,
-  CustomToastProps,
-} from './enhanced-toast';
-
 // Dialog 组件
 export {
   Dialog,

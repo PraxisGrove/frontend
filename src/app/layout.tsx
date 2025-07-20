@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { DM_Sans, Space_Mono } from 'next/font/google';
 import '@/styles/globals.css';
 import { AppProviders } from '@/contexts/providers';
+import { initializePerformanceMonitoring } from '@/utils/performance';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],

@@ -195,8 +195,73 @@ class PerformanceMonitor {
   }
 }
 
-// 创建全局性能监控实例
-export const performanceMonitor = new PerformanceMonitor();
+// 创建全局性能监控实例（延迟初始化）
+let performanceMonitorInstance: PerformanceMonitor | null = null;
+
+export const performanceMonitor = {
+  getInstance(): PerformanceMonitor | null {
+    if (typeof window === 'undefined') return null;
+
+    if (!performanceMonitorInstance) {
+      performanceMonitorInstance = new PerformanceMonitor();
+    }
+    return performanceMonitorInstance;
+  },
+
+  // 代理方法
+  startComponentRender(componentName: string) {
+    return this.getInstance()?.startComponentRender(componentName);
+  },
+
+  endComponentRender(componentName: string) {
+    return this.getInstance()?.endComponentRender(componentName);
+  },
+
+  measureMemoryUsage() {
+    return this.getInstance()?.measureMemoryUsage() || 0;
+  },
+
+  startFPSMonitoring() {
+    return this.getInstance()?.startFPSMonitoring();
+  },
+
+  stopFPSMonitoring() {
+    return this.getInstance()?.stopFPSMonitoring();
+  },
+
+  getMetrics(): PerformanceMetrics {
+    return (
+      this.getInstance()?.getMetrics() || {
+        renderTime: 0,
+        memoryUsage: 0,
+        animationFPS: 60,
+        bundleSize: 0,
+        componentCount: 0,
+      }
+    );
+  },
+
+  generateReport() {
+    const instance = this.getInstance();
+    if (!instance) {
+      return {
+        metrics: {},
+        recommendations: [],
+        score: 100,
+        timestamp: Date.now(),
+      };
+    }
+    return instance.generateReport();
+  },
+
+  setComponentCount(count: number) {
+    return this.getInstance()?.setComponentCount(count);
+  },
+
+  cleanup() {
+    return this.getInstance()?.cleanup();
+  },
+};
 
 // React Hook 用于组件性能监控
 export function usePerformanceMonitor(componentName: string) {

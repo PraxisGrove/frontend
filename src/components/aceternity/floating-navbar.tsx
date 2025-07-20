@@ -1,8 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { useAceternityTheme } from './theme-provider';
 
 export const FloatingNav = ({
   navItems,
@@ -19,8 +18,57 @@ export const FloatingNav = ({
   showLoginButton?: boolean;
   loginText?: string;
 }) => {
-  const { utils } = useAceternityTheme();
   const [visible, setVisible] = useState(true);
+  const [activeSection, setActiveSection] = useState('');
+
+  // 滚动检测
+  useEffect(() => {
+    // 检查是否在浏览器环境
+    if (typeof window === 'undefined') return;
+
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // 当滚动到顶部时总是显示
+      if (currentScrollY < 50) {
+        setVisible(true);
+      } else {
+        // 向上滚动时显示，向下滚动时隐藏
+        setVisible(currentScrollY < lastScrollY);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 活跃区域检测
+  useEffect(() => {
+    // 检查是否在浏览器环境
+    if (typeof window === 'undefined') return;
+
+    const handleScroll = () => {
+      const sections = navItems.map((item) => item.link.replace('#', ''));
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [navItems]);
 
   return (
     <AnimatePresence mode="wait">
@@ -42,19 +90,48 @@ export const FloatingNav = ({
           className
         )}
       >
-        {navItems.map((navItem, idx) => (
-          <a
-            key={`link-${idx}`}
-            href={navItem.link}
-            className={cn(
-              'aceternity-floating-nav-item',
-              'relative flex items-center space-x-1'
-            )}
-          >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="hidden text-sm sm:block">{navItem.name}</span>
-          </a>
-        ))}
+        {navItems.map((navItem, idx) => {
+          const isActive = activeSection === navItem.link.replace('#', '');
+
+          const handleClick = (e: React.MouseEvent) => {
+            e.preventDefault();
+            if (typeof window === 'undefined') return;
+
+            const targetId = navItem.link.replace('#', '');
+            const element = document.getElementById(targetId);
+            if (element) {
+              element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }
+          };
+
+          return (
+            <a
+              key={`link-${idx}`}
+              href={navItem.link}
+              onClick={handleClick}
+              className={cn(
+                'aceternity-floating-nav-item',
+                'relative flex items-center space-x-1 rounded-full px-3 py-2 transition-all duration-200',
+                'hover:bg-accent/10 hover:text-accent-foreground cursor-pointer',
+                isActive && 'bg-primary/10 text-primary font-medium'
+              )}
+            >
+              <span className="block sm:hidden">{navItem.icon}</span>
+              <span className="hidden text-sm sm:block">{navItem.name}</span>
+              {isActive && (
+                <motion.div
+                  layoutId="activeSection"
+                  className="bg-primary/5 border-primary/20 absolute inset-0 rounded-full border"
+                  initial={false}
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+            </a>
+          );
+        })}
         {showLoginButton && (
           <button
             className={cn(

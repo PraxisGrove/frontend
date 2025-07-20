@@ -344,6 +344,9 @@ export function usePerformanceMonitoring(componentName: string) {
 // 自动优化 Hook
 export function useAutoOptimization() {
   React.useEffect(() => {
+    // 检查是否在浏览器环境
+    if (typeof window === 'undefined') return;
+
     // 页面加载完成后自动优化
     const handleLoad = () => {
       performanceConfig.autoOptimizeForDevice();

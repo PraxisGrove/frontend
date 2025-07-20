@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { NotificationBadge } from '@/components/ui/enhanced-toast';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -74,18 +74,18 @@ const defaultNavigation: NavItem[] = [
     icon: <Home className="h-4 w-4" />,
   },
   {
-    title: '课程',
-    href: '/courses',
+    title: '功能特性',
+    href: '#features',
     icon: <BookOpen className="h-4 w-4" />,
   },
   {
-    title: '知识宇宙',
-    href: '/knowledge-universe',
+    title: '产品介绍',
+    href: '#product',
     icon: <Globe className="h-4 w-4" />,
   },
   {
-    title: '仪表板',
-    href: '/dashboard',
+    title: '用户评价',
+    href: '#testimonials',
     icon: <BarChart3 className="h-4 w-4" />,
   },
 ];
@@ -112,7 +112,7 @@ function Logo({ logo }: { logo?: HeaderProps['logo'] }) {
         height={logoConfig.height}
         className="rounded"
       />
-      <span className="text-xl font-bold text-foreground">PraxisGrove</span>
+      <span className="text-foreground text-xl font-bold">PraxisGrove</span>
     </Link>
   );
 }
@@ -154,7 +154,7 @@ function NavigationMenu({
                       {child.icon}
                       {child.title}
                       {child.badge && (
-                        <span className="ml-auto rounded-full bg-primary px-1.5 py-0.5 text-xs text-primary-foreground">
+                        <span className="bg-primary text-primary-foreground ml-auto rounded-full px-1.5 py-0.5 text-xs">
                           {child.badge}
                         </span>
                       )}
@@ -290,7 +290,7 @@ function UserMenu({
         <DropdownMenuLabel>
           <div>
             <p className="font-medium">{user.name}</p>
-            <p className="text-sm text-muted-foreground">{user.email}</p>
+            <p className="text-muted-foreground text-sm">{user.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -337,7 +337,7 @@ export function Header({
   return (
     <motion.header
       className={cn(
-        'sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60',
+        'bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur',
         className
       )}
       initial={{ y: -100 }}
@@ -359,13 +359,13 @@ export function Header({
               className="mx-6 hidden max-w-md flex-1 lg:flex"
             >
               <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="text-muted-foreground absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="搜索..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-md border border-input bg-background py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="border-input bg-background focus:ring-ring w-full rounded-md border py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-2"
                 />
               </div>
             </form>
@@ -375,11 +375,16 @@ export function Header({
           <div className="flex items-center gap-2">
             {/* 通知 */}
             {onNotificationClick && (
-              <NotificationBadge count={notifications}>
+              <div className="relative">
                 <Button variant="ghost" size="sm" onClick={onNotificationClick}>
                   <Bell className="h-4 w-4" />
                 </Button>
-              </NotificationBadge>
+                {notifications > 0 && (
+                  <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                    {notifications > 9 ? '9+' : notifications}
+                  </span>
+                )}
+              </div>
             )}
 
             {/* 主题切换 */}

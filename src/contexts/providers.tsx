@@ -7,6 +7,11 @@ import { createQueryClient } from '@/lib/query-client';
 import { ThemeProvider } from './theme-provider';
 import { AuthProvider } from './auth-provider';
 import { NotificationProvider } from './notification-provider';
+import { PerformanceProvider } from '@/components/ui/PerformanceOptimizer';
+// import { PerformanceInitializer } from '@/components/providers/PerformanceInitializer';
+import { ToastProvider, ToastInitializer } from '@/components/ui/Toast';
+
+import { AceternityThemeProvider } from '@/components/aceternity/theme-provider';
 
 /**
  * 查询客户端实例
@@ -33,9 +38,22 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={client}>
       <ThemeProvider>
-        <AuthProvider>
-          <NotificationProvider>{children}</NotificationProvider>
-        </AuthProvider>
+        <AceternityThemeProvider>
+          <PerformanceProvider>
+            <ToastProvider>
+              <AuthProvider>
+                <NotificationProvider>
+                  {children}
+                  {/* 性能监控暂时禁用以解决 SSR 问题 */}
+                  {/* {process.env.NODE_ENV === 'development' && <PerformanceInitializer />} */}
+                  {/* {process.env.NODE_ENV === 'development' && <PerformanceMonitor />} */}
+                  {/* Toast 初始化器 */}
+                  <ToastInitializer />
+                </NotificationProvider>
+              </AuthProvider>
+            </ToastProvider>
+          </PerformanceProvider>
+        </AceternityThemeProvider>
       </ThemeProvider>
 
       {/* 开发环境显示React Query开发工具 */}
