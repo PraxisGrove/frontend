@@ -22,7 +22,7 @@ export default function AuthLayout({
           <div className="text-center text-white">
             <h1 className="mb-6 text-4xl font-bold">PraxisGrove</h1>
             <p className="mb-8 text-xl opacity-90">
-              AI驱动的沉浸式在线教育平台
+              一所无需许可的学校
             </p>
             <div className="max-w-md space-y-4 text-left">
               <div className="flex items-center space-x-3">

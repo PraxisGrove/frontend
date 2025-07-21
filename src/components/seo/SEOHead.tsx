@@ -23,7 +23,7 @@ interface SEOProps {
 }
 
 const defaultSEO = {
-  title: 'PraxisGrove - AI驱动的沉浸式在线教育平台',
+  title: 'PraxisGrove - 一所无需许可的学校',
   description:
     '通过人工智能技术和3D知识宇宙，为您提供个性化学习体验。探索知识的无限可能，开启智慧学习新时代。',
   keywords: [
@@ -202,7 +202,7 @@ export function WebsiteStructuredData() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'PraxisGrove',
-    description: 'AI驱动的沉浸式在线教育平台',
+    description: '一所无需许可的学校',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://praxisgrove.com',
     potentialAction: {
       '@type': 'SearchAction',
@@ -228,7 +228,7 @@ export function OrganizationStructuredData() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'PraxisGrove',
-    description: 'AI驱动的沉浸式在线教育平台',
+    description: '一所无需许可的学校',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://praxisgrove.com',
     logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://praxisgrove.com'}/images/logo.png`,
     contactPoint: {
@@ -253,7 +253,7 @@ export function EducationalOrganizationStructuredData() {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
     name: 'PraxisGrove',
-    description: 'AI驱动的沉浸式在线教育平台，提供个性化学习体验',
+    description: '一所无需许可的学校',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://praxisgrove.com',
     logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://praxisgrove.com'}/images/logo.png`,
     hasCredential: {
@@ -264,7 +264,7 @@ export function EducationalOrganizationStructuredData() {
     offers: {
       '@type': 'Offer',
       category: '在线教育服务',
-      description: 'AI驱动的个性化在线学习服务',
+      description: '一所无需许可的学校',
     },
   };
 

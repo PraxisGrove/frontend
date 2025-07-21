@@ -119,17 +119,19 @@
 - ✅ 课程相关 API
 - ✅ API 路由实现
 
-### 📁 创建的文件
+### 📁 当前文件状态
 
-| 文件路径                           | 功能描述       |
-| ---------------------------------- | -------------- |
-| `src/lib/api.ts`                   | API 客户端封装 |
-| `src/types/api.ts`                 | API 类型定义   |
-| `src/api/auth.ts`                  | 认证 API 服务  |
-| `src/api/courses.ts`               | 课程 API 服务  |
-| `src/app/api/auth/login/route.ts`  | 登录 API 路由  |
-| `src/app/api/auth/logout/route.ts` | 登出 API 路由  |
-| `src/app/api/courses/route.ts`     | 课程 API 路由  |
+| 文件路径                               | 功能描述          | 状态      |
+| -------------------------------------- | ----------------- | --------- |
+| `src/lib/api.ts`                       | API 客户端封装    | ✅ 保留   |
+| `src/types/api.ts`                     | API 类型定义      | ✅ 保留   |
+| `src/api/auth.ts`                      | 认证 API 服务     | ✅ 保留   |
+| `src/api/courses.ts`                   | 课程 API 服务     | ✅ 保留   |
+| ~~`src/app/api/auth/login/route.ts`~~  | ~~登录 API 路由~~ | ❌ 已删除 |
+| ~~`src/app/api/auth/logout/route.ts`~~ | ~~登出 API 路由~~ | ❌ 已删除 |
+| ~~`src/app/api/courses/route.ts`~~     | ~~课程 API 路由~~ | ❌ 已删除 |
+
+> **架构调整**: 项目已从 Next.js 全栈架构调整为纯前端架构，所有API调用通过代理指向Rust后端。
 
 ---
 

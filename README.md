@@ -4,7 +4,7 @@
 
 ![PraxisGrove Logo](./public/logo/android-chrome-192x192.png)
 
-**重新定义在线教育 - AI驱动的沉浸式学习平台**
+**重新定义教育 - 一所无需许可的学校**
 
 _融合人工智能、3D可视化与社区协作，打造无边界的知识探索体验_
 
@@ -367,7 +367,16 @@ src/
 ### 💬 社区讨论
 
 - [GitHub Discussions](https://github.com/PraxisGrove/frontend/discussions) - 功能讨论和问答
-- [项目文档](./docs) - 详细的技术文档
+- [项目文档](./docs) - 详细的技术文档和使用指南
+
+### 📚 文档导航
+
+- [📖 文档中心](./docs/README.md) - 完整的文档索引和导航
+- [🔐 认证系统](./docs/auth/) - 用户认证和权限管理文档
+- [🎨 UI 组件](./docs/UI_LIBRARIES_GUIDE.md) - UI 库使用指南
+- [⚡ 性能优化](./docs/PERFORMANCE_OPTIMIZATION_COMPLETE_GUIDE.md) - 性能优化指南
+- [🎯 任务管理](./docs/tasks/) - 项目任务和开发规划
+- [🔧 问题修复](./docs/fixes/) - 常见问题解决方案
 
 ## 📄 许可证
 

@@ -260,7 +260,7 @@ export function BrandLogo({
       <Logo size={size} variant="stacked" animated={animated} showText={true} />
       {showTagline && (
         <p className="text-muted-foreground mx-auto max-w-md text-sm">
-          AI驱动的沉浸式在线教育平台，重新定义学习体验
+          一所无需许可的学校
         </p>
       )}
     </div>

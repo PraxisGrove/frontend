@@ -1,4 +1,10 @@
 import { api, publicApi } from '@/lib/api';
+import {
+  ApiFallbackHandler,
+  mockCategories,
+  mockCourses,
+  createMockListResponse
+} from '@/lib/api-fallback';
 import type {
   Course,
   CoursesQueryParams,
@@ -17,14 +23,56 @@ export const coursesApi = {
   getCourses: async (
     params?: CoursesQueryParams
   ): Promise<ListResponse<Course>> => {
-    return publicApi.get<ListResponse<Course>>('/courses', { params });
+    try {
+      // 检查 API 是否可用
+      const isHealthy = await ApiFallbackHandler.isApiHealthy();
+
+      if (isHealthy) {
+        return await publicApi.get<ListResponse<Course>>('/courses', { params });
+      } else {
+        console.warn('API unavailable, using mock data for courses');
+        // 使用模拟数据
+        const page = params?.page || 1;
+        const limit = params?.limit || 12;
+        return createMockListResponse(mockCourses, page, limit);
+      }
+    } catch (error) {
+      console.error('Failed to fetch courses, falling back to mock data:', error);
+      // API 调用失败，使用模拟数据
+      const page = params?.page || 1;
+      const limit = params?.limit || 12;
+      return createMockListResponse(mockCourses, page, limit);
+    }
   },
 
   /**
    * 获取课程详情
    */
   getCourse: async (id: string): Promise<Course> => {
-    return publicApi.get<Course>(`/courses/${id}`);
+    try {
+      // 检查 API 是否可用
+      const isHealthy = await ApiFallbackHandler.isApiHealthy();
+
+      if (isHealthy) {
+        return await publicApi.get<Course>(`/courses/${id}`);
+      } else {
+        console.warn('API unavailable, using mock data for course details');
+        // 从模拟数据中查找课程
+        const course = mockCourses.find(c => c.id === id);
+        if (!course) {
+          throw new Error(`Course with id ${id} not found`);
+        }
+        return course;
+      }
+    } catch (error) {
+      console.error('Failed to fetch course details, falling back to mock data:', error);
+      // 从模拟数据中查找课程
+      const course = mockCourses.find(c => c.id === id);
+      if (!course) {
+        throw new Error(`Course with id ${id} not found`);
+      }
+      return course;
+    }
   },
 
   /**
@@ -86,7 +134,20 @@ export const coursesApi = {
       }>;
     }>
   > => {
-    return publicApi.get('/courses/categories');
+    try {
+      // 检查 API 是否可用
+      const isHealthy = await ApiFallbackHandler.isApiHealthy();
+
+      if (isHealthy) {
+        return await publicApi.get('/courses/categories');
+      } else {
+        console.warn('API unavailable, using mock data for categories');
+        return mockCategories;
+      }
+    } catch (error) {
+      console.error('Failed to fetch categories, falling back to mock data:', error);
+      return mockCategories;
+    }
   },
 
   /**

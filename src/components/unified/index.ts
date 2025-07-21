@@ -101,6 +101,19 @@ export {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from '@/components/ui';
 
 // ===== 动画和特效组件 (优先使用 Aceternity UI) =====

@@ -17,6 +17,13 @@ interface AuthContextType {
   updateUser: (userData: Partial<User>) => void;
   clearError: () => void;
   checkAuth: () => Promise<void>;
+
+  // 密码重置
+  forgotPassword: (email: string) => Promise<string>;
+  resetPassword: (data: { token: string; password: string }) => Promise<void>;
+
+  // 社交登录
+  socialLogin: (provider: 'google' | 'github' | 'wechat', code: string) => Promise<void>;
 }
 
 /**
@@ -39,6 +46,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const updateUser = useAuthStore((state) => state.updateUser);
   const clearError = useAuthStore((state) => state.clearError);
   const checkAuth = useAuthStore((state) => state.checkAuth);
+  const storeForgotPassword = useAuthStore((state) => state.forgotPassword);
+  const resetPassword = useAuthStore((state) => state.resetPassword);
+  const socialLogin = useAuthStore((state) => state.socialLogin);
+
+  // 包装 forgotPassword 以匹配接口
+  const forgotPassword = async (email: string): Promise<string> => {
+    return await storeForgotPassword(email);
+  };
 
   // 应用启动时检查认证状态
   useEffect(() => {
@@ -85,6 +100,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     updateUser,
     clearError,
     checkAuth,
+    forgotPassword,
+    resetPassword,
+    socialLogin,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,292 +1,260 @@
-import type { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-  title: '学习仪表板 - PraxisGrove',
-  description: '查看您的学习进度、成就和推荐内容',
-};
+import React, { useState, useEffect } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  ProgressChart,
+  LearningCalendar,
+  Achievements,
+  LearningStats,
+  RecentCourses,
+  defaultLearningStats,
+} from '@/components/dashboard';
+import { AnimatedContainer, GradientText } from '@/components/unified';
+import { useAuth } from '@/hooks/useAuth';
+
+// 注意：由于使用了 'use client'，metadata 需要在其他地方定义
+// export const metadata: Metadata = {
+//   title: '学习仪表板 - PraxisGrove',
+//   description: '查看您的学习进度、成就和推荐内容',
+// };
 
 /**
  * 用户学习仪表板页面
  */
 export default function DashboardPage() {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+
+  // 模拟数据
+  const [progressData, setProgressData] = useState([
+    { date: '2024-01-01', studyTime: 45, completedLessons: 2, progress: 15 },
+    { date: '2024-01-02', studyTime: 60, completedLessons: 3, progress: 25 },
+    { date: '2024-01-03', studyTime: 30, completedLessons: 1, progress: 30 },
+    { date: '2024-01-04', studyTime: 90, completedLessons: 4, progress: 45 },
+    { date: '2024-01-05', studyTime: 75, completedLessons: 3, progress: 55 },
+    { date: '2024-01-06', studyTime: 120, completedLessons: 5, progress: 70 },
+    { date: '2024-01-07', studyTime: 45, completedLessons: 2, progress: 75 },
+  ]);
+
+  const [courseProgress] = useState([
+    { name: 'JavaScript', progress: 75, color: '#3b82f6' },
+    { name: '机器学习', progress: 45, color: '#10b981' },
+    { name: 'Three.js', progress: 30, color: '#8b5cf6' },
+    { name: 'React', progress: 60, color: '#f59e0b' },
+  ]);
+
+  const [learningCalendarData] = useState([
+    {
+      date: '2024-01-01',
+      studyTime: 45,
+      completedLessons: 2,
+      courses: [
+        { id: '1', name: 'JavaScript', progress: 15, color: '#3b82f6' },
+      ],
+      streak: true,
+    },
+    {
+      date: '2024-01-02',
+      studyTime: 60,
+      completedLessons: 3,
+      courses: [
+        { id: '1', name: 'JavaScript', progress: 25, color: '#3b82f6' },
+        { id: '2', name: '机器学习', progress: 10, color: '#10b981' },
+      ],
+      streak: true,
+    },
+  ]);
+
+  const [achievements] = useState([
+    {
+      id: '1',
+      title: '初学者',
+      description: '完成第一门课程',
+      icon: 'BookOpen',
+      category: 'learning' as const,
+      rarity: 'common' as const,
+      isUnlocked: true,
+      unlockedAt: '2024-01-01',
+      progress: 1,
+      maxProgress: 1,
+      reward: { type: 'points' as const, value: 100 },
+    },
+    {
+      id: '2',
+      title: '连续学习者',
+      description: '连续学习7天',
+      icon: 'Target',
+      category: 'streak' as const,
+      rarity: 'rare' as const,
+      isUnlocked: false,
+      progress: 5,
+      maxProgress: 7,
+      reward: { type: 'badge' as const, value: '坚持徽章' },
+    },
+  ]);
+
+  const [recentCourses] = useState([
+    {
+      id: '1',
+      title: 'JavaScript 高级编程',
+      instructor: '张老师',
+      progress: 75,
+      totalLessons: 20,
+      completedLessons: 15,
+      lastAccessedAt: '2024-01-07T10:30:00Z',
+      nextLesson: {
+        id: '16',
+        title: '异步编程进阶',
+        duration: 25,
+      },
+      rating: 4.8,
+      category: '前端开发',
+      difficulty: 'intermediate' as const,
+    },
+    {
+      id: '2',
+      title: '机器学习基础',
+      instructor: '李博士',
+      progress: 45,
+      totalLessons: 30,
+      completedLessons: 13,
+      lastAccessedAt: '2024-01-06T15:20:00Z',
+      nextLesson: {
+        id: '14',
+        title: '神经网络入门',
+        duration: 35,
+      },
+      rating: 4.9,
+      category: '人工智能',
+      difficulty: 'beginner' as const,
+    },
+  ]);
+
+  const [stats, setStats] = useState(defaultLearningStats);
+
+  useEffect(() => {
+    // 模拟数据加载
+    const timer = setTimeout(() => {
+      // 更新统计数据
+      const updatedStats = [...defaultLearningStats];
+      updatedStats[0].value = 48; // 总学习时间
+      updatedStats[1].value = 3; // 完成课程
+      updatedStats[2].value = 5; // 连续学习天数
+      updatedStats[3].value = 8; // 获得成就
+      updatedStats[3].progress = { current: 8, total: 50, label: '成就进度' };
+      updatedStats[4].value = 15; // 学习天数
+      updatedStats[5].value = 4.7; // 平均评分
+      updatedStats[6].value = 2.3; // 学习效率
+      updatedStats[7].value = 2; // 获得证书
+      updatedStats[7].progress = { current: 2, total: 10, label: '证书进度' };
+
+      setStats(updatedStats);
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // 处理时间范围变化
+  const handleTimeRangeChange = (range: '7d' | '30d' | '90d' | '1y') => {
+    setTimeRange(range);
+    // 这里可以根据时间范围重新获取数据
+  };
+
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        <div className="h-8 w-48 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className="h-32 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700" />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {Array.from({ length: 2 }).map((_, index) => (
+            <div key={index} className="h-96 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700" />
+          ))}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="space-y-8">
       {/* 页面标题 */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          学习仪表板
-        </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">
-          欢迎回来！查看您的学习进度和最新推荐
-        </p>
-      </div>
+      <AnimatedContainer animation="slideDown" delay={0.1}>
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+            <GradientText>学习仪表板</GradientText>
+          </h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+            欢迎回来，{user?.name || '学习者'}！查看您的学习进度和成就
+          </p>
+        </div>
+      </AnimatedContainer>
 
       {/* 统计卡片 */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-blue-100 dark:bg-blue-900">
-                <svg
-                  className="h-5 w-5 text-blue-600 dark:text-blue-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                正在学习的课程
-              </p>
-              <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                5
-              </p>
-            </div>
-          </div>
-        </div>
+      <LearningStats stats={stats} />
 
-        <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-green-100 dark:bg-green-900">
-                <svg
-                  className="h-5 w-5 text-green-600 dark:text-green-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                已完成课程
-              </p>
-              <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                12
-              </p>
-            </div>
-          </div>
-        </div>
+      {/* 主要内容选项卡 */}
+      <AnimatedContainer animation="slideUp" delay={0.3}>
+        <Tabs defaultValue="overview" className="w-full">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="overview">概览</TabsTrigger>
+            <TabsTrigger value="progress">学习进度</TabsTrigger>
+            <TabsTrigger value="calendar">学习日历</TabsTrigger>
+            <TabsTrigger value="achievements">成就</TabsTrigger>
+            <TabsTrigger value="courses">我的课程</TabsTrigger>
+          </TabsList>
 
-        <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-yellow-100 dark:bg-yellow-900">
-                <svg
-                  className="h-5 w-5 text-yellow-600 dark:text-yellow-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
+          <TabsContent value="overview" className="mt-6">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <RecentCourses courses={recentCourses} />
+              <ProgressChart
+                data={progressData}
+                courseProgress={courseProgress}
+                timeRange={timeRange}
+                onTimeRangeChange={handleTimeRangeChange}
+              />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                学习时长
-              </p>
-              <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                48h
-              </p>
-            </div>
-          </div>
-        </div>
+          </TabsContent>
 
-        <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-purple-100 dark:bg-purple-900">
-                <svg
-                  className="h-5 w-5 text-purple-600 dark:text-purple-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                获得成就
-              </p>
-              <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                8
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+          <TabsContent value="progress" className="mt-6">
+            <ProgressChart
+              data={progressData}
+              courseProgress={courseProgress}
+              timeRange={timeRange}
+              onTimeRangeChange={handleTimeRangeChange}
+            />
+          </TabsContent>
 
-      {/* 学习进度和推荐内容 */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* 最近学习 */}
-        <div className="rounded-lg bg-white shadow dark:bg-gray-800">
-          <div className="border-b border-gray-200 p-6 dark:border-gray-700">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              最近学习
-            </h2>
-          </div>
-          <div className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900">
-                  <span className="font-semibold text-blue-600 dark:text-blue-400">
-                    JS
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white">
-                    JavaScript 高级编程
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    进度: 75%
-                  </p>
-                  <div className="mt-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-                    <div
-                      className="h-2 rounded-full bg-blue-600"
-                      style={{ width: '75%' }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
+          <TabsContent value="calendar" className="mt-6">
+            <LearningCalendar
+              data={learningCalendarData}
+              currentDate={new Date()}
+              onDateSelect={(date) => console.log('Selected date:', date)}
+            />
+          </TabsContent>
 
-              <div className="flex items-center space-x-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900">
-                  <span className="font-semibold text-green-600 dark:text-green-400">
-                    AI
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white">
-                    机器学习基础
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    进度: 45%
-                  </p>
-                  <div className="mt-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-                    <div
-                      className="h-2 rounded-full bg-green-600"
-                      style={{ width: '45%' }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
+          <TabsContent value="achievements" className="mt-6">
+            <Achievements
+              achievements={achievements}
+              totalPoints={1250}
+              level={5}
+              nextLevelProgress={65}
+            />
+          </TabsContent>
 
-              <div className="flex items-center space-x-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900">
-                  <span className="font-semibold text-purple-600 dark:text-purple-400">
-                    3D
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white">
-                    Three.js 3D 开发
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    进度: 30%
-                  </p>
-                  <div className="mt-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-                    <div
-                      className="h-2 rounded-full bg-purple-600"
-                      style={{ width: '30%' }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* AI 推荐 */}
-        <div className="rounded-lg bg-white shadow dark:bg-gray-800">
-          <div className="border-b border-gray-200 p-6 dark:border-gray-700">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              AI 为您推荐
-            </h2>
-          </div>
-          <div className="p-6">
-            <div className="space-y-4">
-              <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
-                <h3 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  React 高级模式
-                </h3>
-                <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
-                  基于您对 JavaScript 的学习进度，推荐学习 React 高级开发模式。
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-600 dark:bg-blue-900 dark:text-blue-400">
-                    匹配度: 95%
-                  </span>
-                  <button className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400">
-                    查看详情
-                  </button>
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
-                <h3 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  深度学习实战
-                </h3>
-                <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
-                  继续您的 AI 学习之旅，深入了解神经网络和深度学习算法。
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-green-100 px-2 py-1 text-xs text-green-600 dark:bg-green-900 dark:text-green-400">
-                    匹配度: 88%
-                  </span>
-                  <button className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400">
-                    查看详情
-                  </button>
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
-                <h3 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  WebGL 图形编程
-                </h3>
-                <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
-                  结合您的 3D 开发兴趣，学习底层图形编程技术。
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-purple-100 px-2 py-1 text-xs text-purple-600 dark:bg-purple-900 dark:text-purple-400">
-                    匹配度: 82%
-                  </span>
-                  <button className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400">
-                    查看详情
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+          <TabsContent value="courses" className="mt-6">
+            <RecentCourses
+              courses={recentCourses}
+              maxItems={10}
+              showViewAll={false}
+            />
+          </TabsContent>
+        </Tabs>
+      </AnimatedContainer>
     </div>
   );
 }

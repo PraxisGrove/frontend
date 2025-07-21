@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'PraxisGrove - AI驱动的沉浸式在线教育平台',
+  title: 'PraxisGrove - 一所无需许可的学校',
   description: '基于AI技术的创新在线教育平台，提供个性化学习体验和3D知识宇宙',
   keywords: ['在线教育', 'AI学习', '3D知识图谱', '个性化教育'],
   authors: [{ name: 'PraxisGrove Team' }],

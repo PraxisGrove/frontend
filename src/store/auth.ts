@@ -9,7 +9,7 @@ export interface User {
   email: string;
   name: string;
   avatar?: string | null;
-  role: 'user' | 'admin' | 'instructor';
+  role: 'user' | 'admin';
   createdAt?: string;
   updatedAt?: string;
 }
@@ -33,6 +33,13 @@ export interface AuthState {
   clearError: () => void;
   setLoading: (loading: boolean) => void;
   checkAuth: () => Promise<void>;
+
+  // 密码重置
+  forgotPassword: (email: string) => Promise<string>;
+  resetPassword: (data: { token: string; password: string }) => Promise<void>;
+
+  // 社交登录
+  socialLogin: (provider: 'google' | 'github' | 'wechat', code: string) => Promise<void>;
 }
 
 /**
@@ -60,28 +67,57 @@ export const useAuthStore = create<AuthState>()(
         isLoading: false,
         error: null,
 
-        // 登录操作
+        // 登录操作（纯前端模拟）
         login: async (email: string, password: string, remember = false) => {
           set({ isLoading: true, error: null });
 
           try {
-            const response = await fetch('/api/auth/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
+            // 模拟网络延迟
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // 模拟用户数据
+            const mockUsers = [
+              {
+                id: '1',
+                email: 'user@example.com',
+                password: 'password123',
+                name: '张三',
+                avatar: null,
+                role: 'user' as const,
               },
-              body: JSON.stringify({ email, password, remember }),
-            });
+              {
+                id: '2',
+                email: 'admin@example.com',
+                password: 'admin123',
+                name: '管理员',
+                avatar: null,
+                role: 'admin' as const,
+              },
+            ];
 
-            const data = await response.json();
+            // 验证用户凭据
+            const user = mockUsers.find(
+              (u) => u.email === email && u.password === password
+            );
 
-            if (!response.ok) {
-              throw new Error(data.message || '登录失败');
+            if (!user) {
+              throw new Error('邮箱或密码错误');
             }
 
+            // 生成模拟 token
+            const token = btoa(JSON.stringify({
+              userId: user.id,
+              email: user.email,
+              role: user.role,
+              exp: Date.now() + (remember ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000), // 7天或1天
+            }));
+
+            // 创建用户对象（排除密码）
+            const { password: _, ...userWithoutPassword } = user;
+
             set({
-              user: data.data.user,
-              token: data.data.token,
+              user: userWithoutPassword,
+              token,
               isAuthenticated: true,
               isLoading: false,
               error: null,
@@ -98,50 +134,84 @@ export const useAuthStore = create<AuthState>()(
           }
         },
 
-        // 登出操作
+        // 登出操作（纯前端）
         logout: async () => {
           set({ isLoading: true });
 
           try {
-            await fetch('/api/auth/logout', {
-              method: 'POST',
-            });
-          } catch (error) {
-            console.error('Logout API error:', error);
-            // 即使API调用失败，也要清除本地状态
-          }
+            // 模拟网络延迟
+            await new Promise(resolve => setTimeout(resolve, 500));
 
-          set({
-            user: null,
-            token: null,
-            isAuthenticated: false,
-            isLoading: false,
-            error: null,
-          });
+            // 清除本地状态
+            set({
+              user: null,
+              token: null,
+              isAuthenticated: false,
+              isLoading: false,
+              error: null,
+            });
+
+            // 清除本地存储
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('auth-token');
+              localStorage.removeItem('user-info');
+            }
+          } catch (error) {
+            console.error('Logout failed:', error);
+            // 即使出错也要清除状态
+            set({
+              user: null,
+              token: null,
+              isAuthenticated: false,
+              isLoading: false,
+              error: null,
+            });
+          }
         },
 
-        // 注册操作
+        // 注册操作（纯前端模拟）
         register: async (userData: RegisterData) => {
           set({ isLoading: true, error: null });
 
           try {
-            const response = await fetch('/api/auth/register', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(userData),
-            });
+            // 模拟网络延迟
+            await new Promise(resolve => setTimeout(resolve, 1500));
 
-            const data = await response.json();
-
-            if (!response.ok) {
-              throw new Error(data.message || '注册失败');
+            // 简单的验证
+            if (!userData.email || !userData.password || !userData.name) {
+              throw new Error('请填写所有必填字段');
             }
 
+            if (userData.password.length < 6) {
+              throw new Error('密码长度至少6位');
+            }
+
+            // 检查邮箱是否已存在（模拟）
+            const existingEmails = ['user@example.com', 'admin@example.com'];
+            if (existingEmails.includes(userData.email)) {
+              throw new Error('该邮箱已被注册');
+            }
+
+            // 创建新用户
+            const newUser = {
+              id: Date.now().toString(),
+              email: userData.email,
+              name: userData.name,
+              avatar: null,
+              role: 'user' as const,
+            };
+
+            // 生成模拟 token
+            const token = btoa(JSON.stringify({
+              userId: newUser.id,
+              email: newUser.email,
+              role: newUser.role,
+              exp: Date.now() + 24 * 60 * 60 * 1000, // 1天
+            }));
+
             set({
-              user: data.data.user,
-              token: data.data.token,
+              user: newUser,
+              token,
               isAuthenticated: true,
               isLoading: false,
               error: null,
@@ -178,7 +248,7 @@ export const useAuthStore = create<AuthState>()(
           set({ isLoading: loading });
         },
 
-        // 检查认证状态
+        // 检查认证状态（纯前端验证）
         checkAuth: async () => {
           const token = get().token;
 
@@ -195,24 +265,29 @@ export const useAuthStore = create<AuthState>()(
           set({ isLoading: true });
 
           try {
-            const response = await fetch('/api/auth/login', {
-              method: 'GET',
-            });
+            // 解析 token 检查是否过期
+            const tokenData = JSON.parse(atob(token));
+            const isExpired = Date.now() > tokenData.exp;
 
-            if (response.ok) {
-              const data = await response.json();
-              // 如果token有效，保持当前状态
-              set({
-                isAuthenticated: true,
-                isLoading: false,
-                error: null,
-              });
-            } else {
-              // token无效，清除状态
+            if (isExpired) {
+              // token 已过期，清除状态
               set({
                 user: null,
                 token: null,
                 isAuthenticated: false,
+                isLoading: false,
+                error: null,
+              });
+
+              // 清除本地存储
+              if (typeof window !== 'undefined') {
+                localStorage.removeItem('auth-token');
+                localStorage.removeItem('user-info');
+              }
+            } else {
+              // token 有效，保持当前状态
+              set({
+                isAuthenticated: true,
                 isLoading: false,
                 error: null,
               });
@@ -226,6 +301,142 @@ export const useAuthStore = create<AuthState>()(
               isLoading: false,
               error: null,
             });
+          }
+        },
+
+        // 忘记密码
+        forgotPassword: async (email: string) => {
+          set({ isLoading: true, error: null });
+
+          try {
+            // 模拟网络延迟
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // 简单的邮箱格式验证
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+              throw new Error('请输入有效的邮箱地址');
+            }
+
+            // 模拟检查邮箱是否存在
+            const existingEmails = ['user@example.com', 'admin@example.com'];
+            if (!existingEmails.includes(email)) {
+              throw new Error('该邮箱未注册');
+            }
+
+            set({
+              isLoading: false,
+              error: null,
+            });
+
+            return '重置密码邮件已发送到您的邮箱，请查收';
+          } catch (error) {
+            set({
+              isLoading: false,
+              error: error instanceof Error ? error.message : '发送重置邮件失败',
+            });
+            throw error;
+          }
+        },
+
+        // 重置密码（纯前端模拟）
+        resetPassword: async (data: { token: string; password: string }) => {
+          set({ isLoading: true, error: null });
+
+          try {
+            // 模拟网络延迟
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // 验证密码强度
+            if (data.password.length < 6) {
+              throw new Error('密码长度至少6位');
+            }
+
+            // 模拟验证重置 token
+            if (!data.token || data.token.length < 10) {
+              throw new Error('重置链接无效或已过期');
+            }
+
+            set({
+              isLoading: false,
+              error: null,
+            });
+
+            // 密码重置成功，可以跳转到登录页面
+          } catch (error) {
+            set({
+              isLoading: false,
+              error: error instanceof Error ? error.message : '重置密码失败',
+            });
+            throw error;
+          }
+        },
+
+        // 社交登录（纯前端模拟）
+        socialLogin: async (provider: 'google' | 'github' | 'wechat', code: string) => {
+          set({ isLoading: true, error: null });
+
+          try {
+            // 模拟网络延迟
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // 模拟社交登录验证
+            if (!code || code.length < 5) {
+              throw new Error('授权码无效');
+            }
+
+            // 根据不同的社交平台创建模拟用户
+            const socialUsers = {
+              google: {
+                id: 'google_' + Date.now(),
+                email: 'user@gmail.com',
+                name: 'Google 用户',
+                avatar: 'https://lh3.googleusercontent.com/a/default-user',
+                role: 'user' as const,
+              },
+              github: {
+                id: 'github_' + Date.now(),
+                email: 'user@github.com',
+                name: 'GitHub 用户',
+                avatar: 'https://github.com/identicons/default.png',
+                role: 'user' as const,
+              },
+              wechat: {
+                id: 'wechat_' + Date.now(),
+                email: 'user@wechat.com',
+                name: '微信用户',
+                avatar: null,
+                role: 'user' as const,
+              },
+            };
+
+            const user = socialUsers[provider];
+
+            // 生成模拟 token
+            const token = btoa(JSON.stringify({
+              userId: user.id,
+              email: user.email,
+              role: user.role,
+              provider,
+              exp: Date.now() + 24 * 60 * 60 * 1000, // 1天
+            }));
+
+            set({
+              user,
+              token,
+              isAuthenticated: true,
+              isLoading: false,
+              error: null,
+            });
+          } catch (error) {
+            set({
+              user: null,
+              token: null,
+              isAuthenticated: false,
+              isLoading: false,
+              error: error instanceof Error ? error.message : '社交登录失败',
+            });
+            throw error;
           }
         },
       }),
@@ -273,7 +484,6 @@ export const authSelectors = {
 
   // 检查用户角色
   isAdmin: (state: AuthState) => state.user?.role === 'admin',
-  isInstructor: (state: AuthState) => state.user?.role === 'instructor',
 
   // 获取用户显示名称
   displayName: (state: AuthState) =>

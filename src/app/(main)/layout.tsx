@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'PraxisGrove - AI驱动的沉浸式在线教育平台',
+  title: 'PraxisGrove - 一所无需许可的学校',
   description: '基于AI技术的创新在线教育平台，提供个性化学习体验和3D知识宇宙',
 };
 
@@ -127,7 +127,7 @@ export default function MainLayout({
                 PraxisGrove
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                AI驱动的沉浸式在线教育平台，重新定义学习体验。
+                一所无需许可的学校
               </p>
             </div>
             <div>
