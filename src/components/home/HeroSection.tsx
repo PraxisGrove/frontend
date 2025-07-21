@@ -63,14 +63,14 @@ export function HeroSection({ className }: HeroSectionProps) {
           className="mb-6"
         >
           <h1 id="hero-title" className="sr-only">
-            PraxisGrove - AI驱动的沉浸式在线教育平台
+            PraxisGrove
           </h1>
           <TextGenerateEffect
             text="PraxisGrove"
             className="text-foreground mb-4 text-4xl font-bold md:text-6xl lg:text-7xl"
           />
           <AnimatedText
-            text="打造无需许可的学校"
+            text="一所无需许可的学校"
             variant="typewriter"
             className="text-primary text-2xl font-light md:text-4xl lg:text-5xl"
             speed={100}
