@@ -10,7 +10,19 @@ import {
   RecentCourses,
   defaultLearningStats,
 } from '@/components/dashboard';
-import { AnimatedContainer, GradientText } from '@/components/unified';
+import {
+  AnimatedContainer,
+  GradientText,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  EnhancedCard,
+  Badge,
+} from '@/components/unified';
+import { FloatingNav } from '@/components/aceternity/floating-navbar';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { motion } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
 
 // 注意：由于使用了 'use client'，metadata 需要在其他地方定义
@@ -24,6 +36,12 @@ import { useAuth } from '@/hooks/useAuth';
  */
 export default function DashboardPage() {
   const { user } = useAuth();
+
+  // 导航配置
+  const navItems = [
+    { name: '知识宇宙', link: '/knowledge-universe' },
+    { name: '仪表板', link: '/dashboard' },
+  ];
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>(
     '30d'
@@ -188,81 +206,300 @@ export default function DashboardPage() {
       </div>
     );
   }
+
   return (
-    <div className="space-y-8">
-      {/* 页面标题 */}
-      <AnimatedContainer animation="slideDown" delay={0.1}>
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-            <GradientText>学习仪表板</GradientText>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-900 dark:to-pink-900">
+      {/* 浮动导航栏 */}
+      <FloatingNav navItems={navItems} />
+
+      {/* 主题切换按钮 */}
+      <div className="fixed right-4 top-4 z-40">
+        <ThemeToggle />
+      </div>
+
+      <div className="container mx-auto space-y-8 px-4 py-20">
+        {/* 页面标题 */}
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-4xl font-bold text-transparent">
+            学习仪表板
           </h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
             欢迎回来，{user?.name || '学习者'}！查看您的学习进度和成就
           </p>
-        </div>
-      </AnimatedContainer>
+        </motion.div>
 
-      {/* 统计卡片 */}
-      <LearningStats stats={stats} />
-
-      {/* 主要内容选项卡 */}
-      <AnimatedContainer animation="slideUp" delay={0.3}>
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="overview">概览</TabsTrigger>
-            <TabsTrigger value="progress">学习进度</TabsTrigger>
-            <TabsTrigger value="calendar">学习日历</TabsTrigger>
-            <TabsTrigger value="achievements">成就</TabsTrigger>
-            <TabsTrigger value="courses">我的课程</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview" className="mt-6">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-              <RecentCourses courses={recentCourses} />
-              <ProgressChart
-                data={progressData}
-                courseProgress={courseProgress}
-                timeRange={timeRange}
-                onTimeRangeChange={handleTimeRangeChange}
-              />
+        {/* 统计卡片 */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <EnhancedCard variant="glow" className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                  总学习时间
+                </p>
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                    {stats[0]?.value || 48}h
+                  </span>
+                  <Badge
+                    variant="secondary"
+                    className="bg-green-500/20 text-xs text-green-600 dark:text-green-400"
+                  >
+                    +15% 增长
+                  </Badge>
+                </div>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  本月累计
+                </p>
+              </div>
+              <div className="rounded-lg bg-blue-500/20 p-2 text-blue-600 dark:text-blue-400">
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
             </div>
-          </TabsContent>
+          </EnhancedCard>
 
-          <TabsContent value="progress" className="mt-6">
-            <ProgressChart
-              data={progressData}
-              courseProgress={courseProgress}
-              timeRange={timeRange}
-              onTimeRangeChange={handleTimeRangeChange}
-            />
-          </TabsContent>
+          <EnhancedCard variant="glow" className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                  完成课程
+                </p>
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-2xl font-bold text-green-600 dark:text-green-400">
+                    {stats[1]?.value || 3}
+                  </span>
+                  <Badge
+                    variant="secondary"
+                    className="bg-green-500/20 text-xs text-green-600 dark:text-green-400"
+                  >
+                    +2 本月
+                  </Badge>
+                </div>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  已完成
+                </p>
+              </div>
+              <div className="rounded-lg bg-green-500/20 p-2 text-green-600 dark:text-green-400">
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  />
+                </svg>
+              </div>
+            </div>
+          </EnhancedCard>
 
-          <TabsContent value="calendar" className="mt-6">
-            <LearningCalendar
-              data={learningCalendarData}
-              currentDate={new Date()}
-              onDateSelect={(date) => console.log('Selected date:', date)}
-            />
-          </TabsContent>
+          <EnhancedCard variant="glow" className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                  连续学习
+                </p>
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                    {stats[2]?.value || 5}天
+                  </span>
+                  <Badge
+                    variant="secondary"
+                    className="bg-green-500/20 text-xs text-green-600 dark:text-green-400"
+                  >
+                    +25% 提升
+                  </Badge>
+                </div>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  当前连击
+                </p>
+              </div>
+              <div className="rounded-lg bg-orange-500/20 p-2 text-orange-600 dark:text-orange-400">
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </EnhancedCard>
 
-          <TabsContent value="achievements" className="mt-6">
-            <Achievements
-              achievements={achievements}
-              totalPoints={1250}
-              level={5}
-              nextLevelProgress={65}
-            />
-          </TabsContent>
+          <EnhancedCard variant="glow" className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                  获得成就
+                </p>
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                    {stats[3]?.value || 8}
+                  </span>
+                  <Badge
+                    variant="secondary"
+                    className="bg-green-500/20 text-xs text-green-600 dark:text-green-400"
+                  >
+                    +3 新增
+                  </Badge>
+                </div>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  解锁徽章
+                </p>
+              </div>
+              <div className="rounded-lg bg-purple-500/20 p-2 text-purple-600 dark:text-purple-400">
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </EnhancedCard>
+        </div>
 
-          <TabsContent value="courses" className="mt-6">
-            <RecentCourses
-              courses={recentCourses}
-              maxItems={10}
-              showViewAll={false}
-            />
-          </TabsContent>
-        </Tabs>
-      </AnimatedContainer>
+        {/* 主要内容选项卡 */}
+        <EnhancedCard variant="glow" className="p-8">
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="grid w-full grid-cols-5 border border-white/20 bg-white/10 dark:bg-white/5">
+              <TabsTrigger
+                value="overview"
+                className="data-[state=active]:bg-white/20 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white"
+              >
+                概览
+              </TabsTrigger>
+              <TabsTrigger
+                value="progress"
+                className="data-[state=active]:bg-white/20 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white"
+              >
+                学习进度
+              </TabsTrigger>
+              <TabsTrigger
+                value="calendar"
+                className="data-[state=active]:bg-white/20 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white"
+              >
+                学习日历
+              </TabsTrigger>
+              <TabsTrigger
+                value="achievements"
+                className="data-[state=active]:bg-white/20 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white"
+              >
+                成就
+              </TabsTrigger>
+              <TabsTrigger
+                value="courses"
+                className="data-[state=active]:bg-white/20 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white"
+              >
+                我的课程
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="overview" className="mt-6">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <Card>
+                  <CardContent className="p-6">
+                    <RecentCourses courses={recentCourses} />
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-6">
+                    <ProgressChart
+                      data={progressData}
+                      courseProgress={courseProgress}
+                      timeRange={timeRange}
+                      onTimeRangeChange={handleTimeRangeChange}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="progress" className="mt-6">
+              <Card>
+                <CardContent className="p-6">
+                  <ProgressChart
+                    data={progressData}
+                    courseProgress={courseProgress}
+                    timeRange={timeRange}
+                    onTimeRangeChange={handleTimeRangeChange}
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="calendar" className="mt-6">
+              <Card>
+                <CardContent className="p-6">
+                  <LearningCalendar
+                    data={learningCalendarData}
+                    currentDate={new Date()}
+                    onDateSelect={(date) => console.log('Selected date:', date)}
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="achievements" className="mt-6">
+              <Card>
+                <CardContent className="p-6">
+                  <Achievements
+                    achievements={achievements}
+                    totalPoints={1250}
+                    level={5}
+                    nextLevelProgress={65}
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="courses" className="mt-6">
+              <Card>
+                <CardContent className="p-6">
+                  <RecentCourses
+                    courses={recentCourses}
+                    maxItems={10}
+                    showViewAll={false}
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </EnhancedCard>
+      </div>
     </div>
   );
 }

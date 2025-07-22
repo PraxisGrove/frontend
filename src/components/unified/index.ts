@@ -140,7 +140,7 @@ export {
   RippleWave,
 
   // 样式组件
-  GlassCard,
+  AceternityGlassCard,
   GlowBorder,
   FloatingShadow,
   GradientText,

@@ -96,12 +96,23 @@ export const FloatingNav = ({
         {/* Logo 区域 */}
         <div
           className="flex cursor-pointer items-center rounded-full px-3 py-2 transition-all duration-200 hover:bg-black/5 hover:shadow-sm dark:hover:bg-white/5 dark:hover:shadow-none"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
             if (typeof window !== 'undefined') {
-              window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              });
+              const currentPath = window.location.pathname;
+
+              // 如果当前在首页，滚动到顶部
+              if (currentPath === '/') {
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                });
+              } else {
+                // 如果不在首页，跳转到首页
+                window.location.href = '/';
+              }
             }
           }}
         >

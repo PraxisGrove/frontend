@@ -38,7 +38,7 @@ export {
 
 // 样式组件
 export {
-  GlassCard,
+  GlassCard as AceternityGlassCard,
   GlowBorder,
   FloatingShadow,
   GradientText,
