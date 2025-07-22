@@ -38,12 +38,7 @@ export default function MainLayout({
               >
                 仪表板
               </Link>
-              <Link
-                href="/courses"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-              >
-                课程
-              </Link>
+
               <Link
                 href="/knowledge-universe"
                 className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
@@ -135,11 +130,6 @@ export default function MainLayout({
                 产品
               </h4>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                <li>
-                  <Link href="/courses" className="hover:text-blue-600">
-                    课程中心
-                  </Link>
-                </li>
                 <li>
                   <Link
                     href="/knowledge-universe"

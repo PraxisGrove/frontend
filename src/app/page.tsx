@@ -30,7 +30,6 @@ const sections = [
 // 导航配置
 const navItems = [
   { name: '知识宇宙', link: '/knowledge-universe' },
-  { name: '课程', link: '/courses' },
   { name: '仪表板', link: '/dashboard' },
 ];
 
