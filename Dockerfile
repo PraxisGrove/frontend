@@ -1,7 +1,7 @@
 # 多阶段构建 Dockerfile for Next.js 应用
 
 # 阶段 1: 依赖安装
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY .npmrc* ./
 RUN npm ci --only=production --ignore-scripts
 
 # 阶段 2: 构建应用
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
 # 复制依赖
@@ -28,7 +28,7 @@ ENV NODE_ENV production
 RUN npm run build
 
 # 阶段 3: 运行时
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 # 创建非 root 用户
