@@ -29,9 +29,9 @@ const sections = [
 
 // 导航配置
 const navItems = [
-  { name: '地图', link: '/map' },
+  { name: '知识宇宙', link: '/knowledge-universe' },
   { name: '课程', link: '/courses' },
-  { name: '社区', link: '/community' },
+  { name: '仪表板', link: '/dashboard' },
 ];
 
 export default function HomePage() {

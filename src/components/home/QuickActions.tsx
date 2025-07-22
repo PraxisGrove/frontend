@@ -216,22 +216,6 @@ export function QuickActions({ className }: QuickActionsProps) {
           }}
         />
       </motion.div>
-
-      {/* 提示文本 */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            className="text-foreground absolute bottom-16 right-0 whitespace-nowrap rounded-lg border border-white/30 bg-white/20 px-3 py-1 text-sm backdrop-blur-md dark:border-white/10 dark:bg-black/20"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            transition={{ delay: 2 }}
-          >
-            快速操作
-            <div className="absolute right-4 top-full h-0 w-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white/20 dark:border-t-black/20" />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

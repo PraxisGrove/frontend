@@ -2,9 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
+
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 
 export const FloatingNav = ({
   navItems,
@@ -120,42 +119,51 @@ export const FloatingNav = ({
 
         {/* 导航项 */}
         {navItems.map((navItem, idx) => (
-          <Button
+          <button
             key={`nav-${idx}`}
-            variant="ghost"
-            size="sm"
-            asChild
+            onClick={(e) => {
+              e.preventDefault();
+
+              // 使用原生导航
+              if (typeof window !== 'undefined') {
+                window.location.href = navItem.link;
+              }
+            }}
             className={cn(
               'relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-200',
               'text-foreground/80 hover:text-foreground',
               'backdrop-blur-sm hover:bg-black/5 dark:hover:bg-white/5',
               'hover:shadow-sm dark:hover:shadow-none',
-              'border-0 bg-transparent'
+              'inline-flex items-center justify-center border-0 bg-transparent',
+              'cursor-pointer'
             )}
           >
-            <Link href={navItem.link}>
-              <span className="block sm:hidden">{navItem.icon}</span>
-              <span className="hidden sm:block">{navItem.name}</span>
-            </Link>
-          </Button>
+            <span className="block sm:hidden">{navItem.icon}</span>
+            <span className="hidden sm:block">{navItem.name}</span>
+          </button>
         ))}
 
         {/* 登录按钮 */}
         {showLoginButton && (
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+
+              if (typeof window !== 'undefined') {
+                window.location.href = '/login';
+              }
+            }}
             className={cn(
               'relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-200',
               'text-foreground/80 hover:text-foreground',
               'backdrop-blur-sm hover:bg-black/5 dark:hover:bg-white/5',
               'hover:shadow-sm dark:hover:shadow-none',
-              'border-0 bg-transparent'
+              'inline-flex items-center justify-center border-0 bg-transparent',
+              'cursor-pointer'
             )}
           >
-            <Link href="/login">{loginText}</Link>
-          </Button>
+            {loginText}
+          </button>
         )}
       </motion.div>
     </AnimatePresence>
