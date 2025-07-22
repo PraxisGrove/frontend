@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 export const FloatingNav = ({
   navItems,
@@ -46,13 +49,13 @@ export const FloatingNav = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 活跃区域检测
+  // 活跃区域检测（用于导航项高亮）
   useEffect(() => {
     // 检查是否在浏览器环境
     if (typeof window === 'undefined') return;
 
     const handleScroll = () => {
-      const sections = navItems.map((item) => item.link.replace('#', ''));
+      const sections = ['hero', 'features', 'product', 'roadmap', 'cta'];
 
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
@@ -68,7 +71,7 @@ export const FloatingNav = ({
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [navItems]);
+  }, []);
 
   return (
     <AnimatePresence mode="wait">
@@ -86,62 +89,73 @@ export const FloatingNav = ({
         }}
         className={cn(
           'aceternity-floating-nav',
-          'fixed inset-x-0 top-10 z-[5000] mx-auto flex max-w-fit items-center justify-center space-x-4 rounded-full py-2 pl-8 pr-2',
+          'fixed inset-x-0 top-10 z-[5000] mx-auto flex max-w-fit items-center justify-center space-x-2 rounded-full px-4 py-2',
+          'border border-white/20 bg-white/10 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-black/10',
           className
         )}
       >
-        {navItems.map((navItem, idx) => {
-          const isActive = activeSection === navItem.link.replace('#', '');
-
-          const handleClick = (e: React.MouseEvent) => {
-            e.preventDefault();
-            if (typeof window === 'undefined') return;
-
-            const targetId = navItem.link.replace('#', '');
-            const element = document.getElementById(targetId);
-            if (element) {
-              element.scrollIntoView({
+        {/* Logo 区域 */}
+        <div
+          className="flex cursor-pointer items-center rounded-full px-3 py-2 transition-all duration-200 hover:bg-black/5 hover:shadow-sm dark:hover:bg-white/5 dark:hover:shadow-none"
+          onClick={() => {
+            if (typeof window !== 'undefined') {
+              window.scrollTo({
+                top: 0,
                 behavior: 'smooth',
-                block: 'start',
               });
             }
-          };
+          }}
+        >
+          <Image
+            src="/logo/favicon-32x32.png"
+            alt="PraxisGrove"
+            width={24}
+            height={24}
+            className="object-contain"
+          />
+        </div>
 
-          return (
-            <a
-              key={`link-${idx}`}
-              href={navItem.link}
-              onClick={handleClick}
-              className={cn(
-                'aceternity-floating-nav-item',
-                'relative flex items-center space-x-1 rounded-full px-3 py-2 transition-all duration-200',
-                'hover:bg-accent/10 hover:text-accent-foreground cursor-pointer',
-                isActive && 'bg-primary/10 text-primary font-medium'
-              )}
-            >
-              <span className="block sm:hidden">{navItem.icon}</span>
-              <span className="hidden text-sm sm:block">{navItem.name}</span>
-              {isActive && (
-                <motion.div
-                  layoutId="activeSection"
-                  className="bg-primary/5 border-primary/20 absolute inset-0 rounded-full border"
-                  initial={false}
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
-              )}
-            </a>
-          );
-        })}
-        {showLoginButton && (
-          <button
+        {/* 分隔线 */}
+        <div className="h-6 w-px bg-white/20 dark:bg-white/10" />
+
+        {/* 导航项 */}
+        {navItems.map((navItem, idx) => (
+          <Button
+            key={`nav-${idx}`}
+            variant="ghost"
+            size="sm"
+            asChild
             className={cn(
-              'aceternity-floating-nav-button',
-              'relative rounded-full text-sm font-medium'
+              'relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-200',
+              'text-foreground/80 hover:text-foreground',
+              'backdrop-blur-sm hover:bg-black/5 dark:hover:bg-white/5',
+              'hover:shadow-sm dark:hover:shadow-none',
+              'border-0 bg-transparent'
             )}
           >
-            <span>{loginText}</span>
-            <span className="absolute inset-x-0 -bottom-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-current to-transparent opacity-60" />
-          </button>
+            <Link href={navItem.link}>
+              <span className="block sm:hidden">{navItem.icon}</span>
+              <span className="hidden sm:block">{navItem.name}</span>
+            </Link>
+          </Button>
+        ))}
+
+        {/* 登录按钮 */}
+        {showLoginButton && (
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className={cn(
+              'relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-200',
+              'text-foreground/80 hover:text-foreground',
+              'backdrop-blur-sm hover:bg-black/5 dark:hover:bg-white/5',
+              'hover:shadow-sm dark:hover:shadow-none',
+              'border-0 bg-transparent'
+            )}
+          >
+            <Link href="/login">{loginText}</Link>
+          </Button>
         )}
       </motion.div>
     </AnimatePresence>

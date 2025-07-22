@@ -39,7 +39,7 @@ interface RoadmapItem {
 
 const roadmapItems: RoadmapItem[] = [
   {
-    id: 'q1-2025',
+    id: 'q3-2025',
     quarter: '2025 Q1',
     title: 'AI 学习助手 2.0',
     description: '全面升级 AI 学习助手，提供更智能的个性化学习体验',
@@ -54,7 +54,7 @@ const roadmapItems: RoadmapItem[] = [
     gradient: 'from-green-500 to-emerald-500',
   },
   {
-    id: 'q2-2025',
+    id: 'q4-2025',
     quarter: '2025 Q2',
     title: '3D 知识宇宙增强',
     description: '打造更加沉浸式的 3D 学习环境，支持 VR/AR 设备',
@@ -69,7 +69,7 @@ const roadmapItems: RoadmapItem[] = [
     gradient: 'from-blue-500 to-cyan-500',
   },
   {
-    id: 'q3-2025',
+    id: 'q1-2026',
     quarter: '2025 Q3',
     title: '智能学习社区',
     description: '构建全球学习者社区，实现智能匹配和协作学习',
@@ -84,7 +84,7 @@ const roadmapItems: RoadmapItem[] = [
     gradient: 'from-purple-500 to-pink-500',
   },
   {
-    id: 'q4-2025',
+    id: 'q2-2026',
     quarter: '2025 Q4',
     title: '企业级解决方案',
     description: '为企业和教育机构提供定制化的学习管理系统',

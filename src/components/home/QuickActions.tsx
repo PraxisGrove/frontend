@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import {
@@ -62,8 +62,20 @@ const quickActions: QuickAction[] = [
 
 export function QuickActions({ className }: QuickActionsProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mouseLeaveTimer, setMouseLeaveTimer] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   const toggleOpen = () => setIsOpen(!isOpen);
+
+  // 清理定时器
+  useEffect(() => {
+    return () => {
+      if (mouseLeaveTimer) {
+        clearTimeout(mouseLeaveTimer);
+      }
+    };
+  }, [mouseLeaveTimer]);
 
   const fabVariants = {
     closed: {
@@ -108,8 +120,30 @@ export function QuickActions({ className }: QuickActionsProps) {
     },
   };
 
+  const handleMouseLeave = () => {
+    // 添加延迟，避免鼠标快速移动时意外触发
+    const timer = setTimeout(() => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    }, 300); // 300ms 延迟
+    setMouseLeaveTimer(timer);
+  };
+
+  const handleMouseEnter = () => {
+    // 鼠标重新进入时，清除延迟定时器
+    if (mouseLeaveTimer) {
+      clearTimeout(mouseLeaveTimer);
+      setMouseLeaveTimer(null);
+    }
+  };
+
   return (
-    <div className={cn('fixed bottom-6 right-6 z-50', className)}>
+    <div
+      className={cn('fixed bottom-6 right-6 z-50', className)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* 快速操作菜单 */}
       <AnimatePresence>
         {isOpen && (
@@ -136,10 +170,12 @@ export function QuickActions({ className }: QuickActionsProps) {
       <motion.div
         className={cn(
           'relative h-14 w-14 cursor-pointer rounded-full shadow-lg',
-          'bg-gradient-to-r from-purple-600 to-blue-600',
-          'hover:from-purple-700 hover:to-blue-700',
+          'bg-white/20 backdrop-blur-md dark:bg-black/20',
+          'border border-white/30 dark:border-white/10',
+          'hover:bg-white/30 dark:hover:bg-black/30',
+          'hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]',
           'flex items-center justify-center',
-          'transition-all duration-200'
+          'transition-all duration-300'
         )}
         variants={fabVariants}
         animate={isOpen ? 'open' : 'closed'}
@@ -148,15 +184,15 @@ export function QuickActions({ className }: QuickActionsProps) {
         whileTap={{ scale: 0.95 }}
       >
         {isOpen ? (
-          <X className="h-6 w-6 text-white" />
+          <X className="text-foreground h-6 w-6" />
         ) : (
-          <Plus className="h-6 w-6 text-white" />
+          <Plus className="text-foreground h-6 w-6" />
         )}
 
         {/* 脉冲动画 */}
         {!isOpen && (
           <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-blue-600"
+            className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm dark:bg-white/5"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.7, 0, 0.7],
@@ -168,20 +204,31 @@ export function QuickActions({ className }: QuickActionsProps) {
             }}
           />
         )}
+
+        {/* 悬停发光效果 */}
+        <motion.div
+          className="dark:bg-white/3 absolute inset-0 rounded-full bg-white/5"
+          initial={{ opacity: 0, scale: 1 }}
+          whileHover={{
+            opacity: 1,
+            scale: 1.2,
+            transition: { duration: 0.3 },
+          }}
+        />
       </motion.div>
 
       {/* 提示文本 */}
       <AnimatePresence>
         {!isOpen && (
           <motion.div
-            className="absolute bottom-16 right-0 whitespace-nowrap rounded-lg bg-black/80 px-3 py-1 text-sm text-white"
+            className="text-foreground absolute bottom-16 right-0 whitespace-nowrap rounded-lg border border-white/30 bg-white/20 px-3 py-1 text-sm backdrop-blur-md dark:border-white/10 dark:bg-black/20"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ delay: 2 }}
           >
             快速操作
-            <div className="absolute right-4 top-full h-0 w-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/80" />
+            <div className="absolute right-4 top-full h-0 w-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white/20 dark:border-t-black/20" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -212,25 +259,34 @@ function QuickActionButton({
   };
 
   return (
-    <motion.div className="flex items-center gap-3" variants={variants}>
-      {/* 标签 */}
-      <div className="whitespace-nowrap rounded-lg bg-black/80 px-3 py-2 text-sm text-white">
-        {action.label}
-      </div>
-
+    <motion.div className="flex items-center justify-end" variants={variants}>
       {/* 按钮 */}
       <motion.button
         className={cn(
-          'h-12 w-12 rounded-full shadow-lg',
-          `bg-gradient-to-r ${action.color}`,
+          'relative h-12 w-12 rounded-full shadow-lg',
+          'bg-white/20 backdrop-blur-md dark:bg-black/20',
+          'border border-white/30 dark:border-white/10',
+          'hover:bg-white/30 dark:hover:bg-black/30',
+          'hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]',
           'flex items-center justify-center',
-          'transition-all duration-200'
+          'overflow-hidden transition-all duration-300'
         )}
         onClick={handleClick}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        <Icon className="h-5 w-5 text-white" />
+        <Icon className="text-foreground relative z-10 h-5 w-5" />
+
+        {/* 悬停发光效果 */}
+        <motion.div
+          className="dark:bg-white/3 absolute inset-0 rounded-full bg-white/5"
+          initial={{ opacity: 0, scale: 1 }}
+          whileHover={{
+            opacity: 1,
+            scale: 1.2,
+            transition: { duration: 0.3 },
+          }}
+        />
       </motion.button>
     </motion.div>
   );

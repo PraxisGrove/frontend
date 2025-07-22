@@ -32,9 +32,10 @@ export function ThemeToggle({
         variant="ghost"
         size="icon"
         className={cn(
-          'border-border/40 bg-background/80 relative rounded-full border backdrop-blur-sm',
-          'hover:bg-accent hover:text-accent-foreground',
-          'transition-all duration-200',
+          'relative rounded-full border border-white/30 bg-white/20 backdrop-blur-md dark:border-white/10 dark:bg-black/20',
+          'hover:text-foreground hover:bg-white/30 dark:hover:bg-black/30',
+          'hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]',
+          'transition-all duration-300',
           size === 'sm' ? 'h-8 w-8' : size === 'lg' ? 'h-10 w-10' : 'h-9 w-9',
           variant === 'floating' && 'fixed right-4 top-4 z-50 shadow-lg',
           className
@@ -64,9 +65,10 @@ export function ThemeToggle({
   };
 
   const baseClasses = cn(
-    'relative rounded-full border border-border/40 bg-background/80 backdrop-blur-sm',
-    'hover:bg-accent hover:text-accent-foreground',
-    'transition-all duration-200',
+    'relative rounded-full border border-white/30 dark:border-white/10 bg-white/20 dark:bg-black/20 backdrop-blur-md',
+    'hover:bg-white/30 dark:hover:bg-black/30 hover:text-foreground',
+    'hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]',
+    'transition-all duration-300',
     sizeClasses[size],
     className
   );
