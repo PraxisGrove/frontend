@@ -3,7 +3,7 @@ import {
   ApiFallbackHandler,
   mockCategories,
   mockCourses,
-  createMockListResponse
+  createMockListResponse,
 } from '@/lib/api-fallback';
 import type {
   Course,
@@ -15,10 +15,91 @@ import type {
 
 /**
  * 课程相关API服务
+ *
+ * @swagger
+ * tags:
+ *   name: Courses
+ *   description: 课程管理相关接口
  */
 export const coursesApi = {
   /**
    * 获取课程列表
+   *
+   * @swagger
+   * /api/courses:
+   *   get:
+   *     summary: 获取课程列表
+   *     description: 分页获取课程列表，支持筛选和排序
+   *     tags: [Courses]
+   *     parameters:
+   *       - in: query
+   *         name: page
+   *         schema:
+   *           type: integer
+   *           minimum: 1
+   *           default: 1
+   *         description: 页码
+   *       - in: query
+   *         name: limit
+   *         schema:
+   *           type: integer
+   *           minimum: 1
+   *           maximum: 100
+   *           default: 12
+   *         description: 每页数量
+   *       - in: query
+   *         name: category
+   *         schema:
+   *           type: string
+   *         description: 课程分类
+   *       - in: query
+   *         name: level
+   *         schema:
+   *           type: string
+   *           enum: [beginner, intermediate, advanced]
+   *         description: 课程难度
+   *       - in: query
+   *         name: search
+   *         schema:
+   *           type: string
+   *         description: 搜索关键词
+   *       - in: query
+   *         name: sort
+   *         schema:
+   *           type: string
+   *           enum: [title, price, rating, createdAt, updatedAt]
+   *           default: createdAt
+   *         description: 排序字段
+   *       - in: query
+   *         name: order
+   *         schema:
+   *           type: string
+   *           enum: [asc, desc]
+   *           default: desc
+   *         description: 排序方向
+   *     responses:
+   *       200:
+   *         description: 课程列表获取成功
+   *         content:
+   *           application/json:
+   *             schema:
+   *               allOf:
+   *                 - $ref: '#/components/schemas/ApiResponse'
+   *                 - type: object
+   *                   properties:
+   *                     data:
+   *                       type: object
+   *                       properties:
+   *                         items:
+   *                           type: array
+   *                           items:
+   *                             $ref: '#/components/schemas/Course'
+   *                         pagination:
+   *                           $ref: '#/components/schemas/PaginationResponse'
+   *       400:
+   *         description: 请求参数错误
+   *       500:
+   *         description: 服务器内部错误
    */
   getCourses: async (
     params?: CoursesQueryParams
@@ -28,7 +109,9 @@ export const coursesApi = {
       const isHealthy = await ApiFallbackHandler.isApiHealthy();
 
       if (isHealthy) {
-        return await publicApi.get<ListResponse<Course>>('/courses', { params });
+        return await publicApi.get<ListResponse<Course>>('/courses', {
+          params,
+        });
       } else {
         console.warn('API unavailable, using mock data for courses');
         // 使用模拟数据
@@ -37,7 +120,10 @@ export const coursesApi = {
         return createMockListResponse(mockCourses, page, limit);
       }
     } catch (error) {
-      console.error('Failed to fetch courses, falling back to mock data:', error);
+      console.error(
+        'Failed to fetch courses, falling back to mock data:',
+        error
+      );
       // API 调用失败，使用模拟数据
       const page = params?.page || 1;
       const limit = params?.limit || 12;
@@ -47,6 +133,36 @@ export const coursesApi = {
 
   /**
    * 获取课程详情
+   *
+   * @swagger
+   * /api/courses/{id}:
+   *   get:
+   *     summary: 获取课程详情
+   *     description: 根据课程ID获取详细信息
+   *     tags: [Courses]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *         description: 课程ID
+   *     responses:
+   *       200:
+   *         description: 课程详情获取成功
+   *         content:
+   *           application/json:
+   *             schema:
+   *               allOf:
+   *                 - $ref: '#/components/schemas/ApiResponse'
+   *                 - type: object
+   *                   properties:
+   *                     data:
+   *                       $ref: '#/components/schemas/Course'
+   *       404:
+   *         description: 课程不存在
+   *       500:
+   *         description: 服务器内部错误
    */
   getCourse: async (id: string): Promise<Course> => {
     try {
@@ -58,16 +174,19 @@ export const coursesApi = {
       } else {
         console.warn('API unavailable, using mock data for course details');
         // 从模拟数据中查找课程
-        const course = mockCourses.find(c => c.id === id);
+        const course = mockCourses.find((c) => c.id === id);
         if (!course) {
           throw new Error(`Course with id ${id} not found`);
         }
         return course;
       }
     } catch (error) {
-      console.error('Failed to fetch course details, falling back to mock data:', error);
+      console.error(
+        'Failed to fetch course details, falling back to mock data:',
+        error
+      );
       // 从模拟数据中查找课程
-      const course = mockCourses.find(c => c.id === id);
+      const course = mockCourses.find((c) => c.id === id);
       if (!course) {
         throw new Error(`Course with id ${id} not found`);
       }
@@ -117,6 +236,29 @@ export const coursesApi = {
 
   /**
    * 获取课程分类
+   *
+   * @swagger
+   * /api/courses/categories:
+   *   get:
+   *     summary: 获取课程分类
+   *     description: 获取所有课程分类，包含层级结构
+   *     tags: [Courses]
+   *     responses:
+   *       200:
+   *         description: 课程分类获取成功
+   *         content:
+   *           application/json:
+   *             schema:
+   *               allOf:
+   *                 - $ref: '#/components/schemas/ApiResponse'
+   *                 - type: object
+   *                   properties:
+   *                     data:
+   *                       type: array
+   *                       items:
+   *                         $ref: '#/components/schemas/CourseCategory'
+   *       500:
+   *         description: 服务器内部错误
    */
   getCategories: async (): Promise<
     Array<{
@@ -145,7 +287,10 @@ export const coursesApi = {
         return mockCategories;
       }
     } catch (error) {
-      console.error('Failed to fetch categories, falling back to mock data:', error);
+      console.error(
+        'Failed to fetch categories, falling back to mock data:',
+        error
+      );
       return mockCategories;
     }
   },

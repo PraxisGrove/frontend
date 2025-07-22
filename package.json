@@ -19,9 +19,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
-    "optimize": "node tools/optimization/quick-optimize.js"
+    "optimize": "node tools/optimization/quick-optimize.js",
+    "logs:start": "bash scripts/start-logging.sh",
+    "logs:stop": "bash scripts/stop-logging.sh",
+    "logs:view": "docker-compose -f docker-compose.logging.yml logs -f"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^9.0.3",
     "@formatjs/intl-localematcher": "^0.6.1",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -79,10 +83,14 @@
     "react-resizable-panels": "^3.0.3",
     "recharts": "2.15.4",
     "sonner": "^2.0.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-react": "^5.27.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.167.1",
     "vaul": "^1.1.2",
+    "winston": "^3.17.0",
+    "winston-elasticsearch": "^0.19.0",
     "zod": "^3.25.76",
     "zustand": "^4.5.7"
   },
@@ -103,6 +111,8 @@
     "@types/node": "^20.19.9",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-react": "^5.18.0",
     "@types/three": "^0.160.0",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
