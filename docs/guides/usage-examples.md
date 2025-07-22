@@ -45,14 +45,8 @@ export default function AdminPage() {
 import { useAuth } from '@/hooks/useAuth';
 
 export function UserProfile() {
-  const { 
-    user, 
-    isAuthenticated, 
-    isLoading, 
-    logout,
-    hasRole,
-    canAccess 
-  } = useAuth();
+  const { user, isAuthenticated, isLoading, logout, hasRole, canAccess } =
+    useAuth();
 
   if (isLoading) return <div>加载中...</div>;
   if (!isAuthenticated) return <div>请先登录</div>;
@@ -61,15 +55,11 @@ export function UserProfile() {
     <div>
       <h2>欢迎, {user.name}!</h2>
       <p>角色: {user.role}</p>
-      
-      {hasRole('admin') && (
-        <button>管理员功能</button>
-      )}
-      
-      {canAccess('instructor') && (
-        <button>创建课程</button>
-      )}
-      
+
+      {hasRole('admin') && <button>管理员功能</button>}
+
+      {canAccess('instructor') && <button>创建课程</button>}
+
       <button onClick={logout}>退出登录</button>
     </div>
   );
@@ -89,15 +79,15 @@ export function Navigation() {
   return (
     <nav>
       <a href="/">首页</a>
-      
+
       {isAuthenticated ? (
         <>
           <a href="/dashboard">仪表板</a>
-          
+
           <RoleGuard allowedRoles={['instructor', 'admin']}>
             <a href="/courses/create">创建课程</a>
           </RoleGuard>
-          
+
           <RoleGuard allowedRoles={['admin']}>
             <a href="/admin">管理面板</a>
           </RoleGuard>
@@ -132,17 +122,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="text-3xl font-bold text-center">登录账户</h2>
+          <h2 className="text-center text-3xl font-bold">登录账户</h2>
         </div>
-        
-        <LoginForm
-          onSuccess={handleSuccess}
-          onError={handleError}
-        />
-        
+
+        <LoginForm onSuccess={handleSuccess} onError={handleError} />
+
         <SocialLogin
           providers={['google', 'github']}
           onSuccess={handleSuccess}
@@ -162,13 +149,15 @@ import { PermissionChecker, PERMISSIONS } from '@/utils/permissions';
 
 export function checkUserPermissions(userRole: string) {
   const checker = new PermissionChecker(userRole as any);
-  
+
   return {
-    canCreateCourse: checker.hasPermission(PERMISSIONS.INSTRUCTOR.COURSES_CREATE),
+    canCreateCourse: checker.hasPermission(
+      PERMISSIONS.INSTRUCTOR.COURSES_CREATE
+    ),
     canManageUsers: checker.hasPermission(PERMISSIONS.ADMIN.USERS_CREATE),
     canViewAnalytics: checker.hasAnyPermission([
       PERMISSIONS.INSTRUCTOR.ANALYTICS_VIEW,
-      PERMISSIONS.ADMIN.ANALYTICS_FULL
+      PERMISSIONS.ADMIN.ANALYTICS_FULL,
     ]),
   };
 }
@@ -186,7 +175,7 @@ function MyComponent() {
 
 // 导出受保护的组件
 export default withPrivateRoute(MyComponent, {
-  requiredRole: 'instructor'
+  requiredRole: 'instructor',
 });
 ```
 
@@ -226,7 +215,7 @@ export function CustomAuthForm() {
     <RegisterForm
       onSuccess={handleSuccess}
       onError={handleError}
-      className="max-w-lg mx-auto"
+      className="mx-auto max-w-lg"
     />
   );
 }
@@ -243,27 +232,33 @@ import { PermissionChecker } from '@/utils/permissions';
 
 export function useCustomPermissions() {
   const { user } = useAuth();
-  
+
   if (!user) return null;
-  
+
   const checker = new PermissionChecker(user.role);
-  
+
   return {
     canEditProfile: checker.hasPermission('user:profile:update'),
     canCreateCourse: checker.hasPermission('instructor:courses:create'),
     canManageSystem: checker.hasPermission('admin:system:config'),
-    
+
     // 自定义业务逻辑
     canEditCourse: (courseOwnerId: string) => {
-      return user.id === courseOwnerId || checker.hasPermission('admin:courses:manage');
+      return (
+        user.id === courseOwnerId ||
+        checker.hasPermission('admin:courses:manage')
+      );
     },
-    
+
     canViewUserData: (targetUserId: string) => {
-      return user.id === targetUserId || checker.hasAnyPermission([
-        'instructor:students:view',
-        'admin:users:read'
-      ]);
-    }
+      return (
+        user.id === targetUserId ||
+        checker.hasAnyPermission([
+          'instructor:students:view',
+          'admin:users:read',
+        ])
+      );
+    },
   };
 }
 ```
@@ -285,11 +280,11 @@ export const routePermissions = {
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const config = routePermissions[pathname];
-  
+
   if (config?.requireAuth) {
     // 执行认证检查
   }
-  
+
   if (config?.requiredRole) {
     // 执行角色检查
   }
@@ -313,12 +308,12 @@ export function useDynamicPermissions() {
 
     // 从服务器获取用户的动态权限
     fetch(`/api/users/${user.id}/permissions`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setPermissions(data.permissions);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Failed to load permissions:', error);
         setLoading(false);
       });
@@ -342,8 +337,8 @@ jest.mock('@/hooks/useAuth', () => ({
   useAuth: () => ({
     isAuthenticated: true,
     user: { id: '1', role: 'user' },
-    canAccess: (role: string) => role === 'user'
-  })
+    canAccess: (role: string) => role === 'user',
+  }),
 }));
 
 test('renders protected content for authenticated user', () => {
@@ -352,7 +347,7 @@ test('renders protected content for authenticated user', () => {
       <div>Protected Content</div>
     </PrivateRoute>
   );
-  
+
   expect(screen.getByText('Protected Content')).toBeInTheDocument();
 });
 ```
@@ -365,7 +360,7 @@ import { PermissionChecker } from '@/utils/permissions';
 
 test('admin has all permissions', () => {
   const checker = new PermissionChecker('admin');
-  
+
   expect(checker.hasPermission('user:profile:read')).toBe(true);
   expect(checker.hasPermission('instructor:courses:create')).toBe(true);
   expect(checker.hasPermission('admin:users:create')).toBe(true);
@@ -393,7 +388,8 @@ GITHUB_CLIENT_SECRET=your-github-client-secret
 ```tsx
 // config/auth.ts
 export const authConfig = {
-  tokenStorage: process.env.NODE_ENV === 'production' ? 'cookie' : 'localStorage',
+  tokenStorage:
+    process.env.NODE_ENV === 'production' ? 'cookie' : 'localStorage',
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict' as const,

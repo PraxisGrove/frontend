@@ -93,7 +93,7 @@ export function TextInput<TFieldValues extends FieldValues = FieldValues>({
       />
 
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />
@@ -162,7 +162,7 @@ export function PasswordInput<TFieldValues extends FieldValues = FieldValues>({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground absolute right-3 top-1/2 -translate-y-1/2"
           >
             {showPassword ? (
               <EyeOff className="h-4 w-4" />
@@ -174,7 +174,7 @@ export function PasswordInput<TFieldValues extends FieldValues = FieldValues>({
       </div>
 
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />
@@ -262,7 +262,7 @@ export function NumberInput<TFieldValues extends FieldValues = FieldValues>({
       />
 
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />
@@ -334,7 +334,7 @@ export function TextareaInput<TFieldValues extends FieldValues = FieldValues>({
       />
 
       {maxLength && (
-        <div className="flex justify-between text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex justify-between text-sm">
           <span>{description}</span>
           <span>
             {field.value?.length || 0}/{maxLength}
@@ -343,7 +343,7 @@ export function TextareaInput<TFieldValues extends FieldValues = FieldValues>({
       )}
 
       {description && !maxLength && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />

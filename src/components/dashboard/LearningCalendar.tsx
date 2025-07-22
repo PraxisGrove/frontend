@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, BookOpen } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar as CalendarIcon,
+  Clock,
+  BookOpen,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -49,13 +55,21 @@ export function LearningCalendar({
   const [viewDate, setViewDate] = useState(currentDate);
 
   // 获取当前月份的第一天和最后一天
-  const firstDayOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
-  const lastDayOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0);
-  
+  const firstDayOfMonth = new Date(
+    viewDate.getFullYear(),
+    viewDate.getMonth(),
+    1
+  );
+  const lastDayOfMonth = new Date(
+    viewDate.getFullYear(),
+    viewDate.getMonth() + 1,
+    0
+  );
+
   // 获取日历开始日期（包含上个月的日期）
   const startDate = new Date(firstDayOfMonth);
   startDate.setDate(startDate.getDate() - firstDayOfMonth.getDay());
-  
+
   // 获取日历结束日期（包含下个月的日期）
   const endDate = new Date(lastDayOfMonth);
   endDate.setDate(endDate.getDate() + (6 - lastDayOfMonth.getDay()));
@@ -71,7 +85,7 @@ export function LearningCalendar({
   // 获取指定日期的学习数据
   const getLearningData = (date: Date): LearningDay | null => {
     const dateString = date.toISOString().split('T')[0];
-    return data.find(item => item.date === dateString) || null;
+    return data.find((item) => item.date === dateString) || null;
   };
 
   // 获取学习强度颜色
@@ -123,24 +137,36 @@ export function LearningCalendar({
   };
 
   // 计算学习统计
-  const currentMonthData = data.filter(item => {
+  const currentMonthData = data.filter((item) => {
     const itemDate = new Date(item.date);
-    return itemDate.getMonth() === viewDate.getMonth() && 
-           itemDate.getFullYear() === viewDate.getFullYear();
+    return (
+      itemDate.getMonth() === viewDate.getMonth() &&
+      itemDate.getFullYear() === viewDate.getFullYear()
+    );
   });
 
-  const totalStudyTime = currentMonthData.reduce((sum, item) => sum + item.studyTime, 0);
-  const totalLessons = currentMonthData.reduce((sum, item) => sum + item.completedLessons, 0);
-  const studyDays = currentMonthData.filter(item => item.studyTime > 0).length;
+  const totalStudyTime = currentMonthData.reduce(
+    (sum, item) => sum + item.studyTime,
+    0
+  );
+  const totalLessons = currentMonthData.reduce(
+    (sum, item) => sum + item.completedLessons,
+    0
+  );
+  const studyDays = currentMonthData.filter(
+    (item) => item.studyTime > 0
+  ).length;
   const longestStreak = calculateLongestStreak(currentMonthData);
 
   // 计算最长连续学习天数
   function calculateLongestStreak(data: LearningDay[]): number {
     let maxStreak = 0;
     let currentStreak = 0;
-    
-    const sortedData = data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    
+
+    const sortedData = data.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
     for (let i = 0; i < sortedData.length; i++) {
       if (sortedData[i].studyTime > 0) {
         currentStreak++;
@@ -149,7 +175,7 @@ export function LearningCalendar({
         currentStreak = 0;
       }
     }
-    
+
     return maxStreak;
   }
 
@@ -250,7 +276,9 @@ export function LearningCalendar({
                 {calendarDays.map((date, index) => {
                   const learningData = getLearningData(date);
                   const hasData = learningData && learningData.studyTime > 0;
-                  const intensityColor = getIntensityColor(learningData?.studyTime || 0);
+                  const intensityColor = getIntensityColor(
+                    learningData?.studyTime || 0
+                  );
 
                   return (
                     <TooltipProvider key={index}>
@@ -260,23 +288,27 @@ export function LearningCalendar({
                             onClick={() => onDateSelect?.(date)}
                             className={`
                               relative h-12 w-full rounded-lg border transition-all hover:scale-105
-                              ${isCurrentMonth(date) 
-                                ? 'border-gray-200 dark:border-gray-700' 
-                                : 'border-gray-100 dark:border-gray-800 opacity-50'
+                              ${
+                                isCurrentMonth(date)
+                                  ? 'border-gray-200 dark:border-gray-700'
+                                  : 'border-gray-100 opacity-50 dark:border-gray-800'
                               }
-                              ${isToday(date) 
-                                ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900' 
-                                : ''
+                              ${
+                                isToday(date)
+                                  ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900'
+                                  : ''
                               }
                               ${intensityColor}
                             `}
                           >
                             <div className="flex h-full flex-col items-center justify-center">
-                              <span className={`text-sm font-medium ${
-                                isCurrentMonth(date) 
-                                  ? 'text-gray-900 dark:text-white' 
-                                  : 'text-gray-400 dark:text-gray-600'
-                              }`}>
+                              <span
+                                className={`text-sm font-medium ${
+                                  isCurrentMonth(date)
+                                    ? 'text-gray-900 dark:text-white'
+                                    : 'text-gray-400 dark:text-gray-600'
+                                }`}
+                              >
                                 {date.getDate()}
                               </span>
                               {hasData && (
@@ -310,10 +342,15 @@ export function LearningCalendar({
                                 {learningData.courses.length > 0 && (
                                   <div className="space-y-1">
                                     {learningData.courses.map((course, idx) => (
-                                      <div key={idx} className="flex items-center gap-1 text-xs">
-                                        <div 
+                                      <div
+                                        key={idx}
+                                        className="flex items-center gap-1 text-xs"
+                                      >
+                                        <div
                                           className="h-2 w-2 rounded-full"
-                                          style={{ backgroundColor: course.color }}
+                                          style={{
+                                            backgroundColor: course.color,
+                                          }}
                                         />
                                         {course.name}
                                       </div>

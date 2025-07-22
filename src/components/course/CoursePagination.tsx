@@ -255,7 +255,11 @@ export function CoursePagination({
                 if (e.key === 'Enter') {
                   const target = e.target as HTMLInputElement;
                   const pageNum = parseInt(target.value);
-                  if (pageNum >= 1 && pageNum <= totalPages && pageNum !== page) {
+                  if (
+                    pageNum >= 1 &&
+                    pageNum <= totalPages &&
+                    pageNum !== page
+                  ) {
                     onPageChange(pageNum);
                     target.value = '';
                   }

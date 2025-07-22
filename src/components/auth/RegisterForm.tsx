@@ -31,10 +31,7 @@ const registerSchema = z
       .min(1, '请输入名')
       .min(2, '名至少需要2个字符')
       .max(20, '名不能超过20个字符'),
-    email: z
-      .string()
-      .min(1, '请输入邮箱地址')
-      .email('请输入有效的邮箱地址'),
+    email: z.string().min(1, '请输入邮箱地址').email('请输入有效的邮箱地址'),
     password: z
       .string()
       .min(1, '请输入密码')
@@ -144,7 +141,8 @@ export function RegisterForm({
       });
       onSuccess?.();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : '注册失败，请重试';
+      const errorMessage =
+        err instanceof Error ? err.message : '注册失败，请重试';
       onError?.(errorMessage);
     }
   };
@@ -190,7 +188,9 @@ export function RegisterForm({
               type="text"
               placeholder="请输入您的姓"
               {...register('firstName')}
-              className={errors.firstName ? 'border-red-500 focus:border-red-500' : ''}
+              className={
+                errors.firstName ? 'border-red-500 focus:border-red-500' : ''
+              }
               disabled={isLoading || isSubmitting}
             />
             {errors.firstName && (
@@ -210,7 +210,9 @@ export function RegisterForm({
               type="text"
               placeholder="请输入您的名"
               {...register('lastName')}
-              className={errors.lastName ? 'border-red-500 focus:border-red-500' : ''}
+              className={
+                errors.lastName ? 'border-red-500 focus:border-red-500' : ''
+              }
               disabled={isLoading || isSubmitting}
             />
             {errors.lastName && (
@@ -233,7 +235,9 @@ export function RegisterForm({
             type="email"
             placeholder="请输入您的邮箱"
             {...register('email')}
-            className={errors.email ? 'border-red-500 focus:border-red-500' : ''}
+            className={
+              errors.email ? 'border-red-500 focus:border-red-500' : ''
+            }
             disabled={isLoading || isSubmitting}
           />
           {errors.email && (
@@ -277,8 +281,12 @@ export function RegisterForm({
           {passwordValue && (
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600 dark:text-gray-300">密码强度:</span>
-                <span className={`font-medium ${passwordStrength >= 75 ? 'text-green-600' : passwordStrength >= 50 ? 'text-yellow-600' : 'text-red-600'}`}>
+                <span className="text-gray-600 dark:text-gray-300">
+                  密码强度:
+                </span>
+                <span
+                  className={`font-medium ${passwordStrength >= 75 ? 'text-green-600' : passwordStrength >= 50 ? 'text-yellow-600' : 'text-red-600'}`}
+                >
                   {getPasswordStrengthText(passwordStrength)}
                 </span>
               </div>
@@ -293,7 +301,10 @@ export function RegisterForm({
           {passwordValue && (
             <div className="space-y-1">
               {passwordRequirements.map((req, index) => (
-                <div key={index} className="flex items-center space-x-2 text-sm">
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 text-sm"
+                >
                   {req.met ? (
                     <Check className="h-3 w-3 text-green-500" />
                   ) : (
@@ -366,7 +377,7 @@ export function RegisterForm({
             />
             <Label
               htmlFor="agreeTerms"
-              className="text-sm font-normal cursor-pointer leading-relaxed"
+              className="cursor-pointer text-sm font-normal leading-relaxed"
             >
               我同意{' '}
               <Link

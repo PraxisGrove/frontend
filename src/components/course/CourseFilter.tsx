@@ -71,17 +71,23 @@ export function CourseFilter({
   ];
 
   // 更新过滤器
-  const updateFilters = useCallback((newFilters: Partial<CoursesQueryParams>) => {
-    const updatedFilters = { ...filters, ...newFilters };
-    setFilters(updatedFilters);
-    onFilterChange(updatedFilters);
-  }, [filters, onFilterChange]);
+  const updateFilters = useCallback(
+    (newFilters: Partial<CoursesQueryParams>) => {
+      const updatedFilters = { ...filters, ...newFilters };
+      setFilters(updatedFilters);
+      onFilterChange(updatedFilters);
+    },
+    [filters, onFilterChange]
+  );
 
   // 处理搜索
-  const handleSearch = useCallback((value: string) => {
-    setSearchValue(value);
-    updateFilters({ search: value || undefined });
-  }, [updateFilters]);
+  const handleSearch = useCallback(
+    (value: string) => {
+      setSearchValue(value);
+      updateFilters({ search: value || undefined });
+    },
+    [updateFilters]
+  );
 
   // 处理搜索提交
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -131,7 +137,8 @@ export function CourseFilter({
     if (filters.search) count++;
     if (filters.category) count++;
     if (filters.level) count++;
-    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) count++;
+    if (filters.minPrice !== undefined || filters.maxPrice !== undefined)
+      count++;
     return count;
   };
 
@@ -168,7 +175,10 @@ export function CourseFilter({
       <AnimatedContainer animation="slideDown" delay={0.2}>
         <div className="flex flex-wrap items-center gap-4">
           {/* 分类选择 */}
-          <Select value={filters.category || ''} onValueChange={handleCategoryChange}>
+          <Select
+            value={filters.category || ''}
+            onValueChange={handleCategoryChange}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="选择分类" />
             </SelectTrigger>
@@ -248,14 +258,17 @@ export function CourseFilter({
 
                 {/* 价格范围 */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium">价格范围</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    价格范围
+                  </label>
                   <div className="space-y-2">
                     {priceRanges.map((range, index) => (
                       <button
                         key={index}
                         onClick={() => handlePriceRangeChange(range)}
                         className={`block w-full rounded-md px-3 py-2 text-left text-sm transition-colors ${
-                          filters.minPrice === range.min && filters.maxPrice === range.max
+                          filters.minPrice === range.min &&
+                          filters.maxPrice === range.max
                             ? 'bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100'
                             : 'hover:bg-gray-100 dark:hover:bg-gray-800'
                         }`}
@@ -270,13 +283,19 @@ export function CourseFilter({
 
                 {/* 其他筛选选项 */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium">课程特色</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    课程特色
+                  </label>
                   <div className="space-y-2">
                     <label className="flex items-center space-x-2">
                       <input
                         type="checkbox"
                         checked={filters.featured || false}
-                        onChange={(e) => updateFilters({ featured: e.target.checked || undefined })}
+                        onChange={(e) =>
+                          updateFilters({
+                            featured: e.target.checked || undefined,
+                          })
+                        }
                         className="rounded border-gray-300"
                       />
                       <span className="text-sm">精选课程</span>
@@ -285,7 +304,11 @@ export function CourseFilter({
                       <input
                         type="checkbox"
                         checked={filters.popular || false}
-                        onChange={(e) => updateFilters({ popular: e.target.checked || undefined })}
+                        onChange={(e) =>
+                          updateFilters({
+                            popular: e.target.checked || undefined,
+                          })
+                        }
                         className="rounded border-gray-300"
                       />
                       <span className="text-sm">热门课程</span>
@@ -327,7 +350,9 @@ export function CourseFilter({
             )}
             {filters.category && (
               <Badge variant="secondary" className="flex items-center gap-1">
-                分类: {categories.find(c => c.slug === filters.category)?.name || filters.category}
+                分类:{' '}
+                {categories.find((c) => c.slug === filters.category)?.name ||
+                  filters.category}
                 <button
                   onClick={() => updateFilters({ category: undefined })}
                   className="ml-1 hover:text-red-500"
@@ -338,7 +363,9 @@ export function CourseFilter({
             )}
             {filters.level && (
               <Badge variant="secondary" className="flex items-center gap-1">
-                级别: {levelOptions.find(l => l.value === filters.level)?.label || filters.level}
+                级别:{' '}
+                {levelOptions.find((l) => l.value === filters.level)?.label ||
+                  filters.level}
                 <button
                   onClick={() => updateFilters({ level: undefined })}
                   className="ml-1 hover:text-red-500"
@@ -347,11 +374,14 @@ export function CourseFilter({
                 </button>
               </Badge>
             )}
-            {(filters.minPrice !== undefined || filters.maxPrice !== undefined) && (
+            {(filters.minPrice !== undefined ||
+              filters.maxPrice !== undefined) && (
               <Badge variant="secondary" className="flex items-center gap-1">
                 价格: ¥{filters.minPrice || 0}-{filters.maxPrice || '∞'}
                 <button
-                  onClick={() => updateFilters({ minPrice: undefined, maxPrice: undefined })}
+                  onClick={() =>
+                    updateFilters({ minPrice: undefined, maxPrice: undefined })
+                  }
                   className="ml-1 hover:text-red-500"
                 >
                   <X className="h-3 w-3" />

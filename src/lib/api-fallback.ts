@@ -15,13 +15,16 @@ export async function checkApiHealth(): Promise<boolean> {
 
     // 首先尝试直接连接后端 API
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/health`, {
-        method: 'GET',
-        signal: controller.signal,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/health`,
+        {
+          method: 'GET',
+          signal: controller.signal,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       clearTimeout(timeoutId);
       if (response.ok) {
@@ -98,10 +101,20 @@ export const mockCategories = [
     icon: '🤖',
     coursesCount: 15,
     children: [
-      { id: '3-1', name: '机器学习', slug: 'machine-learning', coursesCount: 6 },
+      {
+        id: '3-1',
+        name: '机器学习',
+        slug: 'machine-learning',
+        coursesCount: 6,
+      },
       { id: '3-2', name: '深度学习', slug: 'deep-learning', coursesCount: 4 },
       { id: '3-3', name: '自然语言处理', slug: 'nlp', coursesCount: 3 },
-      { id: '3-4', name: '计算机视觉', slug: 'computer-vision', coursesCount: 2 },
+      {
+        id: '3-4',
+        name: '计算机视觉',
+        slug: 'computer-vision',
+        coursesCount: 2,
+      },
     ],
   },
   {
@@ -113,7 +126,12 @@ export const mockCategories = [
     coursesCount: 12,
     children: [
       { id: '4-1', name: '数据分析', slug: 'data-analysis', coursesCount: 5 },
-      { id: '4-2', name: '数据可视化', slug: 'data-visualization', coursesCount: 3 },
+      {
+        id: '4-2',
+        name: '数据可视化',
+        slug: 'data-visualization',
+        coursesCount: 3,
+      },
       { id: '4-3', name: '统计学', slug: 'statistics', coursesCount: 4 },
     ],
   },
@@ -125,7 +143,12 @@ export const mockCategories = [
     icon: '📱',
     coursesCount: 10,
     children: [
-      { id: '5-1', name: 'React Native', slug: 'react-native', coursesCount: 4 },
+      {
+        id: '5-1',
+        name: 'React Native',
+        slug: 'react-native',
+        coursesCount: 4,
+      },
       { id: '5-2', name: 'Flutter', slug: 'flutter', coursesCount: 3 },
       { id: '5-3', name: 'iOS', slug: 'ios', coursesCount: 2 },
       { id: '5-4', name: 'Android', slug: 'android', coursesCount: 1 },
@@ -140,7 +163,8 @@ export const mockCourses: Course[] = [
   {
     id: '1',
     title: 'React 18 完整指南',
-    description: '从零开始学习 React 18 的所有新特性，包括并发特性、Suspense、Server Components 等。',
+    description:
+      '从零开始学习 React 18 的所有新特性，包括并发特性、Suspense、Server Components 等。',
     shortDescription: '全面掌握 React 18 新特性',
     instructor: {
       id: 'instructor-1',
@@ -219,7 +243,8 @@ export const mockCourses: Course[] = [
   {
     id: '2',
     title: 'Python 机器学习实战',
-    description: '使用 Python 和 scikit-learn 构建机器学习模型，从数据预处理到模型部署的完整流程。',
+    description:
+      '使用 Python 和 scikit-learn 构建机器学习模型，从数据预处理到模型部署的完整流程。',
     shortDescription: 'Python 机器学习从入门到实战',
     instructor: {
       id: 'instructor-2',
@@ -289,7 +314,8 @@ export const mockCourses: Course[] = [
   {
     id: '3',
     title: 'Vue.js 3 企业级开发',
-    description: '学习 Vue.js 3 的组合式 API、TypeScript 集成、状态管理等企业级开发技能。',
+    description:
+      '学习 Vue.js 3 的组合式 API、TypeScript 集成、状态管理等企业级开发技能。',
     shortDescription: 'Vue.js 3 企业级应用开发',
     instructor: {
       id: 'instructor-3',
@@ -413,7 +439,9 @@ export class ApiFallbackHandler {
     this.apiHealthy = await checkApiHealth();
     this.lastHealthCheck = now;
 
-    console.log(`API Health Check: ${this.apiHealthy ? '✅ Healthy' : '❌ Unhealthy'}`);
+    console.log(
+      `API Health Check: ${this.apiHealthy ? '✅ Healthy' : '❌ Unhealthy'}`
+    );
 
     return this.apiHealthy;
   }

@@ -85,14 +85,14 @@ export class PermissionChecker {
    * 检查是否具有任意一个权限
    */
   hasAnyPermission(permissions: Permission[]): boolean {
-    return permissions.some(permission => this.hasPermission(permission));
+    return permissions.some((permission) => this.hasPermission(permission));
   }
 
   /**
    * 检查是否具有所有权限
    */
   hasAllPermissions(permissions: Permission[]): boolean {
-    return permissions.every(permission => this.hasPermission(permission));
+    return permissions.every((permission) => this.hasPermission(permission));
   }
 
   /**
@@ -140,8 +140,6 @@ export class PermissionChecker {
   isAdmin(): boolean {
     return this.userRole === 'admin';
   }
-
-
 
   /**
    * 检查是否为普通用户
@@ -215,8 +213,8 @@ export const PermissionUtils = {
    */
   getAllPermissions(): Permission[] {
     const allPermissions = new Set<Permission>();
-    Object.values(ROLE_PERMISSIONS).forEach(permissions => {
-      permissions.forEach(permission => allPermissions.add(permission));
+    Object.values(ROLE_PERMISSIONS).forEach((permissions) => {
+      permissions.forEach((permission) => allPermissions.add(permission));
     });
     return Array.from(allPermissions);
   },
@@ -240,7 +238,11 @@ export const PermissionUtils = {
  * 权限装饰器工厂
  */
 export function requirePermission(permission: Permission) {
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
     const originalMethod = descriptor.value;
 
     descriptor.value = function (...args: any[]) {

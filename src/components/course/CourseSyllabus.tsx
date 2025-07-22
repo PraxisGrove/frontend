@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, Play, FileText, HelpCircle, PenTool, Clock, Eye } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronRight,
+  Play,
+  FileText,
+  HelpCircle,
+  PenTool,
+  Clock,
+  Eye,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -36,7 +45,9 @@ export function CourseSyllabus({
   onLessonClick,
   className = '',
 }: CourseSyllabusProps) {
-  const [expandedChapters, setExpandedChapters] = useState<Set<string>>(new Set());
+  const [expandedChapters, setExpandedChapters] = useState<Set<string>>(
+    new Set()
+  );
 
   const { curriculum, lessonsCount } = course;
 
@@ -53,7 +64,7 @@ export function CourseSyllabus({
 
   // 展开所有章节
   const expandAll = () => {
-    setExpandedChapters(new Set(curriculum.map(chapter => chapter.id)));
+    setExpandedChapters(new Set(curriculum.map((chapter) => chapter.id)));
   };
 
   // 折叠所有章节
@@ -105,13 +116,16 @@ export function CourseSyllabus({
 
   // 计算章节总时长
   const getChapterDuration = (chapter: CourseChapter) => {
-    return chapter.lessons.reduce((total, lesson) => total + lesson.duration, 0);
+    return chapter.lessons.reduce(
+      (total, lesson) => total + lesson.duration,
+      0
+    );
   };
 
   // 计算章节完成进度
   const getChapterProgress = (chapter: CourseChapter) => {
     if (!userProgress) return 0;
-    const completedLessons = chapter.lessons.filter(lesson =>
+    const completedLessons = chapter.lessons.filter((lesson) =>
       userProgress.completedLessons.includes(lesson.id)
     ).length;
     return Math.round((completedLessons / chapter.lessons.length) * 100);
@@ -244,7 +258,11 @@ export function CourseSyllabus({
                                   <div className="flex items-center gap-2">
                                     {isCompleted ? (
                                       <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-white">
-                                        <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg
+                                          className="h-3 w-3"
+                                          fill="currentColor"
+                                          viewBox="0 0 20 20"
+                                        >
                                           <path
                                             fillRule="evenodd"
                                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -274,11 +292,17 @@ export function CourseSyllabus({
                                       >
                                         {lesson.title}
                                       </span>
-                                      <Badge variant="outline" className="text-xs">
+                                      <Badge
+                                        variant="outline"
+                                        className="text-xs"
+                                      >
                                         {getLessonTypeText(lesson.type)}
                                       </Badge>
                                       {lesson.isPreview && (
-                                        <Badge variant="secondary" className="text-xs">
+                                        <Badge
+                                          variant="secondary"
+                                          className="text-xs"
+                                        >
                                           <Eye className="mr-1 h-3 w-3" />
                                           预览
                                         </Badge>
@@ -295,14 +319,20 @@ export function CourseSyllabus({
                                   <span className="text-xs text-gray-500 dark:text-gray-400">
                                     {formatDuration(lesson.duration)}
                                   </span>
-                                  {(lesson.isPreview || isCompleted || userProgress) && (
+                                  {(lesson.isPreview ||
+                                    isCompleted ||
+                                    userProgress) && (
                                     <Button
                                       variant="ghost"
                                       size="sm"
                                       onClick={() => onLessonClick?.(lesson.id)}
                                       className="h-8 px-2 text-xs"
                                     >
-                                      {lesson.isPreview ? '预览' : isCompleted ? '重播' : '播放'}
+                                      {lesson.isPreview
+                                        ? '预览'
+                                        : isCompleted
+                                          ? '重播'
+                                          : '播放'}
                                     </Button>
                                   )}
                                 </div>

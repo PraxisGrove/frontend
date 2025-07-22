@@ -27,11 +27,13 @@ PraxisGrove 采用简化的两级用户角色系统，提供清晰的权限管�
 ### 角色特性
 
 #### 👤 普通用户 (user)
+
 - **目标用户**: 学习者、学生
 - **主要功能**: 学习课程、管理个人资料
 - **权限范围**: 个人数据和学习相关功能
 
 #### 👑 管理员 (admin)
+
 - **目标用户**: 系统管理员、内容管理者
 - **主要功能**: 系统管理、用户管理、内容管理
 - **权限范围**: 完整的系统访问权限
@@ -40,34 +42,36 @@ PraxisGrove 采用简化的两级用户角色系统，提供清晰的权限管�
 
 ### 权限分类
 
-#### 用户权限 (user:*)
+#### 用户权限 (user:\*)
+
 ```typescript
-'user:profile:read'     // 查看个人资料
-'user:profile:update'   // 更新个人资料
-'user:courses:enroll'   // 报名课程
-'user:courses:view'     // 查看课程
-'user:progress:view'    // 查看学习进度
+'user:profile:read'; // 查看个人资料
+'user:profile:update'; // 更新个人资料
+'user:courses:enroll'; // 报名课程
+'user:courses:view'; // 查看课程
+'user:progress:view'; // 查看学习进度
 ```
 
-#### 管理员权限 (admin:*)
+#### 管理员权限 (admin:\*)
+
 ```typescript
 // 用户管理
-'admin:users:create'    // 创建用户
-'admin:users:read'      // 查看用户
-'admin:users:update'    // 更新用户
-'admin:users:delete'    // 删除用户
+'admin:users:create'; // 创建用户
+'admin:users:read'; // 查看用户
+'admin:users:update'; // 更新用户
+'admin:users:delete'; // 删除用户
 
 // 课程管理
-'admin:courses:create'  // 创建课程
-'admin:courses:update'  // 更新课程
-'admin:courses:delete'  // 删除课程
-'admin:courses:manage'  // 管理课程
+'admin:courses:create'; // 创建课程
+'admin:courses:update'; // 更新课程
+'admin:courses:delete'; // 删除课程
+'admin:courses:manage'; // 管理课程
 
 // 系统管理
-'admin:students:view'   // 查看学生数据
-'admin:system:config'   // 系统配置
-'admin:analytics:view'  // 查看分析数据
-'admin:roles:manage'    // 角色管理
+'admin:students:view'; // 查看学生数据
+'admin:system:config'; // 系统配置
+'admin:analytics:view'; // 查看分析数据
+'admin:roles:manage'; // 角色管理
 ```
 
 ### 权限继承
@@ -157,7 +161,7 @@ function Navigation() {
           <Link href="/profile">个人资料</Link>
         </>
       )}
-      
+
       {hasRole('admin') && (
         <>
           <Link href="/admin">管理后台</Link>
@@ -179,10 +183,10 @@ function Dashboard() {
   return (
     <div>
       <h1>欢迎, {user?.name}!</h1>
-      
+
       {/* 所有用户都能看到 */}
       <UserStats />
-      
+
       {/* 只有管理员能看到 */}
       {hasRole('admin') && (
         <div>
@@ -245,13 +249,13 @@ if (hasRole('admin')) {
 
 #### 3. 权限映射
 
-| 旧权限 | 新权限 |
-|--------|--------|
+| 旧权限                      | 新权限                 |
+| --------------------------- | ---------------------- |
 | `instructor:courses:create` | `admin:courses:create` |
 | `instructor:courses:update` | `admin:courses:update` |
 | `instructor:courses:delete` | `admin:courses:delete` |
 | `instructor:courses:manage` | `admin:courses:manage` |
-| `instructor:students:view` | `admin:students:view` |
+| `instructor:students:view`  | `admin:students:view`  |
 | `instructor:analytics:view` | `admin:analytics:view` |
 
 ## 🧪 测试
@@ -264,14 +268,14 @@ import { PermissionChecker } from '@/utils/permissions';
 describe('权限系统', () => {
   it('用户权限检查', () => {
     const userChecker = new PermissionChecker('user');
-    
+
     expect(userChecker.hasPermission('user:profile:read')).toBe(true);
     expect(userChecker.hasPermission('admin:users:create')).toBe(false);
   });
 
   it('管理员权限检查', () => {
     const adminChecker = new PermissionChecker('admin');
-    
+
     expect(adminChecker.hasPermission('user:profile:read')).toBe(true);
     expect(adminChecker.hasPermission('admin:users:create')).toBe(true);
   });
@@ -281,16 +285,19 @@ describe('权限系统', () => {
 ## 📝 最佳实践
 
 ### 1. 权限检查原则
+
 - 总是在组件中进行权限检查
 - 使用 `hasRole()` 进行角色检查
 - 使用 `canAccess()` 进行功能访问检查
 
 ### 2. 安全考虑
+
 - 前端权限检查仅用于 UI 控制
 - 后端必须进行完整的权限验证
 - 敏感操作需要额外的安全检查
 
 ### 3. 用户体验
+
 - 提供清晰的权限不足提示
 - 隐藏用户无权访问的功能
 - 提供合适的降级体验

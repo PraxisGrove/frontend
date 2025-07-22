@@ -38,7 +38,10 @@ export interface UseWishlistReturn {
 
   // 排序和过滤
   sortWishlist: (sortBy: 'addedAt' | 'title' | 'price' | 'rating') => void;
-  filterWishlist: (filter: { level?: string; priceRange?: [number, number] }) => WishlistItem[];
+  filterWishlist: (filter: {
+    level?: string;
+    priceRange?: [number, number];
+  }) => WishlistItem[];
 
   // 便利方法
   getWishlistItem: (courseId: string) => WishlistItem | undefined;
@@ -84,7 +87,10 @@ export function useWishlist(): UseWishlistReturn {
   const sortWishlist = (sortBy: 'addedAt' | 'title' | 'price' | 'rating') => {
     console.log('Mock sortWishlist:', sortBy);
   };
-  const filterWishlist = (filter: { level?: string; priceRange?: [number, number] }) => {
+  const filterWishlist = (filter: {
+    level?: string;
+    priceRange?: [number, number];
+  }) => {
     console.log('Mock filterWishlist:', filter);
     return [];
   };
@@ -93,7 +99,7 @@ export function useWishlist(): UseWishlistReturn {
    * 获取收藏夹中的特定商品
    */
   const getWishlistItem = (courseId: string): WishlistItem | undefined => {
-    return items.find(item => item.courseId === courseId);
+    return items.find((item) => item.courseId === courseId);
   };
 
   /**

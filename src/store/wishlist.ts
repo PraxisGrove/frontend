@@ -44,7 +44,10 @@ export interface WishlistState {
 
   // 排序和过滤
   sortWishlist: (sortBy: 'addedAt' | 'title' | 'price' | 'rating') => void;
-  filterWishlist: (filter: { level?: string; priceRange?: [number, number] }) => WishlistItem[];
+  filterWishlist: (filter: {
+    level?: string;
+    priceRange?: [number, number];
+  }) => WishlistItem[];
 }
 
 /**
@@ -67,7 +70,7 @@ export const useWishlistStore = create<WishlistState>()(
         // 操作方法
         addToWishlist: async (courseId: string) => {
           const { items, isInWishlist } = get();
-          
+
           // 检查是否已在收藏夹中
           if (isInWishlist(courseId)) {
             set({ error: '课程已在收藏夹中' });
@@ -107,7 +110,7 @@ export const useWishlistStore = create<WishlistState>()(
         removeFromWishlist: (courseId: string) => {
           const { items } = get();
           set({
-            items: items.filter(item => item.courseId !== courseId),
+            items: items.filter((item) => item.courseId !== courseId),
             error: null,
           });
         },
@@ -121,7 +124,7 @@ export const useWishlistStore = create<WishlistState>()(
 
         isInWishlist: (courseId: string) => {
           const { items } = get();
-          return items.some(item => item.courseId === courseId);
+          return items.some((item) => item.courseId === courseId);
         },
 
         setLoading: (loading: boolean) => {
@@ -178,7 +181,7 @@ export const useWishlistStore = create<WishlistState>()(
         removeMultipleFromWishlist: (courseIds: string[]) => {
           const { items } = get();
           set({
-            items: items.filter(item => !courseIds.includes(item.courseId)),
+            items: items.filter((item) => !courseIds.includes(item.courseId)),
             error: null,
           });
         },
@@ -189,7 +192,9 @@ export const useWishlistStore = create<WishlistState>()(
           const sortedItems = [...items].sort((a, b) => {
             switch (sortBy) {
               case 'addedAt':
-                return new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime();
+                return (
+                  new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()
+                );
               case 'title':
                 return a.title.localeCompare(b.title);
               case 'price':
@@ -205,9 +210,12 @@ export const useWishlistStore = create<WishlistState>()(
         },
 
         // 过滤
-        filterWishlist: (filter: { level?: string; priceRange?: [number, number] }) => {
+        filterWishlist: (filter: {
+          level?: string;
+          priceRange?: [number, number];
+        }) => {
           const { items } = get();
-          return items.filter(item => {
+          return items.filter((item) => {
             if (filter.level && item.level !== filter.level) {
               return false;
             }
@@ -242,5 +250,6 @@ export const wishlistSelectors = {
   totalItems: (state: WishlistState) => state.totalItems,
   isLoading: (state: WishlistState) => state.isLoading,
   error: (state: WishlistState) => state.error,
-  isInWishlist: (courseId: string) => (state: WishlistState) => state.isInWishlist(courseId),
+  isInWishlist: (courseId: string) => (state: WishlistState) =>
+    state.isInWishlist(courseId),
 };

@@ -1,7 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ShoppingCart, Heart, Share2, Gift, Clock, Users, Award, Smartphone, Monitor, Download } from 'lucide-react';
+import {
+  ShoppingCart,
+  Heart,
+  Share2,
+  Gift,
+  Clock,
+  Users,
+  Award,
+  Smartphone,
+  Monitor,
+  Download,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -206,11 +217,7 @@ export function CoursePurchase({
                   </Button>
                 ) : (
                   <>
-                    <Button
-                      size="lg"
-                      className="w-full"
-                      onClick={handleBuyNow}
-                    >
+                    <Button size="lg" className="w-full" onClick={handleBuyNow}>
                       {price === 0 ? '免费学习' : '立即购买'}
                     </Button>
                     {price > 0 && (
@@ -222,7 +229,11 @@ export function CoursePurchase({
                         disabled={isAddingToCart || inCart}
                       >
                         <ShoppingCart className="mr-2 h-4 w-4" />
-                        {inCart ? '已在购物车' : isAddingToCart ? '添加中...' : '加入购物车'}
+                        {inCart
+                          ? '已在购物车'
+                          : isAddingToCart
+                            ? '添加中...'
+                            : '加入购物车'}
                       </Button>
                     )}
                   </>
@@ -237,7 +248,9 @@ export function CoursePurchase({
                   className="flex-1"
                   onClick={handleToggleWishlist}
                 >
-                  <Heart className={`mr-2 h-4 w-4 ${inWishlist ? 'fill-red-500 text-red-500' : ''}`} />
+                  <Heart
+                    className={`mr-2 h-4 w-4 ${inWishlist ? 'fill-red-500 text-red-500' : ''}`}
+                  />
                   {inWishlist ? '已收藏' : '收藏'}
                 </Button>
                 <Button
@@ -249,11 +262,7 @@ export function CoursePurchase({
                   <Share2 className="mr-2 h-4 w-4" />
                   分享
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1"
-                >
+                <Button variant="outline" size="sm" className="flex-1">
                   <Gift className="mr-2 h-4 w-4" />
                   赠送
                 </Button>
@@ -308,7 +317,9 @@ export function CoursePurchase({
               </h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <div className="text-gray-500 dark:text-gray-400">学员数量</div>
+                  <div className="text-gray-500 dark:text-gray-400">
+                    学员数量
+                  </div>
                   <div className="font-medium text-gray-900 dark:text-white">
                     {studentsCount.toLocaleString()}
                   </div>
@@ -320,16 +331,23 @@ export function CoursePurchase({
                   </div>
                 </div>
                 <div>
-                  <div className="text-gray-500 dark:text-gray-400">最后更新</div>
+                  <div className="text-gray-500 dark:text-gray-400">
+                    最后更新
+                  </div>
                   <div className="font-medium text-gray-900 dark:text-white">
                     {new Date(lastUpdated).toLocaleDateString('zh-CN')}
                   </div>
                 </div>
                 <div>
-                  <div className="text-gray-500 dark:text-gray-400">课程级别</div>
+                  <div className="text-gray-500 dark:text-gray-400">
+                    课程级别
+                  </div>
                   <div className="font-medium text-gray-900 dark:text-white">
-                    {course.level === 'beginner' ? '初级' :
-                      course.level === 'intermediate' ? '中级' : '高级'}
+                    {course.level === 'beginner'
+                      ? '初级'
+                      : course.level === 'intermediate'
+                        ? '中级'
+                        : '高级'}
                   </div>
                 </div>
               </div>

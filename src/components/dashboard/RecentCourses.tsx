@@ -73,7 +73,9 @@ export function RecentCourses({
   const formatLastAccessed = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    );
 
     if (diffInHours < 1) {
       return '刚刚';
@@ -139,7 +141,7 @@ export function RecentCourses({
         </CardHeader>
         <CardContent>
           <div className="py-8 text-center">
-            <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
               <BookOpen className="h-8 w-8 text-gray-400" />
             </div>
             <h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
@@ -149,9 +151,7 @@ export function RecentCourses({
               开始学习第一门课程吧！
             </p>
             <Link href="/courses">
-              <Button className="mt-4">
-                浏览课程
-              </Button>
+              <Button className="mt-4">浏览课程</Button>
             </Link>
           </div>
         </CardContent>
@@ -208,17 +208,19 @@ export function RecentCourses({
                 </div>
 
                 {/* 课程信息 */}
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-gray-900 dark:text-white line-clamp-1">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="line-clamp-1 font-medium text-gray-900 dark:text-white">
                         {course.title}
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-300">
                         {course.instructor}
                       </p>
                       <div className="mt-1 flex items-center gap-2">
-                        <Badge className={getDifficultyColor(course.difficulty)}>
+                        <Badge
+                          className={getDifficultyColor(course.difficulty)}
+                        >
                           {getDifficultyText(course.difficulty)}
                         </Badge>
                         <Badge variant="outline" className="text-xs">
@@ -236,24 +238,22 @@ export function RecentCourses({
                     {/* 操作菜单 */}
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
-                          <Link href={`/courses/${course.id}`}>
-                            查看详情
-                          </Link>
+                          <Link href={`/courses/${course.id}`}>查看详情</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                          <Link href={`/learn/${course.id}`}>
-                            从头开始
-                          </Link>
+                          <Link href={`/learn/${course.id}`}>从头开始</Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          移除记录
-                        </DropdownMenuItem>
+                        <DropdownMenuItem>移除记录</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -262,7 +262,8 @@ export function RecentCourses({
                   <div className="mt-3 space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-600 dark:text-gray-300">
-                        进度: {course.completedLessons}/{course.totalLessons} 课时
+                        进度: {course.completedLessons}/{course.totalLessons}{' '}
+                        课时
                       </span>
                       <span className="font-medium text-gray-900 dark:text-white">
                         {course.progress}%
@@ -273,16 +274,20 @@ export function RecentCourses({
 
                   {/* 下一课时和操作 */}
                   <div className="mt-3 flex items-center justify-between">
-                    <div className="flex-1 min-w-0">
+                    <div className="min-w-0 flex-1">
                       {course.nextLesson ? (
                         <div className="text-sm">
-                          <span className="text-gray-600 dark:text-gray-300">下一课时: </span>
-                          <span className="font-medium text-gray-900 dark:text-white line-clamp-1">
+                          <span className="text-gray-600 dark:text-gray-300">
+                            下一课时:{' '}
+                          </span>
+                          <span className="line-clamp-1 font-medium text-gray-900 dark:text-white">
                             {course.nextLesson.title}
                           </span>
                           <div className="flex items-center gap-1 text-xs text-gray-500">
                             <Clock className="h-3 w-3" />
-                            <span>{formatTime(course.nextLesson.duration)}</span>
+                            <span>
+                              {formatTime(course.nextLesson.duration)}
+                            </span>
                           </div>
                         </div>
                       ) : (

@@ -97,7 +97,7 @@ export function FormError({ name, className }: FormErrorProps) {
   if (!error) return null;
 
   return (
-    <p className={cn('mt-1 text-sm text-destructive', className)}>
+    <p className={cn('text-destructive mt-1 text-sm', className)}>
       {error.message as string}
     </p>
   );
@@ -128,7 +128,7 @@ export function FormLabel({
       )}
     >
       {children}
-      {required && <span className="ml-1 text-destructive">*</span>}
+      {required && <span className="text-destructive ml-1">*</span>}
     </label>
   );
 }
@@ -183,17 +183,17 @@ export function FormSubmit({
       disabled={isDisabled}
       className={cn(
         // 基础样式
-        'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
+        'focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50',
 
         // 变体样式
         {
-          'bg-primary text-primary-foreground shadow hover:bg-primary/90':
+          'bg-primary text-primary-foreground hover:bg-primary/90 shadow':
             variant === 'default',
-          'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90':
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm':
             variant === 'destructive',
-          'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground':
+          'border-input bg-background hover:bg-accent hover:text-accent-foreground border shadow-sm':
             variant === 'outline',
-          'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80':
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm':
             variant === 'secondary',
           'hover:bg-accent hover:text-accent-foreground': variant === 'ghost',
           'text-primary underline-offset-4 hover:underline': variant === 'link',
@@ -240,8 +240,8 @@ export function FormReset({ children, className, onReset }: FormResetProps) {
       type="button"
       onClick={handleReset}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
-        'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        'focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50',
+        'border-input bg-background hover:bg-accent hover:text-accent-foreground border shadow-sm',
         'h-9 px-4 py-2',
         className
       )}

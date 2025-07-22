@@ -19,10 +19,7 @@ import { useAuth } from '@/contexts/auth-provider';
  * 忘记密码表单验证模式
  */
 const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .min(1, '请输入邮箱地址')
-    .email('请输入有效的邮箱地址'),
+  email: z.string().min(1, '请输入邮箱地址').email('请输入有效的邮箱地址'),
 });
 
 /**
@@ -102,7 +99,8 @@ export function ResetPassword({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
-  const { forgotPassword, resetPassword, isLoading, error, clearError } = useAuth();
+  const { forgotPassword, resetPassword, isLoading, error, clearError } =
+    useAuth();
 
   // 忘记密码表单
   const forgotPasswordForm = useForm<ForgotPasswordFormData>({
@@ -136,7 +134,8 @@ export function ResetPassword({
       // 可以使用返回的消息，但这里我们只是设置状态
       console.log('Reset email sent:', message);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : '发送重置邮件失败，请重试';
+      const errorMessage =
+        err instanceof Error ? err.message : '发送重置邮件失败，请重试';
       onError?.(errorMessage);
     }
   };
@@ -156,7 +155,8 @@ export function ResetPassword({
       setResetSuccess(true);
       onSuccess?.();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : '重置密码失败，请重试';
+      const errorMessage =
+        err instanceof Error ? err.message : '重置密码失败，请重试';
       onError?.(errorMessage);
     }
   };
@@ -340,10 +340,11 @@ export function ResetPassword({
                 type={showPassword ? 'text' : 'password'}
                 placeholder="请输入新密码"
                 {...resetPasswordForm.register('password')}
-                className={`pr-10 ${resetPasswordForm.formState.errors.password
+                className={`pr-10 ${
+                  resetPasswordForm.formState.errors.password
                     ? 'border-red-500 focus:border-red-500'
                     : ''
-                  }`}
+                }`}
                 disabled={isLoading || resetPasswordForm.formState.isSubmitting}
               />
               <button
@@ -364,14 +365,17 @@ export function ResetPassword({
             {passwordValue && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-300">密码强度:</span>
+                  <span className="text-gray-600 dark:text-gray-300">
+                    密码强度:
+                  </span>
                   <span
-                    className={`font-medium ${passwordStrength >= 75
+                    className={`font-medium ${
+                      passwordStrength >= 75
                         ? 'text-green-600'
                         : passwordStrength >= 50
                           ? 'text-yellow-600'
                           : 'text-red-600'
-                      }`}
+                    }`}
                   >
                     {getPasswordStrengthText(passwordStrength)}
                   </span>
@@ -387,7 +391,10 @@ export function ResetPassword({
             {passwordValue && (
               <div className="space-y-1">
                 {passwordRequirements.map((req, index) => (
-                  <div key={index} className="flex items-center space-x-2 text-sm">
+                  <div
+                    key={index}
+                    className="flex items-center space-x-2 text-sm"
+                  >
                     {req.met ? (
                       <Check className="h-3 w-3 text-green-500" />
                     ) : (
@@ -395,7 +402,9 @@ export function ResetPassword({
                     )}
                     <span
                       className={
-                        req.met ? 'text-green-600' : 'text-gray-500 dark:text-gray-400'
+                        req.met
+                          ? 'text-green-600'
+                          : 'text-gray-500 dark:text-gray-400'
                       }
                     >
                       {req.text}
@@ -425,10 +434,11 @@ export function ResetPassword({
                 type={showConfirmPassword ? 'text' : 'password'}
                 placeholder="请再次输入新密码"
                 {...resetPasswordForm.register('confirmPassword')}
-                className={`pr-10 ${resetPasswordForm.formState.errors.confirmPassword
+                className={`pr-10 ${
+                  resetPasswordForm.formState.errors.confirmPassword
                     ? 'border-red-500 focus:border-red-500'
                     : ''
-                  }`}
+                }`}
                 disabled={isLoading || resetPasswordForm.formState.isSubmitting}
               />
               <button

@@ -1,17 +1,17 @@
 'use client';
 
 import React from 'react';
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Clock, 
-  BookOpen, 
-  Target, 
+import {
+  TrendingUp,
+  TrendingDown,
+  Clock,
+  BookOpen,
+  Target,
   Award,
   Calendar,
   Users,
   Star,
-  Zap
+  Zap,
 } from 'lucide-react';
 import {
   Card,
@@ -98,7 +98,9 @@ export function LearningStats({ stats, className = '' }: LearningStatsProps) {
   };
 
   return (
-    <div className={`grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${className}`}>
+    <div
+      className={`grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${className}`}
+    >
       {stats.map((stat, index) => {
         const IconComponent = getIcon(stat.icon);
         const trendInfo = stat.change ? getTrendIcon(stat.change.type) : null;
@@ -112,18 +114,25 @@ export function LearningStats({ stats, className = '' }: LearningStatsProps) {
           >
             <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-lg">
               {/* 背景装饰 */}
-              <div className={`absolute -right-4 -top-4 h-24 w-24 rounded-full opacity-10 ${stat.bgColor}`} />
-              
+              <div
+                className={`absolute -right-4 -top-4 h-24 w-24 rounded-full opacity-10 ${stat.bgColor}`}
+              />
+
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${stat.bgColor}`}>
+                  <div
+                    className={`flex h-10 w-10 items-center justify-center rounded-lg ${stat.bgColor}`}
+                  >
                     <IconComponent className={`h-5 w-5 ${stat.color}`} />
                   </div>
                   {stat.change && TrendIcon && (
-                    <div className={`flex items-center gap-1 ${trendInfo?.color}`}>
+                    <div
+                      className={`flex items-center gap-1 ${trendInfo?.color}`}
+                    >
                       <TrendIcon className="h-4 w-4" />
                       <span className="text-sm font-medium">
-                        {stat.change.value > 0 ? '+' : ''}{stat.change.value}%
+                        {stat.change.value > 0 ? '+' : ''}
+                        {stat.change.value}%
                       </span>
                     </div>
                   )}
@@ -167,8 +176,10 @@ export function LearningStats({ stats, className = '' }: LearningStatsProps) {
                           {stat.progress.current}/{stat.progress.total}
                         </span>
                       </div>
-                      <Progress 
-                        value={(stat.progress.current / stat.progress.total) * 100} 
+                      <Progress
+                        value={
+                          (stat.progress.current / stat.progress.total) * 100
+                        }
                         className="h-2"
                       />
                     </div>

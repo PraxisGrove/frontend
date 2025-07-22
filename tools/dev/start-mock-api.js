@@ -86,7 +86,10 @@ const mockData = {
 const server = http.createServer((req, res) => {
   // 设置 CORS 头
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS'
+  );
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   // 处理 OPTIONS 请求
@@ -109,12 +112,14 @@ const server = http.createServer((req, res) => {
     // 健康检查
     if (path === '/api/health') {
       res.writeHead(200);
-      res.end(JSON.stringify({
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        service: 'mock-api',
-        version: '1.0.0',
-      }));
+      res.end(
+        JSON.stringify({
+          status: 'ok',
+          timestamp: new Date().toISOString(),
+          service: 'mock-api',
+          version: '1.0.0',
+        })
+      );
       return;
     }
 
@@ -132,7 +137,7 @@ const server = http.createServer((req, res) => {
       const limit = parseInt(query.limit) || 12;
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
-      
+
       const paginatedCourses = mockData.courses.slice(startIndex, endIndex);
       const totalPages = Math.ceil(mockData.courses.length / limit);
 
@@ -158,8 +163,8 @@ const server = http.createServer((req, res) => {
     // 获取单个课程
     if (path.startsWith('/api/courses/') && method === 'GET') {
       const courseId = path.split('/')[3];
-      const course = mockData.courses.find(c => c.id === courseId);
-      
+      const course = mockData.courses.find((c) => c.id === courseId);
+
       if (course) {
         res.writeHead(200);
         res.end(JSON.stringify(course));
@@ -172,24 +177,27 @@ const server = http.createServer((req, res) => {
 
     // 404 - 路由不存在
     res.writeHead(404);
-    res.end(JSON.stringify({ 
-      error: 'Not Found',
-      message: `Route ${path} not found`,
-      availableRoutes: [
-        'GET /api/health',
-        'GET /api/courses/categories',
-        'GET /api/courses',
-        'GET /api/courses/:id',
-      ],
-    }));
-
+    res.end(
+      JSON.stringify({
+        error: 'Not Found',
+        message: `Route ${path} not found`,
+        availableRoutes: [
+          'GET /api/health',
+          'GET /api/courses/categories',
+          'GET /api/courses',
+          'GET /api/courses/:id',
+        ],
+      })
+    );
   } catch (error) {
     console.error('Server error:', error);
     res.writeHead(500);
-    res.end(JSON.stringify({ 
-      error: 'Internal Server Error',
-      message: error.message,
-    }));
+    res.end(
+      JSON.stringify({
+        error: 'Internal Server Error',
+        message: error.message,
+      })
+    );
   }
 });
 

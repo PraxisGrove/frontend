@@ -137,7 +137,7 @@ export function EnhancedModal({
           >
             <motion.div
               className={cn(
-                'rounded-lg border bg-background shadow-lg',
+                'bg-background rounded-lg border shadow-lg',
                 'aceternity-glass-effect',
                 className
               )}
@@ -153,12 +153,12 @@ export function EnhancedModal({
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       {title && (
-                        <DialogTitle className="text-xl font-semibold text-foreground">
+                        <DialogTitle className="text-foreground text-xl font-semibold">
                           {title}
                         </DialogTitle>
                       )}
                       {description && (
-                        <DialogDescription className="mt-2 text-muted-foreground">
+                        <DialogDescription className="text-muted-foreground mt-2">
                           {description}
                         </DialogDescription>
                       )}
@@ -276,7 +276,7 @@ export function EnhancedDrawer({
         {(title || description) && (
           <SheetHeader>
             {title && (
-              <SheetTitle className="text-xl font-semibold text-foreground">
+              <SheetTitle className="text-foreground text-xl font-semibold">
                 {title}
               </SheetTitle>
             )}

@@ -23,6 +23,7 @@ Storybook 配置文件完整且正确，但 `src/stories/` 目录已被清空。
 ### 1. **基础 UI 组件** - `src/components/ui/`
 
 #### 1.1 表单组件 Stories
+
 ```
 src/stories/ui/forms/
 ├── Button.stories.tsx           # 按钮组件 - 8个变体
@@ -36,6 +37,7 @@ src/stories/ui/forms/
 ```
 
 #### 1.2 布局组件 Stories
+
 ```
 src/stories/ui/layout/
 ├── Card.stories.tsx             # 卡片组件 - 10个变体
@@ -47,6 +49,7 @@ src/stories/ui/layout/
 ```
 
 #### 1.3 反馈组件 Stories
+
 ```
 src/stories/ui/feedback/
 ├── Alert.stories.tsx            # 警告组件 - 6个变体
@@ -58,6 +61,7 @@ src/stories/ui/feedback/
 ```
 
 #### 1.4 导航组件 Stories
+
 ```
 src/stories/ui/navigation/
 ├── DropdownMenu.stories.tsx     # 下拉菜单 - 8个变体
@@ -69,6 +73,7 @@ src/stories/ui/navigation/
 ```
 
 #### 1.5 数据展示 Stories
+
 ```
 src/stories/ui/data/
 ├── Table.stories.tsx            # 表格组件 - 8个变体
@@ -81,6 +86,7 @@ src/stories/ui/data/
 ### 2. **动画组件** - `src/components/aceternity/`
 
 #### 2.1 背景效果 Stories
+
 ```
 src/stories/aceternity/backgrounds/
 ├── BackgroundBeams.stories.tsx  # 光束背景 - 5个变体
@@ -88,12 +94,14 @@ src/stories/aceternity/backgrounds/
 ```
 
 #### 2.2 导航组件 Stories
+
 ```
 src/stories/aceternity/navigation/
 └── FloatingNav.stories.tsx      # 浮动导航 - 6个变体
 ```
 
 #### 2.3 动画容器 Stories
+
 ```
 src/stories/aceternity/animation/
 ├── AnimatedContainer.stories.tsx # 动画容器 - 8个变体
@@ -103,6 +111,7 @@ src/stories/aceternity/animation/
 ```
 
 #### 2.4 特殊效果 Stories
+
 ```
 src/stories/aceternity/effects/
 ├── BeamScan.stories.tsx         # 光束扫描 - 4个变体
@@ -114,6 +123,7 @@ src/stories/aceternity/effects/
 ```
 
 #### 2.5 样式组件 Stories
+
 ```
 src/stories/aceternity/styled/
 ├── GlassCard.stories.tsx        # 玻璃卡片 - 6个变体
@@ -128,6 +138,7 @@ src/stories/aceternity/styled/
 ### 3. **高级动画组件** - `src/components/reactbit/`
 
 #### 3.1 基础组件 Stories
+
 ```
 src/stories/reactbit/basic/
 ├── ReactBitButton.stories.tsx   # ReactBit按钮 - 10个变体
@@ -138,6 +149,7 @@ src/stories/reactbit/basic/
 ```
 
 #### 3.2 导航组件 Stories
+
 ```
 src/stories/reactbit/navigation/
 ├── ReactBitNavbar.stories.tsx   # ReactBit导航栏 - 6个变体
@@ -146,6 +158,7 @@ src/stories/reactbit/navigation/
 ```
 
 #### 3.3 表单组件 Stories
+
 ```
 src/stories/reactbit/forms/
 ├── ReactBitSelect.stories.tsx   # ReactBit选择器 - 6个变体
@@ -153,6 +166,7 @@ src/stories/reactbit/forms/
 ```
 
 #### 3.4 反馈组件 Stories
+
 ```
 src/stories/reactbit/feedback/
 ├── ReactBitToast.stories.tsx    # ReactBit消息提示 - 7个变体
@@ -163,6 +177,7 @@ src/stories/reactbit/feedback/
 ### 4. **业务组件** - `src/components/*/`
 
 #### 4.1 首页组件 Stories
+
 ```
 src/stories/home/
 ├── HeroSection.stories.tsx      # 英雄区域 - 5个变体
@@ -176,6 +191,7 @@ src/stories/home/
 ```
 
 #### 4.2 布局组件 Stories
+
 ```
 src/stories/layout/
 ├── MainLayout.stories.tsx       # 主布局 - 4个变体
@@ -190,6 +206,7 @@ src/stories/layout/
 ```
 
 #### 4.3 表单组件 Stories
+
 ```
 src/stories/forms/
 ├── FormProvider.stories.tsx     # 表单提供者 - 3个变体
@@ -207,6 +224,7 @@ src/stories/forms/
 ```
 
 #### 4.4 认证组件 Stories
+
 ```
 src/stories/auth/
 ├── LoginForm.stories.tsx        # 登录表单 - 6个变体
@@ -217,6 +235,7 @@ src/stories/auth/
 ```
 
 #### 4.5 课程组件 Stories
+
 ```
 src/stories/course/
 ├── CourseCard.stories.tsx       # 课程卡片 - 8个变体
@@ -227,6 +246,7 @@ src/stories/course/
 ```
 
 #### 4.6 仪表板组件 Stories
+
 ```
 src/stories/dashboard/
 ├── DashboardLayout.stories.tsx  # 仪表板布局 - 4个变体
@@ -239,6 +259,7 @@ src/stories/dashboard/
 ### 5. **特殊组件** Stories
 
 #### 5.1 3D 组件 Stories
+
 ```
 src/stories/3d/
 ├── KnowledgeGraph.stories.tsx   # 知识图谱 - 4个变体
@@ -246,12 +267,14 @@ src/stories/3d/
 ```
 
 #### 5.2 SEO 组件 Stories
+
 ```
 src/stories/seo/
 └── SEOHead.stories.tsx          # SEO头部 - 5个变体
 ```
 
 #### 5.3 工具组件 Stories
+
 ```
 src/stories/utils/
 ├── PerformanceInitializer.stories.tsx # 性能初始化 - 2个变体
@@ -262,16 +285,19 @@ src/stories/utils/
 ## 📊 Storybook 优先级
 
 ### 🔴 **高优先级** (立即实施)
+
 1. **基础 UI 组件** - Button, Input, Card, Alert 等核心组件
 2. **表单组件** - 登录、注册等关键表单
 3. **布局组件** - Header, Sidebar, MainLayout 等
 
 ### 🟡 **中优先级** (第二阶段)
+
 1. **动画组件** - Aceternity UI 和 ReactBit UI 组件
 2. **业务组件** - 课程、仪表板等功能组件
 3. **导航组件** - 各种导航和菜单组件
 
 ### 🟢 **低优先级** (第三阶段)
+
 1. **特殊效果组件** - 复杂动画和3D组件
 2. **工具组件** - 开发和调试相关组件
 3. **SEO组件** - 元数据和优化组件
@@ -279,6 +305,7 @@ src/stories/utils/
 ## 🛠️ Storybook 配置要求
 
 ### 必需的 Story 结构
+
 ```typescript
 // 标准 Story 模板
 import type { Meta, StoryObj } from '@storybook/react';
@@ -291,9 +318,9 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: '组件描述和使用说明'
-      }
-    }
+        component: '组件描述和使用说明',
+      },
+    },
   },
   tags: ['autodocs'],
   argTypes: {
@@ -320,6 +347,7 @@ export const Variant1: Story = {
 ```
 
 ### Story 分类标准
+
 ```
 UI/Forms/          - 基础表单组件
 UI/Layout/         - 基础布局组件
@@ -343,22 +371,26 @@ Utils/             - 工具组件
 ## 🎯 实施计划
 
 ### 阶段一：基础组件 Stories (2-3天)
+
 - [ ] 创建基础 UI 组件 Stories (Button, Input, Card 等)
 - [ ] 创建表单组件 Stories
 - [ ] 创建布局组件 Stories
 
 ### 阶段二：业务组件 Stories (3-4天)
+
 - [ ] 创建认证组件 Stories
 - [ ] 创建首页组件 Stories
 - [ ] 创建课程组件 Stories
 - [ ] 创建仪表板组件 Stories
 
 ### 阶段三：动画组件 Stories (2-3天)
+
 - [ ] 创建 Aceternity UI 组件 Stories
 - [ ] 创建 ReactBit UI 组件 Stories
 - [ ] 创建特殊效果组件 Stories
 
 ### 阶段四：完善和优化 (1-2天)
+
 - [ ] 添加交互测试
 - [ ] 完善文档说明
 - [ ] 优化 Story 组织结构
@@ -367,6 +399,7 @@ Utils/             - 工具组件
 ## 📝 Story 标准
 
 ### 每个组件至少包含
+
 - **Default** - 默认状态
 - **Variants** - 所有变体展示
 - **Interactive** - 交互状态演示
@@ -374,6 +407,7 @@ Utils/             - 工具组件
 - **Accessibility** - 可访问性演示
 
 ### 文档要求
+
 - 组件用途说明
 - 属性详细描述
 - 使用示例代码
@@ -383,12 +417,14 @@ Utils/             - 工具组件
 ## 🚀 开始实施
 
 **下一步行动**:
+
 1. 从基础 UI 组件开始创建 Stories
 2. 建立 Story 模板和规范
 3. 逐步扩展到业务组件
 4. 完善文档和交互演示
 
 **成功标准**:
+
 - 100+ 组件 Stories 完成 ✅
 - 文档覆盖率 > 90% ✅
 - 交互演示完整 ✅

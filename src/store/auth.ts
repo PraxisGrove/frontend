@@ -39,7 +39,10 @@ export interface AuthState {
   resetPassword: (data: { token: string; password: string }) => Promise<void>;
 
   // 社交登录
-  socialLogin: (provider: 'google' | 'github' | 'wechat', code: string) => Promise<void>;
+  socialLogin: (
+    provider: 'google' | 'github' | 'wechat',
+    code: string
+  ) => Promise<void>;
 }
 
 /**
@@ -73,7 +76,7 @@ export const useAuthStore = create<AuthState>()(
 
           try {
             // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             // 模拟用户数据
             const mockUsers = [
@@ -105,12 +108,16 @@ export const useAuthStore = create<AuthState>()(
             }
 
             // 生成模拟 token
-            const token = btoa(JSON.stringify({
-              userId: user.id,
-              email: user.email,
-              role: user.role,
-              exp: Date.now() + (remember ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000), // 7天或1天
-            }));
+            const token = btoa(
+              JSON.stringify({
+                userId: user.id,
+                email: user.email,
+                role: user.role,
+                exp:
+                  Date.now() +
+                  (remember ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000), // 7天或1天
+              })
+            );
 
             // 创建用户对象（排除密码）
             const { password: _, ...userWithoutPassword } = user;
@@ -140,7 +147,7 @@ export const useAuthStore = create<AuthState>()(
 
           try {
             // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
 
             // 清除本地状态
             set({
@@ -175,7 +182,7 @@ export const useAuthStore = create<AuthState>()(
 
           try {
             // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             // 简单的验证
             if (!userData.email || !userData.password || !userData.name) {
@@ -202,12 +209,14 @@ export const useAuthStore = create<AuthState>()(
             };
 
             // 生成模拟 token
-            const token = btoa(JSON.stringify({
-              userId: newUser.id,
-              email: newUser.email,
-              role: newUser.role,
-              exp: Date.now() + 24 * 60 * 60 * 1000, // 1天
-            }));
+            const token = btoa(
+              JSON.stringify({
+                userId: newUser.id,
+                email: newUser.email,
+                role: newUser.role,
+                exp: Date.now() + 24 * 60 * 60 * 1000, // 1天
+              })
+            );
 
             set({
               user: newUser,
@@ -310,7 +319,7 @@ export const useAuthStore = create<AuthState>()(
 
           try {
             // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             // 简单的邮箱格式验证
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -333,7 +342,8 @@ export const useAuthStore = create<AuthState>()(
           } catch (error) {
             set({
               isLoading: false,
-              error: error instanceof Error ? error.message : '发送重置邮件失败',
+              error:
+                error instanceof Error ? error.message : '发送重置邮件失败',
             });
             throw error;
           }
@@ -345,7 +355,7 @@ export const useAuthStore = create<AuthState>()(
 
           try {
             // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             // 验证密码强度
             if (data.password.length < 6) {
@@ -373,12 +383,15 @@ export const useAuthStore = create<AuthState>()(
         },
 
         // 社交登录（纯前端模拟）
-        socialLogin: async (provider: 'google' | 'github' | 'wechat', code: string) => {
+        socialLogin: async (
+          provider: 'google' | 'github' | 'wechat',
+          code: string
+        ) => {
           set({ isLoading: true, error: null });
 
           try {
             // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             // 模拟社交登录验证
             if (!code || code.length < 5) {
@@ -413,13 +426,15 @@ export const useAuthStore = create<AuthState>()(
             const user = socialUsers[provider];
 
             // 生成模拟 token
-            const token = btoa(JSON.stringify({
-              userId: user.id,
-              email: user.email,
-              role: user.role,
-              provider,
-              exp: Date.now() + 24 * 60 * 60 * 1000, // 1天
-            }));
+            const token = btoa(
+              JSON.stringify({
+                userId: user.id,
+                email: user.email,
+                role: user.role,
+                provider,
+                exp: Date.now() + 24 * 60 * 60 * 1000, // 1天
+              })
+            );
 
             set({
               user,

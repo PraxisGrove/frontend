@@ -228,7 +228,7 @@ export function PageContainer({
       {(title || description || actions || breadcrumb) && (
         <div className="space-y-4">
           {breadcrumb && (
-            <div className="text-sm text-muted-foreground">{breadcrumb}</div>
+            <div className="text-muted-foreground text-sm">{breadcrumb}</div>
           )}
 
           <div className="flex items-center justify-between">

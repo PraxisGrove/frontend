@@ -10,7 +10,7 @@ services:
       - cluster.name=praxisgrove-logs
       - discovery.type=single-node
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
       - xpack.security.enabled=false
       - xpack.security.enrollment.enabled=false
     ulimits:
@@ -20,12 +20,13 @@ services:
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - '9200:9200'
+      - '9300:9300'
     networks:
       - logging
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      test:
+        ['CMD-SHELL', 'curl -f http://localhost:9200/_cluster/health || exit 1']
       interval: 30s
       timeout: 10s
       retries: 5
@@ -38,12 +39,12 @@ services:
       - ./config/logstash/pipeline:/usr/share/logstash/pipeline:ro
       - ./config/logstash/config:/usr/share/logstash/config:ro
     ports:
-      - "5044:5044"
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "9600:9600"
+      - '5044:5044'
+      - '5000:5000/tcp'
+      - '5000:5000/udp'
+      - '9600:9600'
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LS_JAVA_OPTS: '-Xmx256m -Xms256m'
     networks:
       - logging
     depends_on:
@@ -55,11 +56,11 @@ services:
     image: docker.elastic.co/kibana/kibana:8.11.0
     container_name: praxisgrove-kibana
     ports:
-      - "5601:5601"
+      - '5601:5601'
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-      ELASTICSEARCH_USERNAME: ""
-      ELASTICSEARCH_PASSWORD: ""
+      ELASTICSEARCH_USERNAME: ''
+      ELASTICSEARCH_PASSWORD: ''
     networks:
       - logging
     depends_on:

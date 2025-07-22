@@ -109,7 +109,7 @@ export function SelectInput<TFieldValues extends FieldValues = FieldValues>({
       </Select>
 
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />
@@ -214,13 +214,13 @@ export function MultiSelect<TFieldValues extends FieldValues = FieldValues>({
       </div>
 
       {maxSelections && (
-        <p className="text-xs text-muted-foreground">
+        <p className="text-muted-foreground text-xs">
           已选择 {selectedValues.length}/{maxSelections} 项
         </p>
       )}
 
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />
@@ -272,7 +272,7 @@ export function RadioInput<TFieldValues extends FieldValues = FieldValues>({
         disabled={disabled}
         className={cn(
           orientation === 'horizontal' ? 'flex flex-wrap gap-6' : 'space-y-2',
-          error && 'rounded-md border border-destructive p-2'
+          error && 'border-destructive rounded-md border p-2'
         )}
       >
         {options.map((option) => (
@@ -296,7 +296,7 @@ export function RadioInput<TFieldValues extends FieldValues = FieldValues>({
       </RadioGroup>
 
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />
@@ -343,7 +343,7 @@ export function SwitchInput<TFieldValues extends FieldValues = FieldValues>({
             </FormLabel>
           )}
           {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
+            <p className="text-muted-foreground text-sm">{description}</p>
           )}
         </div>
 

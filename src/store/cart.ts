@@ -67,7 +67,9 @@ export const useCartStore = create<CartState>()(
 
         get totalSavings() {
           return get().items.reduce((total, item) => {
-            const savings = item.originalPrice ? item.originalPrice - item.price : 0;
+            const savings = item.originalPrice
+              ? item.originalPrice - item.price
+              : 0;
             return total + savings;
           }, 0);
         },
@@ -75,7 +77,7 @@ export const useCartStore = create<CartState>()(
         // 操作方法
         addToCart: async (courseId: string) => {
           const { items, isInCart } = get();
-          
+
           // 检查是否已在购物车中
           if (isInCart(courseId)) {
             set({ error: '课程已在购物车中' });
@@ -113,7 +115,7 @@ export const useCartStore = create<CartState>()(
         removeFromCart: (courseId: string) => {
           const { items } = get();
           set({
-            items: items.filter(item => item.courseId !== courseId),
+            items: items.filter((item) => item.courseId !== courseId),
             error: null,
           });
         },
@@ -134,7 +136,7 @@ export const useCartStore = create<CartState>()(
 
         isInCart: (courseId: string) => {
           const { items } = get();
-          return items.some(item => item.courseId === courseId);
+          return items.some((item) => item.courseId === courseId);
         },
 
         setLoading: (loading: boolean) => {
@@ -189,7 +191,7 @@ export const useCartStore = create<CartState>()(
         removeMultipleFromCart: (courseIds: string[]) => {
           const { items } = get();
           set({
-            items: items.filter(item => !courseIds.includes(item.courseId)),
+            items: items.filter((item) => !courseIds.includes(item.courseId)),
             error: null,
           });
         },
@@ -217,5 +219,6 @@ export const cartSelectors = {
   totalSavings: (state: CartState) => state.totalSavings,
   isLoading: (state: CartState) => state.isLoading,
   error: (state: CartState) => state.error,
-  isInCart: (courseId: string) => (state: CartState) => state.isInCart(courseId),
+  isInCart: (courseId: string) => (state: CartState) =>
+    state.isInCart(courseId),
 };

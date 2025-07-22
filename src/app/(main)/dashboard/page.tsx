@@ -25,7 +25,9 @@ import { useAuth } from '@/hooks/useAuth';
 export default function DashboardPage() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>(
+    '30d'
+  );
 
   // 模拟数据
   const [progressData, setProgressData] = useState([
@@ -169,12 +171,18 @@ export default function DashboardPage() {
         <div className="h-8 w-48 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="h-32 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700" />
+            <div
+              key={index}
+              className="h-32 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700"
+            />
           ))}
         </div>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {Array.from({ length: 2 }).map((_, index) => (
-            <div key={index} className="h-96 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700" />
+            <div
+              key={index}
+              className="h-96 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700"
+            />
           ))}
         </div>
       </div>

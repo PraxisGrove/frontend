@@ -17,7 +17,7 @@ const defaultLocale = 'zh-CN';
 
 // 中间件会检查路径是否包含语言前缀
 const pathnameIsMissingLocale = locales.every(
-  locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
 );
 
 // 如果没有语言前缀，会自动重定向到带有默认语言的路径
@@ -47,7 +47,7 @@ const enableI18nRedirect = false;
 if (enableI18nRedirect) {
   // 国际化重定向逻辑
   const pathnameIsMissingLocale = locales.every(
-    locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
 
   if (pathnameIsMissingLocale) {
@@ -66,7 +66,7 @@ if (enableI18nRedirect) {
 // 只对特定路径启用国际化重定向
 const i18nEnabledPaths = ['/docs', '/help', '/support'];
 
-const shouldEnableI18n = i18nEnabledPaths.some(path => 
+const shouldEnableI18n = i18nEnabledPaths.some((path) =>
   pathname.startsWith(path)
 );
 

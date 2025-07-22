@@ -23,7 +23,10 @@ interface AuthContextType {
   resetPassword: (data: { token: string; password: string }) => Promise<void>;
 
   // 社交登录
-  socialLogin: (provider: 'google' | 'github' | 'wechat', code: string) => Promise<void>;
+  socialLogin: (
+    provider: 'google' | 'github' | 'wechat',
+    code: string
+  ) => Promise<void>;
 }
 
 /**

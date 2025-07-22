@@ -312,7 +312,7 @@ export function ProgressBar({
     <div className={cn('w-full', className)}>
       <div
         className={cn(
-          'w-full overflow-hidden rounded-full bg-muted',
+          'bg-muted w-full overflow-hidden rounded-full',
           sizeClasses[size]
         )}
       >
@@ -324,7 +324,7 @@ export function ProgressBar({
         />
       </div>
       {showValue && (
-        <div className="mt-1 text-right text-sm text-muted-foreground">
+        <div className="text-muted-foreground mt-1 text-right text-sm">
           {Math.round(percentage)}%
         </div>
       )}
@@ -441,7 +441,7 @@ export function LoadingOverlay({
         {loading && (
           <motion.div
             className={cn(
-              'absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm',
+              'bg-background/80 absolute inset-0 z-50 flex items-center justify-center backdrop-blur-sm',
               overlayClassName
             )}
             initial={{ opacity: 0 }}

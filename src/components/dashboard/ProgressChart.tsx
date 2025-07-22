@@ -79,11 +79,7 @@ export function ProgressChart({
             {label}
           </p>
           {payload.map((entry: any, index: number) => (
-            <p
-              key={index}
-              className="text-sm"
-              style={{ color: entry.color }}
-            >
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}: {entry.value}
               {entry.dataKey === 'studyTime' && ' 分钟'}
               {entry.dataKey === 'completedLessons' && ' 课时'}
@@ -98,10 +94,16 @@ export function ProgressChart({
 
   // 计算总学习时间
   const totalStudyTime = data.reduce((sum, item) => sum + item.studyTime, 0);
-  const totalLessons = data.reduce((sum, item) => sum + item.completedLessons, 0);
-  const averageProgress = data.length > 0 
-    ? Math.round(data.reduce((sum, item) => sum + item.progress, 0) / data.length)
-    : 0;
+  const totalLessons = data.reduce(
+    (sum, item) => sum + item.completedLessons,
+    0
+  );
+  const averageProgress =
+    data.length > 0
+      ? Math.round(
+          data.reduce((sum, item) => sum + item.progress, 0) / data.length
+        )
+      : 0;
 
   // 格式化时间
   const formatTime = (minutes: number) => {
@@ -182,15 +184,12 @@ export function ProgressChart({
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                  <XAxis 
-                    dataKey="date" 
+                  <XAxis
+                    dataKey="date"
                     className="text-xs"
                     tick={{ fontSize: 12 }}
                   />
-                  <YAxis 
-                    className="text-xs"
-                    tick={{ fontSize: 12 }}
-                  />
+                  <YAxis className="text-xs" tick={{ fontSize: 12 }} />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -251,16 +250,16 @@ export function ProgressChart({
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                    <XAxis 
-                      dataKey="date" 
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      className="opacity-30"
+                    />
+                    <XAxis
+                      dataKey="date"
                       className="text-xs"
                       tick={{ fontSize: 12 }}
                     />
-                    <YAxis 
-                      className="text-xs"
-                      tick={{ fontSize: 12 }}
-                    />
+                    <YAxis className="text-xs" tick={{ fontSize: 12 }} />
                     <Tooltip content={<CustomTooltip />} />
                     <Bar
                       dataKey="completedLessons"
@@ -287,12 +286,12 @@ export function ProgressChart({
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                  <XAxis 
-                    dataKey="date" 
+                  <XAxis
+                    dataKey="date"
                     className="text-xs"
                     tick={{ fontSize: 12 }}
                   />
-                  <YAxis 
+                  <YAxis
                     domain={[0, 100]}
                     className="text-xs"
                     tick={{ fontSize: 12 }}

@@ -54,8 +54,8 @@ export class TokenStorage {
    */
   setToken(tokenData: TokenData): void {
     const serializedData = JSON.stringify(tokenData);
-    const dataToStore = this.encryptionKey 
-      ? this.encrypt(serializedData) 
+    const dataToStore = this.encryptionKey
+      ? this.encrypt(serializedData)
       : serializedData;
 
     switch (this.strategy) {
@@ -92,12 +92,10 @@ export class TokenStorage {
     if (!data) return null;
 
     try {
-      const decryptedData = this.encryptionKey 
-        ? this.decrypt(data) 
-        : data;
-      
+      const decryptedData = this.encryptionKey ? this.decrypt(data) : data;
+
       const tokenData: TokenData = JSON.parse(decryptedData);
-      
+
       // 检查Token是否过期
       if (tokenData.expiresAt < Date.now()) {
         this.removeToken();
@@ -209,9 +207,9 @@ export class TokenStorage {
     if (typeof document !== 'undefined') {
       const expires = new Date(expiresAt).toUTCString();
       const options = this.cookieOptions || {};
-      
+
       let cookieString = `${name}=${encodeURIComponent(value)}; expires=${expires}`;
-      
+
       if (options.domain) cookieString += `; domain=${options.domain}`;
       if (options.path) cookieString += `; path=${options.path}`;
       if (options.secure) cookieString += '; secure';
@@ -226,7 +224,7 @@ export class TokenStorage {
     if (typeof document !== 'undefined') {
       const nameEQ = name + '=';
       const ca = document.cookie.split(';');
-      
+
       for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) === ' ') c = c.substring(1, c.length);
@@ -242,7 +240,7 @@ export class TokenStorage {
     if (typeof document !== 'undefined') {
       const options = this.cookieOptions || {};
       let cookieString = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
-      
+
       if (options.domain) cookieString += `; domain=${options.domain}`;
       if (options.path) cookieString += `; path=${options.path}`;
 
@@ -255,7 +253,7 @@ export class TokenStorage {
    */
   private encrypt(data: string): string {
     if (!this.encryptionKey) return data;
-    
+
     // 这里使用简单的Base64编码作为示例
     // 实际应用中应使用AES等安全的加密算法
     return btoa(data);
@@ -263,7 +261,7 @@ export class TokenStorage {
 
   private decrypt(encryptedData: string): string {
     if (!this.encryptionKey) return encryptedData;
-    
+
     try {
       return atob(encryptedData);
     } catch (error) {

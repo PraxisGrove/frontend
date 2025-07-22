@@ -146,7 +146,7 @@ function FilePreview({
   const icon = fileIconMap[fileType] || fileIconMap.default;
 
   return (
-    <div className="flex items-center gap-3 rounded-lg border bg-muted/50 p-3">
+    <div className="bg-muted/50 flex items-center gap-3 rounded-lg border p-3">
       <div className="flex-shrink-0">
         {fileType === 'image' && fileInfo.url ? (
           <NextImage
@@ -157,7 +157,7 @@ function FilePreview({
             className="h-10 w-10 rounded object-cover"
           />
         ) : (
-          <div className="flex h-10 w-10 items-center justify-center rounded bg-muted">
+          <div className="bg-muted flex h-10 w-10 items-center justify-center rounded">
             {icon}
           </div>
         )}
@@ -165,7 +165,7 @@ function FilePreview({
 
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-medium">{fileInfo.name}</p>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-muted-foreground text-xs">
           {formatFileSize(fileInfo.size)}
         </p>
 
@@ -174,7 +174,7 @@ function FilePreview({
         )}
 
         {fileInfo.status === 'error' && fileInfo.error && (
-          <p className="mt-1 flex items-center gap-1 text-xs text-destructive">
+          <p className="text-destructive mt-1 flex items-center gap-1 text-xs">
             <AlertCircle className="h-3 w-3" />
             {fileInfo.error}
           </p>
@@ -421,7 +421,7 @@ export function FileUpload<TFieldValues extends FieldValues = FieldValues>({
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
-            <Upload className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
+            <Upload className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
             <p className="mb-2 text-sm font-medium">
               拖拽文件到此处或
               <Button
@@ -433,7 +433,7 @@ export function FileUpload<TFieldValues extends FieldValues = FieldValues>({
                 点击选择
               </Button>
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               支持 {accept === 'any' ? '所有' : accept} 类型文件，最大 {maxSize}
               MB
               {maxFiles > 1 && `，最多 ${maxFiles} 个文件`}
@@ -477,7 +477,7 @@ export function FileUpload<TFieldValues extends FieldValues = FieldValues>({
       </div>
 
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       )}
 
       <FormError name={name} />

@@ -201,7 +201,7 @@ function SidebarNavItem({
   const itemContent = (
     <div
       className={cn(
-        'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent hover:text-accent-foreground',
+        'hover:bg-accent hover:text-accent-foreground flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all',
         isActive && 'bg-accent text-accent-foreground',
         level > 0 && 'ml-4',
         isCollapsed && 'justify-center px-2'
@@ -284,7 +284,7 @@ function SidebarNavGroup({
   return (
     <div className={cn('space-y-1', className)}>
       {title && !isCollapsed && (
-        <h4 className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        <h4 className="text-muted-foreground mb-2 px-3 text-xs font-semibold uppercase tracking-wider">
           {title}
         </h4>
       )}
@@ -316,7 +316,7 @@ function SidebarUserInfo({
   if (isCollapsed) {
     return (
       <div className="flex items-center justify-center p-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+        <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full">
           {user.avatar ? (
             <Image
               src={user.avatar}
@@ -334,8 +334,8 @@ function SidebarUserInfo({
   }
 
   return (
-    <div className="flex items-center gap-3 rounded-lg p-3 hover:bg-accent">
-      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+    <div className="hover:bg-accent flex items-center gap-3 rounded-lg p-3">
+      <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full">
         {user.avatar ? (
           <Image
             src={user.avatar}
@@ -350,9 +350,9 @@ function SidebarUserInfo({
       </div>
       <div className="flex-1 truncate">
         <p className="text-sm font-medium">{user.name}</p>
-        <p className="text-xs text-muted-foreground">{user.email}</p>
+        <p className="text-muted-foreground text-xs">{user.email}</p>
         {user.role && (
-          <p className="text-xs text-muted-foreground">{user.role}</p>
+          <p className="text-muted-foreground text-xs">{user.role}</p>
         )}
       </div>
     </div>
@@ -372,7 +372,7 @@ function SidebarLogo({
   if (isCollapsed) {
     return (
       <div className="flex items-center justify-center p-4">
-        <div className="flex h-8 w-8 items-center justify-center rounded bg-primary font-bold text-primary-foreground">
+        <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded font-bold">
           P
         </div>
       </div>
@@ -390,7 +390,7 @@ function SidebarLogo({
           className="flex-shrink-0"
         />
       ) : (
-        <div className="flex h-8 w-8 items-center justify-center rounded bg-primary font-bold text-primary-foreground">
+        <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded font-bold">
           P
         </div>
       )}
@@ -419,7 +419,7 @@ function SidebarToggle({
         variant="ghost"
         size="sm"
         onClick={onToggle}
-        className="absolute -right-3 top-4 z-10 h-6 w-6 rounded-full border bg-background p-0 shadow-md"
+        className="bg-background absolute -right-3 top-4 z-10 h-6 w-6 rounded-full border p-0 shadow-md"
       >
         <Icon className="h-3 w-3" />
       </Button>
@@ -431,7 +431,7 @@ function SidebarToggle({
       variant="ghost"
       size="sm"
       onClick={onToggle}
-      className="absolute -right-3 top-4 z-10 h-6 w-6 rounded-full border bg-background p-0 shadow-md"
+      className="bg-background absolute -right-3 top-4 z-10 h-6 w-6 rounded-full border p-0 shadow-md"
     >
       <Icon className="h-3 w-3" />
     </Button>

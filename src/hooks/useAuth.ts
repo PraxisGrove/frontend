@@ -27,7 +27,10 @@ export interface UseAuthReturn {
   resetPassword: (data: { token: string; password: string }) => Promise<void>;
 
   // 社交登录
-  socialLogin: (provider: 'google' | 'github' | 'wechat', code: string) => Promise<void>;
+  socialLogin: (
+    provider: 'google' | 'github' | 'wechat',
+    code: string
+  ) => Promise<void>;
 
   // 权限检查
   hasRole: (role: 'user' | 'admin') => boolean;
@@ -78,7 +81,9 @@ export function useAuth(): UseAuthReturn {
   /**
    * 检查用户是否可以访问需要特定角色的资源
    */
-  const canAccess = (requiredRole?: 'user' | 'admin' | 'instructor'): boolean => {
+  const canAccess = (
+    requiredRole?: 'user' | 'admin' | 'instructor'
+  ): boolean => {
     // 如果没有要求特定角色，只需要登录即可
     if (!requiredRole) {
       return isAuthenticated;

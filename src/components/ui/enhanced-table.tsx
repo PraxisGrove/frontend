@@ -293,7 +293,7 @@ export function EnhancedTable<T = any>({
         {/* 搜索 */}
         {globalSearch && (
           <div className="relative max-w-sm flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
             <Input
               placeholder="搜索..."
               value={tableState.globalFilter}
@@ -368,7 +368,7 @@ export function EnhancedTable<T = any>({
                     className="py-8 text-center"
                   >
                     <div className="flex items-center justify-center gap-2">
-                      <div className="h-4 w-4 animate-spin rounded-full border-b-2 border-primary"></div>
+                      <div className="border-primary h-4 w-4 animate-spin rounded-full border-b-2"></div>
                       加载中...
                     </div>
                   </TableCell>
@@ -377,7 +377,7 @@ export function EnhancedTable<T = any>({
                 <TableRow key="empty">
                   <TableCell
                     colSpan={columns.length + (selectable ? 1 : 0)}
-                    className="py-8 text-center text-muted-foreground"
+                    className="text-muted-foreground py-8 text-center"
                   >
                     {emptyMessage}
                   </TableCell>
@@ -387,7 +387,7 @@ export function EnhancedTable<T = any>({
                   <motion.tr
                     key={rowIndex}
                     className={cn(
-                      'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
+                      'hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors',
                       selectedRows.has(rowIndex) && 'bg-muted',
                       onRowClick && 'cursor-pointer'
                     )}
@@ -443,7 +443,7 @@ export function EnhancedTable<T = any>({
       {/* 分页 */}
       {pagination && !loading && filteredData.length > 0 && (
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2 text-sm">
             <span>每页显示</span>
             <Select
               value={String(tableState.pagination.pageSize)}
@@ -483,7 +483,7 @@ export function EnhancedTable<T = any>({
               <ChevronLeft className="h-4 w-4" />
             </Button>
 
-            <span className="text-sm text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               第 {tableState.pagination.pageIndex + 1} 页，共 {totalPages} 页
             </span>
 

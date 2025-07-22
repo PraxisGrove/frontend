@@ -85,7 +85,7 @@ const UnauthenticatedComponent = ({ redirectTo }: { redirectTo?: string }) => {
  */
 const UnauthorizedComponent = ({
   requiredRole,
-  userRole
+  userRole,
 }: {
   requiredRole: string;
   userRole: string;
@@ -155,13 +155,7 @@ export function PrivateRoute({
   showFallback = true,
   className = '',
 }: PrivateRouteProps) {
-  const {
-    isAuthenticated,
-    isLoading,
-    user,
-    canAccess,
-    checkAuth
-  } = useAuth();
+  const { isAuthenticated, isLoading, user, canAccess, checkAuth } = useAuth();
   const [isInitialized, setIsInitialized] = useState(false);
   const pathname = usePathname();
 
@@ -200,11 +194,13 @@ export function PrivateRoute({
     if (!showFallback) {
       return null;
     }
-    return fallback || (
-      <UnauthorizedComponent
-        requiredRole={requiredRole}
-        userRole={user?.role || 'unknown'}
-      />
+    return (
+      fallback || (
+        <UnauthorizedComponent
+          requiredRole={requiredRole}
+          userRole={user?.role || 'unknown'}
+        />
+      )
     );
   }
 
@@ -262,13 +258,13 @@ export function RoleGuard({
     if (!showFallback) {
       return null;
     }
-    return fallback || (
-      <Alert variant="destructive">
-        <Shield className="h-4 w-4" />
-        <AlertDescription>
-          您没有权限查看此内容
-        </AlertDescription>
-      </Alert>
+    return (
+      fallback || (
+        <Alert variant="destructive">
+          <Shield className="h-4 w-4" />
+          <AlertDescription>您没有权限查看此内容</AlertDescription>
+        </Alert>
+      )
     );
   }
 

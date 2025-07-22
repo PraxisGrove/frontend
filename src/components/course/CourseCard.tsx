@@ -107,9 +107,7 @@ export function CourseCard({
       ) : (
         <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-400 to-purple-500">
           <div className="text-center text-white">
-            <div className="mb-2 text-4xl font-bold">
-              {title.charAt(0)}
-            </div>
+            <div className="mb-2 text-4xl font-bold">{title.charAt(0)}</div>
             <div className="text-sm opacity-90">{title}</div>
           </div>
         </div>
@@ -119,14 +117,10 @@ export function CourseCard({
       {(isPopular || isFeatured) && (
         <div className="absolute left-3 top-3 flex gap-2">
           {isPopular && (
-            <Badge className="bg-orange-500 text-white">
-              热门
-            </Badge>
+            <Badge className="bg-orange-500 text-white">热门</Badge>
           )}
           {isFeatured && (
-            <Badge className="bg-purple-500 text-white">
-              精选
-            </Badge>
+            <Badge className="bg-purple-500 text-white">精选</Badge>
           )}
         </div>
       )}
@@ -138,9 +132,7 @@ export function CourseCard({
     <CardContent className="flex-1 p-6">
       {/* 级别和评分 */}
       <div className="mb-3 flex items-center justify-between">
-        <Badge className={getLevelColor(level)}>
-          {getLevelText(level)}
-        </Badge>
+        <Badge className={getLevelColor(level)}>{getLevelText(level)}</Badge>
         <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
           <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
           <span>{rating}</span>
@@ -148,12 +140,12 @@ export function CourseCard({
       </div>
 
       {/* 标题 */}
-      <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white line-clamp-2">
+      <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 dark:text-white">
         {title}
       </h3>
 
       {/* 描述 */}
-      <p className="mb-4 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+      <p className="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
         {shortDescription || course.description}
       </p>
 
@@ -176,11 +168,7 @@ export function CourseCard({
       {/* 标签 */}
       <div className="mb-4 flex flex-wrap gap-1">
         {tags.slice(0, 3).map((tag, index) => (
-          <Badge
-            key={index}
-            variant="secondary"
-            className="text-xs"
-          >
+          <Badge key={index} variant="secondary" className="text-xs">
             {tag}
           </Badge>
         ))}
@@ -243,7 +231,9 @@ export function CourseCard({
     switch (variant) {
       case 'glass':
         return (
-          <GlassCard className={`group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}>
+          <GlassCard
+            className={`group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}
+          >
             {cardContent}
           </GlassCard>
         );
@@ -251,7 +241,9 @@ export function CourseCard({
       case 'animated':
         return (
           <AnimatedContainer animation="slideUp" delay={0.1}>
-            <Card className={`group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}>
+            <Card
+              className={`group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}
+            >
               {cardContent}
             </Card>
           </AnimatedContainer>
@@ -259,7 +251,9 @@ export function CourseCard({
 
       default:
         return (
-          <Card className={`group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}>
+          <Card
+            className={`group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}
+          >
             {cardContent}
           </Card>
         );

@@ -88,7 +88,7 @@ export function useCart(): UseCartReturn {
    * 获取购物车中的特定商品
    */
   const getCartItem = (courseId: string): CartItem | undefined => {
-    return items.find(item => item.courseId === courseId);
+    return items.find((item) => item.courseId === courseId);
   };
 
   /**

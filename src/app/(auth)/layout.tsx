@@ -21,9 +21,7 @@ export default function AuthLayout({
         <div className="hidden items-center justify-center bg-gradient-to-br from-blue-600 to-purple-700 p-12 lg:flex lg:w-1/2">
           <div className="text-center text-white">
             <h1 className="mb-6 text-4xl font-bold">PraxisGrove</h1>
-            <p className="mb-8 text-xl opacity-90">
-              一所无需许可的学校
-            </p>
+            <p className="mb-8 text-xl opacity-90">一所无需许可的学校</p>
             <div className="max-w-md space-y-4 text-left">
               <div className="flex items-center space-x-3">
                 <div className="h-2 w-2 rounded-full bg-white"></div>

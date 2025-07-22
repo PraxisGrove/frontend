@@ -2,7 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CourseInfo, CourseSyllabus, CourseReviews, CoursePurchase } from '@/components/course';
+import {
+  CourseInfo,
+  CourseSyllabus,
+  CourseReviews,
+  CoursePurchase,
+} from '@/components/course';
 import { AnimatedContainer } from '@/components/unified';
 import { coursesApi } from '@/api/courses';
 import type { Course } from '@/types/api';
@@ -26,9 +31,7 @@ interface CourseDetailPageProps {
 /**
  * 课程详情页面
  */
-export default function CourseDetailPage({
-  params,
-}: CourseDetailPageProps) {
+export default function CourseDetailPage({ params }: CourseDetailPageProps) {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,82 +53,89 @@ export default function CourseDetailPage({
   }, [params]);
 
   // 模拟课程详情数据
-  const mockCourse = React.useMemo((): Course => ({
-    id: courseId || '1',
-    title: 'JavaScript 高级编程',
-    description: '深入学习 JavaScript 的高级特性和最佳实践，包括闭包、原型链、异步编程、模块化等核心概念。',
-    shortDescription: '深入学习 JavaScript 的高级特性和最佳实践',
-    instructor: {
-      id: '1',
-      name: '张老师',
-      avatar: '',
-      bio: '资深前端工程师，拥有10年JavaScript开发经验',
-      rating: 4.9,
-      studentsCount: 5000,
-      coursesCount: 8,
-      specialties: ['JavaScript', '前端开发', 'React'],
-    },
-    category: {
-      id: '1',
-      name: '前端开发',
-      slug: 'frontend',
-      description: '前端开发相关课程',
-    },
-    level: 'intermediate',
-    duration: 2400, // 40小时 = 2400分钟
-    price: 299,
-    originalPrice: 399,
-    currency: 'CNY',
-    rating: 4.8,
-    reviewsCount: 156,
-    studentsCount: 1234,
-    lessonsCount: 45,
-    language: '中文',
-    lastUpdated: '2024-01-15',
-    isPublished: true,
-    isFeatured: true,
-    isPopular: true,
-    tags: ['JavaScript', '前端开发', '编程'],
-    thumbnail: '/images/courses/javascript-advanced.jpg',
-    certificate: true,
-    requirements: ['基础的 HTML、CSS、JavaScript 知识'],
-    whatYouWillLearn: [
-      '掌握 JavaScript 高级特性',
-      '理解闭包和原型链',
-      '学会异步编程',
-      '掌握模块化开发',
-    ],
-    curriculum: [],
-    createdAt: '2024-01-01',
-    updatedAt: '2024-01-15',
-  }), [courseId]);
+  const mockCourse = React.useMemo(
+    (): Course => ({
+      id: courseId || '1',
+      title: 'JavaScript 高级编程',
+      description:
+        '深入学习 JavaScript 的高级特性和最佳实践，包括闭包、原型链、异步编程、模块化等核心概念。',
+      shortDescription: '深入学习 JavaScript 的高级特性和最佳实践',
+      instructor: {
+        id: '1',
+        name: '张老师',
+        avatar: '',
+        bio: '资深前端工程师，拥有10年JavaScript开发经验',
+        rating: 4.9,
+        studentsCount: 5000,
+        coursesCount: 8,
+        specialties: ['JavaScript', '前端开发', 'React'],
+      },
+      category: {
+        id: '1',
+        name: '前端开发',
+        slug: 'frontend',
+        description: '前端开发相关课程',
+      },
+      level: 'intermediate',
+      duration: 2400, // 40小时 = 2400分钟
+      price: 299,
+      originalPrice: 399,
+      currency: 'CNY',
+      rating: 4.8,
+      reviewsCount: 156,
+      studentsCount: 1234,
+      lessonsCount: 45,
+      language: '中文',
+      lastUpdated: '2024-01-15',
+      isPublished: true,
+      isFeatured: true,
+      isPopular: true,
+      tags: ['JavaScript', '前端开发', '编程'],
+      thumbnail: '/images/courses/javascript-advanced.jpg',
+      certificate: true,
+      requirements: ['基础的 HTML、CSS、JavaScript 知识'],
+      whatYouWillLearn: [
+        '掌握 JavaScript 高级特性',
+        '理解闭包和原型链',
+        '学会异步编程',
+        '掌握模块化开发',
+      ],
+      curriculum: [],
+      createdAt: '2024-01-01',
+      updatedAt: '2024-01-15',
+    }),
+    [courseId]
+  );
 
   // 获取课程详情
-  const fetchCourseDetail = React.useCallback(async (id: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await coursesApi.getCourse(id);
-      setCourse(response);
+  const fetchCourseDetail = React.useCallback(
+    async (id: string) => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await coursesApi.getCourse(id);
+        setCourse(response);
 
-      // 获取用户注册信息（如果已登录）
-      // TODO: 实现 getUserEnrollment API
-      // try {
-      //   const enrollmentResponse = await coursesApi.getUserEnrollment(id);
-      //   setUserEnrollment(enrollmentResponse);
-      // } catch (enrollmentError) {
-      //   setUserEnrollment(null);
-      // }
-      setUserEnrollment(null);
-    } catch (err) {
-      setError('获取课程详情失败，请稍后重试');
-      console.error('Failed to fetch course detail:', err);
-      // 使用模拟数据作为后备
-      setCourse(mockCourse);
-    } finally {
-      setLoading(false);
-    }
-  }, [mockCourse]);
+        // 获取用户注册信息（如果已登录）
+        // TODO: 实现 getUserEnrollment API
+        // try {
+        //   const enrollmentResponse = await coursesApi.getUserEnrollment(id);
+        //   setUserEnrollment(enrollmentResponse);
+        // } catch (enrollmentError) {
+        //   setUserEnrollment(null);
+        // }
+        setUserEnrollment(null);
+      } catch (err) {
+        setError('获取课程详情失败，请稍后重试');
+        console.error('Failed to fetch course detail:', err);
+        // 使用模拟数据作为后备
+        setCourse(mockCourse);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [mockCourse]
+  );
 
   useEffect(() => {
     if (courseId) {
@@ -146,7 +156,10 @@ export default function CourseDetailPage({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="space-y-8 lg:col-span-2">
             {Array.from({ length: 3 }).map((_, index) => (
-              <div key={index} className="h-64 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700" />
+              <div
+                key={index}
+                className="h-64 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700"
+              />
             ))}
           </div>
           <div className="lg:col-span-1">
@@ -163,7 +176,7 @@ export default function CourseDetailPage({
       <div className="mx-auto max-w-7xl">
         <AnimatedContainer animation="fadeIn" delay={0.1}>
           <div className="py-16 text-center">
-            <div className="mx-auto mb-4 h-24 w-24 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
               <svg
                 className="h-12 w-12 text-red-500"
                 fill="none"
@@ -181,9 +194,7 @@ export default function CourseDetailPage({
             <h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
               课程加载失败
             </h3>
-            <p className="text-gray-500 dark:text-gray-400">
-              {error}
-            </p>
+            <p className="text-gray-500 dark:text-gray-400">{error}</p>
           </div>
         </AnimatedContainer>
       </div>
@@ -211,10 +222,14 @@ export default function CourseDetailPage({
               <TabsContent value="syllabus" className="mt-6">
                 <CourseSyllabus
                   course={course}
-                  userProgress={userEnrollment ? {
-                    completedLessons: [],
-                    currentLesson: undefined,
-                  } : undefined}
+                  userProgress={
+                    userEnrollment
+                      ? {
+                          completedLessons: [],
+                          currentLesson: undefined,
+                        }
+                      : undefined
+                  }
                   onLessonClick={handleLessonClick}
                 />
               </TabsContent>
@@ -239,4 +254,3 @@ export default function CourseDetailPage({
     </div>
   );
 }
-

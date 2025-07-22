@@ -46,16 +46,20 @@ function ResetPasswordContent() {
 export default function ResetPasswordPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-      <Suspense fallback={
-        <div className="w-full max-w-md">
-          <div className="rounded-lg bg-white p-8 shadow-xl dark:bg-gray-800">
-            <div className="text-center">
-              <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600 dark:text-gray-300">加载中...</p>
+      <Suspense
+        fallback={
+          <div className="w-full max-w-md">
+            <div className="rounded-lg bg-white p-8 shadow-xl dark:bg-gray-800">
+              <div className="text-center">
+                <div className="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600"></div>
+                <p className="mt-4 text-gray-600 dark:text-gray-300">
+                  加载中...
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      }>
+        }
+      >
         <ResetPasswordContent />
       </Suspense>
     </div>

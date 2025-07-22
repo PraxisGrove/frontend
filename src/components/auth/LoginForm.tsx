@@ -19,14 +19,8 @@ import { useAuth } from '@/contexts/auth-provider';
  * 登录表单验证模式
  */
 const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, '请输入邮箱地址')
-    .email('请输入有效的邮箱地址'),
-  password: z
-    .string()
-    .min(1, '请输入密码')
-    .min(6, '密码至少需要6位字符'),
+  email: z.string().min(1, '请输入邮箱地址').email('请输入有效的邮箱地址'),
+  password: z.string().min(1, '请输入密码').min(6, '密码至少需要6位字符'),
   remember: z.boolean().default(false),
 });
 
@@ -80,7 +74,8 @@ export function LoginForm({
       await login(data.email, data.password, data.remember);
       onSuccess?.();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : '登录失败，请重试';
+      const errorMessage =
+        err instanceof Error ? err.message : '登录失败，请重试';
       onError?.(errorMessage);
     }
   };
@@ -122,7 +117,9 @@ export function LoginForm({
             type="email"
             placeholder="请输入您的邮箱"
             {...register('email')}
-            className={errors.email ? 'border-red-500 focus:border-red-500' : ''}
+            className={
+              errors.email ? 'border-red-500 focus:border-red-500' : ''
+            }
             disabled={isLoading || isSubmitting}
           />
           {errors.email && (
@@ -183,7 +180,7 @@ export function LoginForm({
             />
             <Label
               htmlFor="remember"
-              className="text-sm font-normal cursor-pointer"
+              className="cursor-pointer text-sm font-normal"
             >
               记住我
             </Label>

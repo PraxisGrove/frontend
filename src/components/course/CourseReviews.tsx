@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Star, ThumbsUp, MessageSquare, Filter, ChevronDown } from 'lucide-react';
+import {
+  Star,
+  ThumbsUp,
+  MessageSquare,
+  Filter,
+  ChevronDown,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -61,7 +67,9 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
     hasNext: false,
     hasPrev: false,
   });
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'helpful'>('newest');
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'helpful'>(
+    'newest'
+  );
   const [filterRating, setFilterRating] = useState<number | null>(null);
   const [newReview, setNewReview] = useState({
     rating: 5,
@@ -70,25 +78,33 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
   const [showReviewForm, setShowReviewForm] = useState(false);
 
   // 获取评价列表
-  const fetchReviews = React.useCallback(async (page = 1) => {
-    try {
-      setLoading(true);
-      const params = {
-        page,
-        limit: pagination.limit,
-        sort: sortBy === 'newest' ? 'created_at' : sortBy === 'oldest' ? 'created_at' : 'helpful',
-        order: (sortBy === 'oldest' ? 'asc' : 'desc') as 'asc' | 'desc',
-        ...(filterRating && { rating: filterRating }),
-      };
-      const response = await coursesApi.getReviews(course.id, params);
-      setReviews(response.data.items);
-      setPagination(response.data.pagination);
-    } catch (error) {
-      console.error('Failed to fetch reviews:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [course.id, sortBy, filterRating, pagination.limit]);
+  const fetchReviews = React.useCallback(
+    async (page = 1) => {
+      try {
+        setLoading(true);
+        const params = {
+          page,
+          limit: pagination.limit,
+          sort:
+            sortBy === 'newest'
+              ? 'created_at'
+              : sortBy === 'oldest'
+                ? 'created_at'
+                : 'helpful',
+          order: (sortBy === 'oldest' ? 'asc' : 'desc') as 'asc' | 'desc',
+          ...(filterRating && { rating: filterRating }),
+        };
+        const response = await coursesApi.getReviews(course.id, params);
+        setReviews(response.data.items);
+        setPagination(response.data.pagination);
+      } catch (error) {
+        console.error('Failed to fetch reviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [course.id, sortBy, filterRating, pagination.limit]
+  );
 
   useEffect(() => {
     fetchReviews();
@@ -120,22 +136,29 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
 
     try {
       await coursesApi.markReviewHelpful(course.id, reviewId, helpful);
-      setReviews(reviews.map(review =>
-        review.id === reviewId
-          ? {
-            ...review,
-            helpful: helpful ? review.helpful + 1 : review.helpful - 1,
-            isHelpful: helpful,
-          }
-          : review
-      ));
+      setReviews(
+        reviews.map((review) =>
+          review.id === reviewId
+            ? {
+                ...review,
+                helpful: helpful ? review.helpful + 1 : review.helpful - 1,
+                isHelpful: helpful,
+              }
+            : review
+        )
+      );
     } catch (error) {
       console.error('Failed to mark review helpful:', error);
     }
   };
 
   // 渲染星级评分
-  const renderStars = (rating: number, size = 'sm', interactive = false, onChange?: (rating: number) => void) => {
+  const renderStars = (
+    rating: number,
+    size = 'sm',
+    interactive = false,
+    onChange?: (rating: number) => void
+  ) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
@@ -147,8 +170,9 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
           disabled={!interactive}
         >
           <Star
-            className={`${size === 'sm' ? 'h-4 w-4' : 'h-5 w-5'} ${i <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
-              }`}
+            className={`${size === 'sm' ? 'h-4 w-4' : 'h-5 w-5'} ${
+              i <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
+            }`}
           />
         </button>
       );
@@ -168,7 +192,7 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
   // 计算评分分布
   const getRatingDistribution = () => {
     const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-    reviews.forEach(review => {
+    reviews.forEach((review) => {
       distribution[review.rating as keyof typeof distribution]++;
     });
     return distribution;
@@ -196,23 +220,30 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
                 <div className="text-4xl font-bold text-gray-900 dark:text-white">
                   {course.rating}
                 </div>
-                <div className="mt-1">
-                  {renderStars(course.rating)}
-                </div>
+                <div className="mt-1">{renderStars(course.rating)}</div>
                 <div className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                   基于 {course.reviewsCount} 条评价
                 </div>
               </div>
               <div className="space-y-2">
-                {[5, 4, 3, 2, 1].map(rating => {
-                  const count = ratingDistribution[rating as keyof typeof ratingDistribution];
-                  const percentage = course.reviewsCount > 0 ? (count / course.reviewsCount) * 100 : 0;
+                {[5, 4, 3, 2, 1].map((rating) => {
+                  const count =
+                    ratingDistribution[
+                      rating as keyof typeof ratingDistribution
+                    ];
+                  const percentage =
+                    course.reviewsCount > 0
+                      ? (count / course.reviewsCount) * 100
+                      : 0;
                   return (
-                    <div key={rating} className="flex items-center gap-2 text-sm">
+                    <div
+                      key={rating}
+                      className="flex items-center gap-2 text-sm"
+                    >
                       <span className="w-8">{rating}星</span>
-                      <div className="flex-1 h-2 bg-gray-200 rounded-full dark:bg-gray-700">
+                      <div className="h-2 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
                         <div
-                          className="h-2 bg-yellow-400 rounded-full transition-all duration-300"
+                          className="h-2 rounded-full bg-yellow-400 transition-all duration-300"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
@@ -227,7 +258,10 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
 
             {/* 筛选和排序 */}
             <div className="flex flex-wrap items-center gap-4">
-              <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+              <Select
+                value={sortBy}
+                onValueChange={(value: any) => setSortBy(value)}
+              >
                 <SelectTrigger className="w-[140px]">
                   <SelectValue placeholder="排序方式" />
                 </SelectTrigger>
@@ -240,7 +274,9 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
 
               <Select
                 value={filterRating?.toString() || ''}
-                onValueChange={(value) => setFilterRating(value ? parseInt(value) : null)}
+                onValueChange={(value) =>
+                  setFilterRating(value ? parseInt(value) : null)
+                }
               >
                 <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="筛选评分" />
@@ -272,7 +308,7 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
                   <CardContent className="pt-6">
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                           评分
                         </label>
                         {renderStars(newReview.rating, 'md', true, (rating) =>
@@ -280,12 +316,17 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
                         )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                           评价内容
                         </label>
                         <Textarea
                           value={newReview.comment}
-                          onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                          onChange={(e) =>
+                            setNewReview({
+                              ...newReview,
+                              comment: e.target.value,
+                            })
+                          }
                           placeholder="分享您的学习体验..."
                           rows={4}
                         />
@@ -319,9 +360,9 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
                       <div className="flex items-start gap-4">
                         <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700" />
                         <div className="flex-1 space-y-2">
-                          <div className="h-4 w-32 bg-gray-200 rounded dark:bg-gray-700" />
-                          <div className="h-4 w-full bg-gray-200 rounded dark:bg-gray-700" />
-                          <div className="h-4 w-3/4 bg-gray-200 rounded dark:bg-gray-700" />
+                          <div className="h-4 w-32 rounded bg-gray-200 dark:bg-gray-700" />
+                          <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700" />
+                          <div className="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
                         </div>
                       </div>
                     </div>
@@ -329,17 +370,24 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
                 </div>
               ) : reviews.length > 0 ? (
                 reviews.map((review, index) => (
-                  <AnimatedContainer key={review.id} animation="slideUp" delay={0.1 * index}>
+                  <AnimatedContainer
+                    key={review.id}
+                    animation="slideUp"
+                    delay={0.1 * index}
+                  >
                     <div className="border-b border-gray-200 pb-4 last:border-b-0 dark:border-gray-700">
                       <div className="flex items-start gap-4">
                         <Avatar>
-                          <AvatarImage src={review.user.avatar} alt={review.user.name} />
+                          <AvatarImage
+                            src={review.user.avatar}
+                            alt={review.user.name}
+                          />
                           <AvatarFallback>
                             {review.user.name.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
+                          <div className="mb-2 flex items-center gap-2">
                             <span className="font-medium text-gray-900 dark:text-white">
                               {review.user.name}
                             </span>
@@ -348,16 +396,19 @@ export function CourseReviews({ course, className = '' }: CourseReviewsProps) {
                               {formatDate(review.createdAt)}
                             </span>
                           </div>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                          <p className="mb-3 text-gray-700 dark:text-gray-300">
                             {review.comment}
                           </p>
                           <div className="flex items-center gap-4">
                             <button
-                              onClick={() => handleMarkHelpful(review.id, !review.isHelpful)}
-                              className={`flex items-center gap-1 text-sm transition-colors ${review.isHelpful
-                                ? 'text-blue-600 dark:text-blue-400'
-                                : 'text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400'
-                                }`}
+                              onClick={() =>
+                                handleMarkHelpful(review.id, !review.isHelpful)
+                              }
+                              className={`flex items-center gap-1 text-sm transition-colors ${
+                                review.isHelpful
+                                  ? 'text-blue-600 dark:text-blue-400'
+                                  : 'text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400'
+                              }`}
                               disabled={!isAuthenticated}
                             >
                               <ThumbsUp className="h-4 w-4" />

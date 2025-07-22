@@ -16,12 +16,14 @@ Module not found: Can't resolve '@/hooks/useWishlist'
 ### 1. 创建了缺失的 Store 文件
 
 **`src/store/cart.ts`**
+
 - 使用 Zustand 状态管理
 - 包含购物车商品接口 `CartItem`
 - 实现购物车状态管理：添加、移除、清空等操作
 - 支持本地存储持久化
 
 **`src/store/wishlist.ts`**
+
 - 使用 Zustand 状态管理
 - 包含收藏夹商品接口 `WishlistItem`
 - 实现收藏夹状态管理：添加、移除、排序、过滤等操作
@@ -30,11 +32,13 @@ Module not found: Can't resolve '@/hooks/useWishlist'
 ### 2. 创建了缺失的 Hook 文件
 
 **`src/hooks/useCart.ts`**
+
 - 提供购物车操作的简化接口
 - 包含状态选择器和操作方法
 - 临时使用 mock 实现，避免 Zustand 依赖问题
 
 **`src/hooks/useWishlist.ts`**
+
 - 提供收藏夹操作的简化接口
 - 包含状态选择器和操作方法
 - 临时使用 mock 实现，避免 Zustand 依赖问题
@@ -42,6 +46,7 @@ Module not found: Can't resolve '@/hooks/useWishlist'
 ### 3. 修复了组件导出问题
 
 **`src/components/unified/index.ts`**
+
 - 添加了缺失的组件导出：
   - `Popover`, `PopoverContent`, `PopoverTrigger`
   - `Collapsible`, `CollapsibleContent`, `CollapsibleTrigger`
@@ -50,6 +55,7 @@ Module not found: Can't resolve '@/hooks/useWishlist'
 ### 4. 修复了类型错误
 
 **`src/components/course/CourseReviews.tsx`**
+
 - 修复了 `order` 参数的类型错误
 - 确保 `order` 参数符合 `'asc' | 'desc'` 类型要求
 
@@ -58,6 +64,7 @@ Module not found: Can't resolve '@/hooks/useWishlist'
 由于 Zustand store 在构建时仍有模块解析问题，采用了临时的内联 mock 函数：
 
 **`src/components/course/CoursePurchase.tsx`**
+
 ```typescript
 // 临时 mock 函数，等待 hooks 正确加载
 const addToCart = async (courseId: string) => {
@@ -94,6 +101,7 @@ const isInCart = (courseId: string) => {
 ## 🔄 后续工作
 
 ### 短期任务
+
 1. **完善 Zustand Store 集成**
    - 解决模块解析问题
    - 替换临时 mock 函数为真实实现
@@ -103,6 +111,7 @@ const isInCart = (courseId: string) => {
    - 替换 img 标签为 Next.js Image 组件
 
 ### 中期任务
+
 1. **API 集成**
    - 连接真实的购物车和收藏夹 API
    - 实现数据持久化
@@ -112,6 +121,7 @@ const isInCart = (courseId: string) => {
    - 集成测试验证功能完整性
 
 ### 长期任务
+
 1. **性能优化**
    - 优化状态管理性能
    - 实现虚拟滚动等高级功能
@@ -125,12 +135,14 @@ const isInCart = (courseId: string) => {
 通过创建缺失的 hooks 和 stores，修复组件导出问题，以及使用临时 mock 解决方案，成功解决了 Next.js 构建失败的问题。
 
 **主要成就：**
+
 - ✅ 构建错误完全解决
 - ✅ 保持了组件功能完整性
 - ✅ 为后续开发奠定了基础
 - ✅ 提供了清晰的后续工作路线图
 
 **技术亮点：**
+
 - 使用 Zustand 进行状态管理
 - 实现了完整的类型安全
 - 采用了模块化的架构设计

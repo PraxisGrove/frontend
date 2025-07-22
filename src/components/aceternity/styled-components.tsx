@@ -202,7 +202,7 @@ export function EnhancedInput({
     <input
       className={cn(
         'w-full rounded-lg px-3 py-2 text-sm transition-all duration-200',
-        'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+        'focus:ring-ring focus:outline-none focus:ring-2 focus:ring-offset-2',
         'placeholder:text-muted-foreground',
         variantClasses[variant],
         className

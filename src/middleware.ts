@@ -45,11 +45,7 @@ const authRequiredPaths = [
 /**
  * 需要管理员权限的路由
  */
-const adminRequiredPaths = [
-  '/admin',
-];
-
-
+const adminRequiredPaths = ['/admin'];
 
 /**
  * 公开路由（无需认证）
@@ -88,7 +84,7 @@ const staticPaths = [
  * 检查路径是否匹配前缀
  */
 function pathStartsWith(path: string, prefixes: string[]): boolean {
-  return prefixes.some(prefix => path.startsWith(prefix));
+  return prefixes.some((prefix) => path.startsWith(prefix));
 }
 
 /**
@@ -105,7 +101,8 @@ export async function middleware(request: NextRequest) {
   // 处理国际化路由（可通过 enableI18nRedirect 配置开关控制）
   if (enableI18nRedirect) {
     const pathnameIsMissingLocale = locales.every(
-      locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+      (locale) =>
+        !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
     );
 
     // 如果路径中没有语言前缀，重定向到带有默认语言的路径
@@ -113,7 +110,10 @@ export async function middleware(request: NextRequest) {
       const locale = getLocale(request);
 
       // 构建新的URL，添加语言前缀
-      const newUrl = new URL(`/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`, request.url);
+      const newUrl = new URL(
+        `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
+        request.url
+      );
 
       // 保留查询参数
       request.nextUrl.searchParams.forEach((value, key) => {
@@ -163,8 +163,6 @@ export async function middleware(request: NextRequest) {
       if (requiresAdmin && tokenData.role !== 'admin') {
         return NextResponse.redirect(new URL('/unauthorized', request.url));
       }
-
-
     } catch (error) {
       // 令牌无效，清除令牌并重定向到登录页面
       const response = NextResponse.redirect(new URL('/login', request.url));

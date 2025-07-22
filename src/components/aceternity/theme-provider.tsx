@@ -197,7 +197,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <button
       onClick={toggleDarkMode}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+      className={`focus:ring-primary relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
         isDarkMode ? 'bg-primary' : 'bg-gray-200'
       } ${className}`}
       role="switch"
@@ -226,7 +226,7 @@ export function ThemeSelector({ className }: { className?: string }) {
     <select
       value={currentTheme}
       onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
-      className={`rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${className}`}
+      className={`border-input bg-background ring-offset-background focus:ring-ring rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
     >
       {themes.map((theme) => (
         <option key={theme.value} value={theme.value}>

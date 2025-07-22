@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Trophy, Star, Target, Clock, BookOpen, Award, Lock, CheckCircle } from 'lucide-react';
+import {
+  Trophy,
+  Star,
+  Target,
+  Clock,
+  BookOpen,
+  Award,
+  Lock,
+  CheckCircle,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -108,23 +117,27 @@ export function Achievements({
   };
 
   // 过滤成就
-  const filteredAchievements = achievements.filter(achievement => 
-    selectedCategory === 'all' || achievement.category === selectedCategory
+  const filteredAchievements = achievements.filter(
+    (achievement) =>
+      selectedCategory === 'all' || achievement.category === selectedCategory
   );
 
   // 统计数据
-  const unlockedCount = achievements.filter(a => a.isUnlocked).length;
+  const unlockedCount = achievements.filter((a) => a.isUnlocked).length;
   const totalCount = achievements.length;
   const completionRate = Math.round((unlockedCount / totalCount) * 100);
 
   // 按稀有度分组
-  const achievementsByRarity = filteredAchievements.reduce((acc, achievement) => {
-    if (!acc[achievement.rarity]) {
-      acc[achievement.rarity] = [];
-    }
-    acc[achievement.rarity].push(achievement);
-    return acc;
-  }, {} as Record<string, Achievement[]>);
+  const achievementsByRarity = filteredAchievements.reduce(
+    (acc, achievement) => {
+      if (!acc[achievement.rarity]) {
+        acc[achievement.rarity] = [];
+      }
+      acc[achievement.rarity].push(achievement);
+      return acc;
+    },
+    {} as Record<string, Achievement[]>
+  );
 
   // 格式化日期
   const formatDate = (dateString: string) => {
@@ -193,7 +206,11 @@ export function Achievements({
             {categories.map((category) => {
               const IconComponent = category.icon;
               return (
-                <TabsTrigger key={category.id} value={category.id} className="flex items-center gap-1">
+                <TabsTrigger
+                  key={category.id}
+                  value={category.id}
+                  className="flex items-center gap-1"
+                >
                   <IconComponent className="h-4 w-4" />
                   <span className="hidden sm:inline">{category.name}</span>
                 </TabsTrigger>
@@ -203,117 +220,153 @@ export function Achievements({
 
           <TabsContent value={selectedCategory} className="mt-6">
             <div className="space-y-6">
-              {Object.entries(achievementsByRarity).map(([rarity, achievements]) => {
-                const config = rarityConfig[rarity as keyof typeof rarityConfig];
-                return (
-                  <div key={rarity}>
-                    <div className="mb-4 flex items-center gap-2">
-                      <Badge className={`${config.color} ${config.bgColor}`}>
-                        {config.name}
-                      </Badge>
-                      <span className="text-sm text-gray-500">
-                        {achievements.length} 个成就
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                      {achievements.map((achievement, index) => {
-                        const IconComponent = getIcon(achievement.icon);
-                        const isCompleted = achievement.progress >= achievement.maxProgress;
-                        
-                        return (
-                          <AnimatedContainer
-                            key={achievement.id}
-                            animation="slideUp"
-                            delay={0.1 * index}
-                          >
-                            <Card className={`
+              {Object.entries(achievementsByRarity).map(
+                ([rarity, achievements]) => {
+                  const config =
+                    rarityConfig[rarity as keyof typeof rarityConfig];
+                  return (
+                    <div key={rarity}>
+                      <div className="mb-4 flex items-center gap-2">
+                        <Badge className={`${config.color} ${config.bgColor}`}>
+                          {config.name}
+                        </Badge>
+                        <span className="text-sm text-gray-500">
+                          {achievements.length} 个成就
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {achievements.map((achievement, index) => {
+                          const IconComponent = getIcon(achievement.icon);
+                          const isCompleted =
+                            achievement.progress >= achievement.maxProgress;
+
+                          return (
+                            <AnimatedContainer
+                              key={achievement.id}
+                              animation="slideUp"
+                              delay={0.1 * index}
+                            >
+                              <Card
+                                className={`
                               relative transition-all duration-300 hover:shadow-lg
-                              ${achievement.isUnlocked 
-                                ? `${config.borderColor} border-2` 
-                                : 'border-gray-200 dark:border-gray-700 opacity-75'
+                              ${
+                                achievement.isUnlocked
+                                  ? `${config.borderColor} border-2`
+                                  : 'border-gray-200 opacity-75 dark:border-gray-700'
                               }
-                            `}>
-                              <CardContent className="p-6">
-                                <div className="flex items-start gap-4">
-                                  <div className={`
+                            `}
+                              >
+                                <CardContent className="p-6">
+                                  <div className="flex items-start gap-4">
+                                    <div
+                                      className={`
                                     flex h-12 w-12 items-center justify-center rounded-full
-                                    ${achievement.isUnlocked 
-                                      ? config.bgColor 
-                                      : 'bg-gray-100 dark:bg-gray-800'
+                                    ${
+                                      achievement.isUnlocked
+                                        ? config.bgColor
+                                        : 'bg-gray-100 dark:bg-gray-800'
                                     }
-                                  `}>
-                                    {achievement.isUnlocked ? (
-                                      <IconComponent className={`h-6 w-6 ${config.color}`} />
-                                    ) : (
-                                      <Lock className="h-6 w-6 text-gray-400" />
-                                    )}
-                                  </div>
-                                  <div className="flex-1">
-                                    <h3 className={`font-semibold ${
-                                      achievement.isUnlocked 
-                                        ? 'text-gray-900 dark:text-white' 
-                                        : 'text-gray-500 dark:text-gray-400'
-                                    }`}>
-                                      {achievement.title}
-                                    </h3>
-                                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                                      {achievement.description}
-                                    </p>
-                                    
-                                    {/* 进度条 */}
-                                    {!achievement.isUnlocked && (
-                                      <div className="mt-3">
-                                        <div className="mb-1 flex justify-between text-xs">
-                                          <span>进度</span>
-                                          <span>{achievement.progress}/{achievement.maxProgress}</span>
-                                        </div>
-                                        <Progress 
-                                          value={(achievement.progress / achievement.maxProgress) * 100} 
-                                          className="h-2"
+                                  `}
+                                    >
+                                      {achievement.isUnlocked ? (
+                                        <IconComponent
+                                          className={`h-6 w-6 ${config.color}`}
                                         />
-                                      </div>
-                                    )}
+                                      ) : (
+                                        <Lock className="h-6 w-6 text-gray-400" />
+                                      )}
+                                    </div>
+                                    <div className="flex-1">
+                                      <h3
+                                        className={`font-semibold ${
+                                          achievement.isUnlocked
+                                            ? 'text-gray-900 dark:text-white'
+                                            : 'text-gray-500 dark:text-gray-400'
+                                        }`}
+                                      >
+                                        {achievement.title}
+                                      </h3>
+                                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                                        {achievement.description}
+                                      </p>
 
-                                    {/* 解锁时间 */}
-                                    {achievement.isUnlocked && achievement.unlockedAt && (
-                                      <div className="mt-2 text-xs text-gray-500">
-                                        解锁于 {formatDate(achievement.unlockedAt)}
-                                      </div>
-                                    )}
+                                      {/* 进度条 */}
+                                      {!achievement.isUnlocked && (
+                                        <div className="mt-3">
+                                          <div className="mb-1 flex justify-between text-xs">
+                                            <span>进度</span>
+                                            <span>
+                                              {achievement.progress}/
+                                              {achievement.maxProgress}
+                                            </span>
+                                          </div>
+                                          <Progress
+                                            value={
+                                              (achievement.progress /
+                                                achievement.maxProgress) *
+                                              100
+                                            }
+                                            className="h-2"
+                                          />
+                                        </div>
+                                      )}
 
-                                    {/* 奖励 */}
-                                    {achievement.reward && (
-                                      <div className="mt-2">
-                                        <Badge variant="outline" className="text-xs">
-                                          {achievement.reward.type === 'points' && `+${achievement.reward.value} 积分`}
-                                          {achievement.reward.type === 'badge' && `徽章: ${achievement.reward.value}`}
-                                          {achievement.reward.type === 'certificate' && `证书: ${achievement.reward.value}`}
-                                        </Badge>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
+                                      {/* 解锁时间 */}
+                                      {achievement.isUnlocked &&
+                                        achievement.unlockedAt && (
+                                          <div className="mt-2 text-xs text-gray-500">
+                                            解锁于{' '}
+                                            {formatDate(achievement.unlockedAt)}
+                                          </div>
+                                        )}
 
-                                {/* 已解锁标识 */}
-                                {achievement.isUnlocked && (
-                                  <div className="absolute -right-2 -top-2">
-                                    <div className={`
-                                      flex h-8 w-8 items-center justify-center rounded-full
-                                      ${config.bgColor} ${config.borderColor} border-2
-                                    `}>
-                                      <CheckCircle className={`h-4 w-4 ${config.color}`} />
+                                      {/* 奖励 */}
+                                      {achievement.reward && (
+                                        <div className="mt-2">
+                                          <Badge
+                                            variant="outline"
+                                            className="text-xs"
+                                          >
+                                            {achievement.reward.type ===
+                                              'points' &&
+                                              `+${achievement.reward.value} 积分`}
+                                            {achievement.reward.type ===
+                                              'badge' &&
+                                              `徽章: ${achievement.reward.value}`}
+                                            {achievement.reward.type ===
+                                              'certificate' &&
+                                              `证书: ${achievement.reward.value}`}
+                                          </Badge>
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
-                                )}
-                              </CardContent>
-                            </Card>
-                          </AnimatedContainer>
-                        );
-                      })}
+
+                                  {/* 已解锁标识 */}
+                                  {achievement.isUnlocked && (
+                                    <div className="absolute -right-2 -top-2">
+                                      <div
+                                        className={`
+                                      flex h-8 w-8 items-center justify-center rounded-full
+                                      ${config.bgColor} ${config.borderColor} border-2
+                                    `}
+                                      >
+                                        <CheckCircle
+                                          className={`h-4 w-4 ${config.color}`}
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
+                                </CardContent>
+                              </Card>
+                            </AnimatedContainer>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
             </div>
           </TabsContent>
         </Tabs>

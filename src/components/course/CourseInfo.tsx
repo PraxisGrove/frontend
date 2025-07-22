@@ -1,7 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Star, Clock, Users, Globe, Calendar, Award, BookOpen } from 'lucide-react';
+import {
+  Star,
+  Clock,
+  Users,
+  Globe,
+  Calendar,
+  Award,
+  BookOpen,
+} from 'lucide-react';
 import {
   Badge,
   Card,
@@ -102,24 +110,18 @@ export function CourseInfo({ course, className = '' }: CourseInfoProps) {
               {getLevelText(level)}
             </Badge>
             {isPopular && (
-              <Badge className="bg-orange-500 text-white">
-                🔥 热门
-              </Badge>
+              <Badge className="bg-orange-500 text-white">🔥 热门</Badge>
             )}
             {isFeatured && (
-              <Badge className="bg-purple-500 text-white">
-                ⭐ 精选
-              </Badge>
+              <Badge className="bg-purple-500 text-white">⭐ 精选</Badge>
             )}
             {certificate && (
-              <Badge className="bg-blue-500 text-white">
-                🏆 提供证书
-              </Badge>
+              <Badge className="bg-blue-500 text-white">🏆 提供证书</Badge>
             )}
           </div>
 
           {/* 课程标题 */}
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
+          <h1 className="text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
             <GradientText>{title}</GradientText>
           </h1>
 
@@ -156,7 +158,7 @@ export function CourseInfo({ course, className = '' }: CourseInfoProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="leading-relaxed text-gray-700 dark:text-gray-300">
               {description}
             </p>
           </CardContent>
@@ -191,7 +193,9 @@ export function CourseInfo({ course, className = '' }: CourseInfoProps) {
                   </div>
                   <div className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
-                    <span>{instructor.studentsCount.toLocaleString()} 学员</span>
+                    <span>
+                      {instructor.studentsCount.toLocaleString()} 学员
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <BookOpen className="h-4 w-4" />

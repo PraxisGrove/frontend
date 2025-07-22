@@ -17,7 +17,9 @@ export default function LoginPage() {
 
   const handleLoginSuccess = () => {
     // 登录成功后重定向到仪表板或之前的页面
-    const redirectTo = new URLSearchParams(window.location.search).get('redirect') || '/dashboard';
+    const redirectTo =
+      new URLSearchParams(window.location.search).get('redirect') ||
+      '/dashboard';
     router.push(redirectTo);
   };
 

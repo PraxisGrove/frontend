@@ -87,7 +87,9 @@ export function SocialLogin({
   showDivider = true,
   dividerText = '或者',
 }: SocialLoginProps) {
-  const [loadingProvider, setLoadingProvider] = useState<SocialProvider | null>(null);
+  const [loadingProvider, setLoadingProvider] = useState<SocialProvider | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
   const { socialLogin } = useAuth();
 
@@ -116,7 +118,8 @@ export function SocialLogin({
 
       onSuccess?.();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : '社交登录失败，请重试';
+      const errorMessage =
+        err instanceof Error ? err.message : '社交登录失败，请重试';
       setError(errorMessage);
       onError?.(errorMessage);
     } finally {
@@ -214,7 +217,9 @@ export function SocialLogin({
       )}
 
       {/* 社交登录按钮 */}
-      <div className={`grid gap-3 ${providers.length === 1 ? 'grid-cols-1' : providers.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+      <div
+        className={`grid gap-3 ${providers.length === 1 ? 'grid-cols-1' : providers.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}
+      >
         {providers.map((provider) => {
           const config = socialProviders[provider];
           const isLoading = loadingProvider === provider;

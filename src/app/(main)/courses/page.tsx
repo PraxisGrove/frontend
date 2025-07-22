@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { CourseCard, CourseFilter, CoursePagination } from '@/components/course';
+import {
+  CourseCard,
+  CourseFilter,
+  CoursePagination,
+} from '@/components/course';
 import { AnimatedContainer } from '@/components/unified';
 // import { ApiStatusIndicator } from '@/components/common/ApiStatusIndicator';
 import type { Course, CoursesQueryParams } from '@/types/api';
@@ -34,28 +38,33 @@ export default function CoursesPage() {
     hasNext: false,
     hasPrev: false,
   });
-  const [categories, setCategories] = useState<Array<{
-    id: string;
-    name: string;
-    slug: string;
-    coursesCount: number;
-  }>>([]);
+  const [categories, setCategories] = useState<
+    Array<{
+      id: string;
+      name: string;
+      slug: string;
+      coursesCount: number;
+    }>
+  >([]);
 
   // 获取课程数据
-  const fetchCourses = React.useCallback(async (queryParams: CoursesQueryParams) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await coursesApi.getCourses(queryParams);
-      setCourses(response.data.items);
-      setPagination(response.data.pagination);
-    } catch (err) {
-      setError('获取课程数据失败，请稍后重试');
-      console.error('Failed to fetch courses:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const fetchCourses = React.useCallback(
+    async (queryParams: CoursesQueryParams) => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await coursesApi.getCourses(queryParams);
+        setCourses(response.data.items);
+        setPagination(response.data.pagination);
+      } catch (err) {
+        setError('获取课程数据失败，请稍后重试');
+        console.error('Failed to fetch courses:', err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   // 获取分类数据
   const fetchCategories = React.useCallback(async () => {
@@ -74,66 +83,75 @@ export default function CoursesPage() {
   }, [filters, fetchCourses, fetchCategories]);
 
   // 处理过滤器变化
-  const handleFilterChange = React.useCallback((newFilters: CoursesQueryParams) => {
-    const updatedFilters = { ...filters, ...newFilters, page: 1 };
-    setFilters(updatedFilters);
-    fetchCourses(updatedFilters);
-  }, [filters, fetchCourses]);
+  const handleFilterChange = React.useCallback(
+    (newFilters: CoursesQueryParams) => {
+      const updatedFilters = { ...filters, ...newFilters, page: 1 };
+      setFilters(updatedFilters);
+      fetchCourses(updatedFilters);
+    },
+    [filters, fetchCourses]
+  );
 
   // 处理分页变化
-  const handlePageChange = React.useCallback((page: number) => {
-    const updatedFilters = { ...filters, page };
-    setFilters(updatedFilters);
-    fetchCourses(updatedFilters);
-  }, [filters, fetchCourses]);
+  const handlePageChange = React.useCallback(
+    (page: number) => {
+      const updatedFilters = { ...filters, page };
+      setFilters(updatedFilters);
+      fetchCourses(updatedFilters);
+    },
+    [filters, fetchCourses]
+  );
 
   // 模拟课程数据（作为后备）
-  const mockCourses = React.useMemo((): Course[] => [
-    {
-      id: '1',
-      title: 'JavaScript 高级编程',
-      description: '深入学习 JavaScript 的高级特性和最佳实践',
-      shortDescription: '深入学习 JavaScript 的高级特性和最佳实践',
-      instructor: {
+  const mockCourses = React.useMemo(
+    (): Course[] => [
+      {
         id: '1',
-        name: '张老师',
-        avatar: '',
-        bio: '资深前端工程师',
-        rating: 4.9,
-        studentsCount: 1000,
-        coursesCount: 5,
-        specialties: ['JavaScript', '前端开发'],
+        title: 'JavaScript 高级编程',
+        description: '深入学习 JavaScript 的高级特性和最佳实践',
+        shortDescription: '深入学习 JavaScript 的高级特性和最佳实践',
+        instructor: {
+          id: '1',
+          name: '张老师',
+          avatar: '',
+          bio: '资深前端工程师',
+          rating: 4.9,
+          studentsCount: 1000,
+          coursesCount: 5,
+          specialties: ['JavaScript', '前端开发'],
+        },
+        category: {
+          id: '1',
+          name: '前端开发',
+          slug: 'frontend',
+          description: '前端开发相关课程',
+        },
+        level: 'intermediate',
+        duration: 2400, // 40小时 = 2400分钟
+        price: 299,
+        originalPrice: 399,
+        currency: 'CNY',
+        rating: 4.8,
+        reviewsCount: 156,
+        studentsCount: 1234,
+        lessonsCount: 45,
+        language: '中文',
+        lastUpdated: '2024-01-15',
+        isPublished: true,
+        isFeatured: true,
+        isPopular: true,
+        tags: ['JavaScript', '前端开发', '编程'],
+        thumbnail: '',
+        certificate: true,
+        requirements: ['具备基础的 JavaScript 知识'],
+        whatYouWillLearn: ['掌握 JavaScript 的高级语法特性'],
+        curriculum: [],
+        createdAt: '2024-01-01',
+        updatedAt: '2024-01-15',
       },
-      category: {
-        id: '1',
-        name: '前端开发',
-        slug: 'frontend',
-        description: '前端开发相关课程',
-      },
-      level: 'intermediate',
-      duration: 2400, // 40小时 = 2400分钟
-      price: 299,
-      originalPrice: 399,
-      currency: 'CNY',
-      rating: 4.8,
-      reviewsCount: 156,
-      studentsCount: 1234,
-      lessonsCount: 45,
-      language: '中文',
-      lastUpdated: '2024-01-15',
-      isPublished: true,
-      isFeatured: true,
-      isPopular: true,
-      tags: ['JavaScript', '前端开发', '编程'],
-      thumbnail: '',
-      certificate: true,
-      requirements: ['具备基础的 JavaScript 知识'],
-      whatYouWillLearn: ['掌握 JavaScript 的高级语法特性'],
-      curriculum: [],
-      createdAt: '2024-01-01',
-      updatedAt: '2024-01-15',
-    },
-  ], []);
+    ],
+    []
+  );
 
   // 如果 API 失败，使用模拟数据
   useEffect(() => {
@@ -217,7 +235,7 @@ export default function CoursesPage() {
       {!loading && courses.length === 0 && !error && (
         <AnimatedContainer animation="fadeIn" delay={0.3}>
           <div className="py-16 text-center">
-            <div className="mx-auto mb-4 h-24 w-24 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
               <svg
                 className="h-12 w-12 text-gray-400"
                 fill="none"
