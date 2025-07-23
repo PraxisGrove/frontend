@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '用户认证 - PraxisGrove',
+  title: 'PraxisGrove',
   description: '登录或注册 PraxisGrove 账户',
 };
 

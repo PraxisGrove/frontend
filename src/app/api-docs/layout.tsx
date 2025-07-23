@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'API Documentation - PraxisGrove',
+  title: 'PraxisGrove',
   description: 'Complete API documentation for PraxisGrove platform',
 };
 

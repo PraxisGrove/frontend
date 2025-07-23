@@ -21,15 +21,10 @@ import {
   Badge,
 } from '@/components/unified';
 import { FloatingNav } from '@/components/aceternity/floating-navbar';
+import { globalNavItems } from '@/lib/navigation';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
-
-// 注意：由于使用了 'use client'，metadata 需要在其他地方定义
-// export const metadata: Metadata = {
-//   title: '学习仪表板 - PraxisGrove',
-//   description: '查看您的学习进度、成就和推荐内容',
-// };
 
 /**
  * 用户学习仪表板页面
@@ -37,11 +32,7 @@ import { useAuth } from '@/hooks/useAuth';
 export default function DashboardPage() {
   const { user } = useAuth();
 
-  // 导航配置
-  const navItems = [
-    { name: '知识宇宙', link: '/knowledge-universe' },
-    { name: '仪表板', link: '/dashboard' },
-  ];
+  // 使用统一的导航配置
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>(
     '30d'
@@ -210,7 +201,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-900 dark:to-pink-900">
       {/* 浮动导航栏 */}
-      <FloatingNav navItems={navItems} />
+      <FloatingNav navItems={globalNavItems} />
 
       {/* 主题切换按钮 */}
       <div className="fixed right-4 top-4 z-40">

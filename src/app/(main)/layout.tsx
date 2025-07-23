@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'PraxisGrove - 一所无需许可的学校',
+  title: 'PraxisGrove',
   description: '基于AI技术的创新在线教育平台，提供个性化学习体验和3D知识宇宙',
 };
 

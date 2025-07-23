@@ -1,13 +1,7 @@
 'use client';
 
-import type { Metadata } from 'next';
 import { useRouter } from 'next/navigation';
 import { RegisterForm, SocialLogin } from '@/components/auth';
-
-// export const metadata: Metadata = {
-//   title: '注册 - PraxisGrove',
-//   description: '创建您的 PraxisGrove 账户',
-// };
 
 /**
  * 用户注册页面

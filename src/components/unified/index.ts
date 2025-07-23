@@ -262,3 +262,6 @@ export type {
  *    - 需要动画时，在基础组件上包装 Aceternity UI 效果
  *    - 只在需要特定动画行为时使用 ReactBit UI
  */
+
+// Layout Components
+export { PageLayout } from '../layout/PageLayout';

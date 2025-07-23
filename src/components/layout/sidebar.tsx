@@ -34,6 +34,8 @@ import {
   LogOut,
   Menu,
   X,
+  Users,
+  Bot,
 } from 'lucide-react';
 
 // 侧边栏导航项类型
@@ -105,6 +107,18 @@ const defaultNavigation: SidebarGroupProps[] = [
         title: '仪表板',
         href: '/dashboard',
         icon: <BarChart3 className="h-4 w-4" />,
+      },
+      {
+        title: '社区',
+        href: '/community',
+        icon: <Users className="h-4 w-4" />,
+        badge: 'NEW',
+      },
+      {
+        title: 'AI 助手',
+        href: '/ai',
+        icon: <Bot className="h-4 w-4" />,
+        badge: 'HOT',
       },
     ],
   },

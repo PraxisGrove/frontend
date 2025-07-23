@@ -23,7 +23,7 @@ interface SEOProps {
 }
 
 const defaultSEO = {
-  title: 'PraxisGrove - 一所无需许可的学校',
+  title: 'PraxisGrove',
   description:
     '通过人工智能技术和3D知识宇宙，为您提供个性化学习体验。探索知识的无限可能，开启智慧学习新时代。',
   keywords: [

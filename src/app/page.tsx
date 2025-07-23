@@ -8,6 +8,7 @@ import { QuickActions } from '@/components/home/QuickActions';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { ScrollSpy } from '@/components/ui/ScrollSpy';
 import { FloatingNav } from '@/components/aceternity/floating-navbar';
+import { globalNavItems } from '@/lib/navigation';
 import {
   SEOHead,
   WebsiteStructuredData,
@@ -27,18 +28,13 @@ const sections = [
   { id: 'cta', label: '开始使用' },
 ];
 
-// 导航配置
-const navItems = [
-  { name: '知识宇宙', link: '/knowledge-universe' },
-  { name: '仪表板', link: '/dashboard' },
-];
+// 使用统一的导航配置
 
 export default function HomePage() {
   return (
     <>
       {/* SEO 优化 */}
       <SEOHead
-        title="首页"
         description="PraxisGrove - 通过人工智能技术和区块链技术，为您提供个性化学习体验。探索知识的无限可能，开启智慧学习新时代。"
         keywords={[
           '在线教育',
@@ -62,7 +58,7 @@ export default function HomePage() {
           <div />
         </AdaptiveParticles>
 
-        <FloatingNav navItems={navItems} showLoginButton={true} />
+        <FloatingNav navItems={globalNavItems} showLoginButton={true} />
         <ScrollProgress />
         <ScrollSpy sections={sections} />
 

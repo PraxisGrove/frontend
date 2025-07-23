@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { FloatingNav } from '@/components/aceternity/floating-navbar';
+import { globalNavItems } from '@/lib/navigation';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import {
   Card,
@@ -18,16 +19,12 @@ import { motion } from 'framer-motion';
  * 3D知识宇宙页面
  */
 export default function KnowledgeUniversePage() {
-  // 导航配置
-  const navItems = [
-    { name: '知识宇宙', link: '/knowledge-universe' },
-    { name: '仪表板', link: '/dashboard' },
-  ];
+  // 使用统一的导航配置
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900">
       {/* 浮动导航栏 */}
-      <FloatingNav navItems={navItems} />
+      <FloatingNav navItems={globalNavItems} />
 
       {/* 主题切换按钮 */}
       <div className="fixed right-4 top-4 z-40">

@@ -32,6 +32,8 @@ import {
   BookOpen,
   Globe,
   BarChart3,
+  Users,
+  Bot,
 } from 'lucide-react';
 
 // 导航项类型
@@ -74,19 +76,24 @@ const defaultNavigation: NavItem[] = [
     icon: <Home className="h-4 w-4" />,
   },
   {
-    title: '功能特性',
-    href: '#features',
-    icon: <BookOpen className="h-4 w-4" />,
-  },
-  {
-    title: '产品介绍',
-    href: '#product',
+    title: '知识宇宙',
+    href: '/knowledge-universe',
     icon: <Globe className="h-4 w-4" />,
   },
   {
-    title: '用户评价',
-    href: '#testimonials',
+    title: '仪表板',
+    href: '/dashboard',
     icon: <BarChart3 className="h-4 w-4" />,
+  },
+  {
+    title: '社区',
+    href: '/community',
+    icon: <Users className="h-4 w-4" />,
+  },
+  {
+    title: 'AI 助手',
+    href: '/ai',
+    icon: <Bot className="h-4 w-4" />,
   },
 ];
 
