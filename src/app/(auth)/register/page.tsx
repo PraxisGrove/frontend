@@ -1,7 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { RegisterForm, SocialLogin } from '@/components/auth';
+import { RegisterForm, AuthLayout } from '@/components/auth';
+import { EnhancedSocialLogin } from '@/components/auth/EnhancedLoginForm';
 
 /**
  * 用户注册页面
@@ -20,28 +21,23 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="rounded-lg bg-white p-8 shadow-xl dark:bg-gray-800">
-      <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-          创建账户
-        </h2>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">
-          加入 PraxisGrove，开启您的学习之旅
-        </p>
-      </div>
-
+    <AuthLayout
+      title="创建账户"
+      subtitle="加入 PraxisGrove，开启您的智慧学习之旅"
+      type="register"
+    >
       <RegisterForm
         onSuccess={handleRegisterSuccess}
         onError={handleRegisterError}
         showSocialLogin={false}
       />
 
-      <SocialLogin
-        providers={['google', 'github']}
+      <EnhancedSocialLogin
+        providers={['google', 'github', 'feishu']}
         onSuccess={handleRegisterSuccess}
         onError={handleRegisterError}
         className="mt-6"
       />
-    </div>
+    </AuthLayout>
   );
 }

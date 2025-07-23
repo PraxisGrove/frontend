@@ -1,13 +1,11 @@
 'use client';
 
-import type { Metadata } from 'next';
 import { useRouter } from 'next/navigation';
-import { LoginForm, SocialLogin } from '@/components/auth';
-
-// export const metadata: Metadata = {
-//   title: '登录 - PraxisGrove',
-//   description: '登录您的 PraxisGrove 账户',
-// };
+import { AuthLayout } from '@/components/auth';
+import {
+  EnhancedLoginForm,
+  EnhancedSocialLogin,
+} from '@/components/auth/EnhancedLoginForm';
 
 /**
  * 用户登录页面
@@ -29,28 +27,22 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="rounded-lg bg-white p-8 shadow-xl dark:bg-gray-800">
-      <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-          欢迎回来
-        </h2>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">
-          登录您的账户继续学习之旅
-        </p>
-      </div>
-
-      <LoginForm
+    <AuthLayout
+      title="欢迎回来"
+      subtitle="登录您的账户，继续探索知识的无限可能"
+      type="login"
+    >
+      <EnhancedLoginForm
         onSuccess={handleLoginSuccess}
         onError={handleLoginError}
-        showSocialLogin={false}
       />
 
-      <SocialLogin
-        providers={['google', 'github']}
+      <EnhancedSocialLogin
+        providers={['google', 'github', 'feishu']}
         onSuccess={handleLoginSuccess}
         onError={handleLoginError}
         className="mt-6"
       />
-    </div>
+    </AuthLayout>
   );
 }

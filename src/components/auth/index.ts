@@ -8,3 +8,4 @@ export {
   RoleGuard,
 } from './PrivateRoute';
 export type { SocialProvider } from './SocialLogin';
+export { AuthLayout } from './AuthLayout';
