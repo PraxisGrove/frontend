@@ -35,12 +35,15 @@ export interface PerformanceMetrics {
 export class PerformanceMonitor {
   private metrics: PerformanceMetrics = {};
   private observers: PerformanceObserver[] = [];
-  private startTime: number;
+  private startTime: number = 0;
 
   constructor() {
-    this.startTime = performance.now();
-    this.initializeObservers();
-    this.measureBasicMetrics();
+    // 检查是否在浏览器环境
+    if (typeof window !== 'undefined') {
+      this.startTime = performance.now();
+      this.initializeObservers();
+      this.measureBasicMetrics();
+    }
   }
 
   // 初始化性能观察器

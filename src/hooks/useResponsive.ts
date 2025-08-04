@@ -146,6 +146,45 @@ export function usePerformance() {
   );
   const [reducedMotion, setReducedMotion] = useState(false);
 
+  // 简单的性能检测函数
+  const detectPerformance = React.useCallback(() => {
+    const connection = (navigator as any).connection;
+    const memory = (performance as any).memory;
+
+    let score = 0;
+
+    // 网络连接质量
+    if (connection) {
+      if (connection.effectiveType === '4g') score += 2;
+      else if (connection.effectiveType === '3g') score += 1;
+    } else {
+      score += 1; // 默认中等
+    }
+
+    // 内存情况
+    if (memory) {
+      if (memory.jsHeapSizeLimit > 1000000000)
+        score += 2; // > 1GB
+      else if (memory.jsHeapSizeLimit > 500000000) score += 1; // > 500MB
+    } else {
+      score += 1; // 默认中等
+    }
+
+    // 硬件并发
+    if (navigator.hardwareConcurrency >= 8) score += 2;
+    else if (navigator.hardwareConcurrency >= 4) score += 1;
+
+    // 设备像素比
+    if (window.devicePixelRatio <= 1) score += 1;
+    else if (window.devicePixelRatio <= 2) score += 0;
+    else score -= 1;
+
+    // 根据分数确定性能等级
+    if (score >= 5) setPerformance('high');
+    else if (score >= 3) setPerformance('medium');
+    else setPerformance('low');
+  }, []);
+
   useEffect(() => {
     // 检查是否在浏览器环境
     if (typeof window === 'undefined') return;
@@ -156,48 +195,9 @@ export function usePerformance() {
     ).matches;
     setReducedMotion(prefersReducedMotion);
 
-    // 简单的性能检测
-    const detectPerformance = () => {
-      const connection = (navigator as any).connection;
-      const memory = (performance as any).memory;
-
-      let score = 0;
-
-      // 网络连接质量
-      if (connection) {
-        if (connection.effectiveType === '4g') score += 2;
-        else if (connection.effectiveType === '3g') score += 1;
-      } else {
-        score += 1; // 默认中等
-      }
-
-      // 内存情况
-      if (memory) {
-        if (memory.jsHeapSizeLimit > 1000000000)
-          score += 2; // > 1GB
-        else if (memory.jsHeapSizeLimit > 500000000) score += 1; // > 500MB
-      } else {
-        score += 1; // 默认中等
-      }
-
-      // 硬件并发
-      if (navigator.hardwareConcurrency >= 8) score += 2;
-      else if (navigator.hardwareConcurrency >= 4) score += 1;
-
-      // 设备像素比
-      if (window.devicePixelRatio <= 1) score += 1;
-      else if (window.devicePixelRatio <= 2) score += 0;
-      else score -= 1;
-
-      // 根据分数确定性能等级
-      if (score >= 5) setPerformance('high');
-      else if (score >= 3) setPerformance('medium');
-      else setPerformance('low');
-    };
-
+    // 执行性能检测
     detectPerformance();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [detectPerformance]);
 
   return {
     performance,

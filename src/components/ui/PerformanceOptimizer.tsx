@@ -53,6 +53,9 @@ export function PerformanceProvider({
   const { isMobile } = useDeviceType();
   const { isSlowConnection } = useNetworkStatus();
 
+  // 稳定 defaultConfig 以避免无限循环
+  const stableDefaultConfig = React.useMemo(() => defaultConfig, []);
+
   const getOptimalConfig = React.useCallback((): PerformanceConfig => {
     const baseConfig: PerformanceConfig = {
       enableAnimations: true,
@@ -90,15 +93,34 @@ export function PerformanceProvider({
       };
     }
 
-    return { ...baseConfig, ...defaultConfig };
-  }, [performance, reducedMotion, isMobile, isSlowConnection, defaultConfig]);
+    return { ...baseConfig, ...stableDefaultConfig };
+  }, [
+    performance,
+    reducedMotion,
+    isMobile,
+    isSlowConnection,
+    stableDefaultConfig,
+  ]);
 
-  const [config, setConfig] = useState<PerformanceConfig>(() =>
-    getOptimalConfig()
-  );
+  const [config, setConfig] = useState<PerformanceConfig>(() => {
+    const baseConfig: PerformanceConfig = {
+      enableAnimations: true,
+      particleCount: 50,
+      imageQuality: 75,
+      enableParallax: true,
+      enableBlur: true,
+      enableShadows: true,
+      animationDuration: 0.6,
+      enableAutoplay: true,
+    };
 
+    return { ...baseConfig, ...stableDefaultConfig };
+  });
+
+  // 在性能检测完成后更新配置
   useEffect(() => {
-    setConfig(getOptimalConfig());
+    const newConfig = getOptimalConfig();
+    setConfig(newConfig);
   }, [getOptimalConfig]);
 
   const updateConfig = React.useCallback(
@@ -230,13 +252,23 @@ export function AdaptiveParticles({
   const [ParticleComponent, setParticleComponent] =
     useState<React.ComponentType<any> | null>(null);
 
+  // 稳定配置值以避免无限循环
+  const shouldEnableAnimations = React.useMemo(
+    () => config.enableAnimations,
+    [config.enableAnimations]
+  );
+  const particleCount = React.useMemo(
+    () => config.particleCount,
+    [config.particleCount]
+  );
+
   useEffect(() => {
-    if (config.enableAnimations && config.particleCount > 0) {
+    if (shouldEnableAnimations && particleCount > 0) {
       import('@/components/ui/ParticleBackground').then((module) => {
         setParticleComponent(() => module.ParticleBackground);
       });
     }
-  }, [config.enableAnimations, config.particleCount]);
+  }, [shouldEnableAnimations, particleCount]);
 
   if (!config.enableAnimations || config.particleCount === 0) {
     return <div className={className}>{children}</div>;
